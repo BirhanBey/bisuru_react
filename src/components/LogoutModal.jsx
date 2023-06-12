@@ -36,7 +36,7 @@ const LogoutModal = () => {
   return (
     <Container>
       <Row>
-        <Button className='w-25 ms-auto' onClick={handleShow}>Logout</Button>
+        <Button className='w-25 ms-auto ' onClick={handleShow}>Logout</Button>
         <Modal
           show={show}
           onHide={handleClose}
