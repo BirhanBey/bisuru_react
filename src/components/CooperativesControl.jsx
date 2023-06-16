@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Dropdown  } from 'react-bootstrap';
+import { Table, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 
 const CooperativesControl = () => {
   const [allCooperatives, setAllCooperatives] = useState([]);
   let token = localStorage.getItem('token');
-    console.log(allCooperatives);
+  console.log(allCooperatives);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/cooperatives', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          'http://localhost:8000/api/cooperatives',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setAllCooperatives(response.data);
       } catch (error) {
         console.error('Request Error:', error);
@@ -25,7 +28,7 @@ const CooperativesControl = () => {
   }, [token]);
 
   return (
-<div>
+    <div>
       <h1>Cooperatives Control</h1>
       <Table striped bordered hover>
         <thead>
@@ -36,7 +39,7 @@ const CooperativesControl = () => {
             <th>Status</th>
             <th>Field</th>
             <th>Founded</th>
-            <th>Founded</th>
+            <th>License Number</th>
           </tr>
         </thead>
         <tbody>
@@ -65,8 +68,7 @@ const CooperativesControl = () => {
                   </Dropdown>
                 </td>
               </tr>
-              <tr>
-              </tr>
+              <tr></tr>
             </React.Fragment>
           ))}
         </tbody>

@@ -5,6 +5,7 @@ import CooperativesControl from './components/CooperativesControl';
 import Register from './Register';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import FarmerController from './components/FarmerController';
+import FarmController from './components/FarmController';
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +24,10 @@ function App() {
     {
       path: '/farmers',
       element: <FarmerController />,
+    },
+    {
+      path: '/farms',
+      element: <FarmController />,
     },
     {
       path: '/login',

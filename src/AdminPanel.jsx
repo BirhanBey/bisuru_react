@@ -5,11 +5,15 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import CooperativesControl from './components/CooperativesControl';
 import AdminControl from './components/AdminControl';
 import FarmerController from './components/FarmerController';
+import FarmController from './components/FarmController';
+import FarmStaffController from './components/FarmStaffController';
+import CoopStaffController from './components/CoopStaffController';
+import AnimalController from './components/AnimalController';
 
 function AdminPanel() {
   const userInfo = localStorage.getItem('userInfo');
   const token = localStorage.getItem('token');
-  const  userData = localStorage.getItem('userData');
+  const userData = localStorage.getItem('userData');
   console.log(userInfo);
   console.log(userData);
   const [activePage, setActivePage] = useState(userInfo);
@@ -23,11 +27,13 @@ function AdminPanel() {
       <Navbar className="d-flex w-100" bg="light">
         <div className="d-flex w-100">
           <Navbar.Brand>BiSuru Admin Panel</Navbar.Brand>
-          <p className='w-100 ms-auto me-auto'>welcome {userInfo}</p>
+          <p className="w-100 ms-auto me-auto">
+            <b> Welcome </b> <i> {userInfo} </i>
+          </p>
           <LogoutModal token={token} />
         </div>
       </Navbar>
-      <Container className=''>
+      <Container className="">
         <div className="d-flex">
           <div className="sidebar">
             <Nav className="flex-column bg-light mt-2">
@@ -80,13 +86,43 @@ function AdminPanel() {
             {userInfo === 'SuperUser' && activePage === 'admin' && (
               <AdminControl />
             )}
+
             {(userInfo === 'Cooperative' || userInfo === 'SuperUser') &&
               activePage === 'cooperatives' && <CooperativesControl />}
-            {(userInfo === 'Farmer' ||
+
+            {(userInfo === 'CooperativeStaff' ||
+              userInfo === 'Cooperative' ||
+              userInfo === 'SuperUser') &&
+              activePage === 'cooperativesstaff' && <CoopStaffController />}
+
+            {(userInfo === 'CooperativeStaff' ||
+              userInfo === 'Farmer' ||
               userInfo === 'Cooperative' ||
               userInfo === 'SuperUser') &&
               activePage === 'farmers' && <FarmerController />}
-            {activePage === 'farms' && <h2>Farms Page</h2>}
+
+            {(userInfo === 'CooperativeStaff' ||
+              userInfo === 'Farm' ||
+              userInfo === 'Farmer' ||
+              userInfo === 'Cooperative' ||
+              userInfo === 'SuperUser') &&
+              activePage === 'farms' && <FarmController />}
+
+            {(userInfo === 'CooperativeStaff' ||
+              userInfo === 'FarmStaff' ||
+              userInfo === 'Farm' ||
+              userInfo === 'Farmer' ||
+              userInfo === 'Cooperative' ||
+              userInfo === 'SuperUser') &&
+              activePage === 'farmsstaff' && <FarmStaffController />}
+
+            {(userInfo === 'CooperativeStaff' ||
+              userInfo === 'FarmStaff' ||
+              userInfo === 'Farm' ||
+              userInfo === 'Farmer' ||
+              userInfo === 'Cooperative' ||
+              userInfo === 'SuperUser') &&
+              activePage === 'animals' && <AnimalController />}
           </div>
         </div>
       </Container>
