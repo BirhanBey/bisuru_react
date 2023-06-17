@@ -26,7 +26,7 @@ const AnimalController = () => {
 
   return (
 <div>
-      <h1>Farm Staff Control</h1>
+      <h1>Animal Panel</h1>
       <Table striped bordered hover>
         <thead>
           <tr>

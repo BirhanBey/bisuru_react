@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
+import CoopStaffDetail from './CoopStaffDetail'; // Eğer CoopStaffDetail bileşeni başka bir dosyada bulunuyorsa import edin
 
 const CooperativesControl = () => {
   const [allCooperatives, setAllCooperatives] = useState([]);
+  const [showCoopStaffDetail, setShowCoopStaffDetail] = useState(false); // Yeni bileşenin açılıp açılmayacağını kontrol etmek için bir durum kullanın
+  const [selectedCooperative, setSelectedCooperative] = useState(null); // Seçilen kooperatifin bilgilerini saklamak için bir durum kullanın
+
   let token = localStorage.getItem('token');
-  console.log(allCooperatives);
+  // console.log(allCooperatives);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,9 +31,17 @@ const CooperativesControl = () => {
     fetchData();
   }, [token]);
 
+  const handleCoopStaffClick = (cooperative) => {
+    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
+    setShowCoopStaffDetail(!showCoopStaffDetail); // "Cooperative Staff" seçeneğine tıklandığında yeni bileşeni aç/kapat
+  };
+
+  const handleClose = () => {
+    setShowCoopStaffDetail(false);
+  };
   return (
     <div>
-      <h1>Cooperatives Control</h1>
+      <h1>Cooperatives Panel</h1>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -60,7 +72,11 @@ const CooperativesControl = () => {
                       View Details
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item>Coopertive Staff</Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => handleCoopStaffClick(cooperative)}
+                      >
+                        Cooperative Staff
+                      </Dropdown.Item>
                       <Dropdown.Item>Farmers</Dropdown.Item>
                       <Dropdown.Item>Farms</Dropdown.Item>
                       {/* Diğer özelliklerinizi burada listeye ekleyebilirsin */}
@@ -68,11 +84,13 @@ const CooperativesControl = () => {
                   </Dropdown>
                 </td>
               </tr>
-              <tr></tr>
             </React.Fragment>
           ))}
         </tbody>
       </Table>
+      {showCoopStaffDetail && selectedCooperative && (
+        <CoopStaffDetail cooperative={selectedCooperative} onClose={handleClose} />
+      )}
     </div>
   );
 };

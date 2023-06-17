@@ -26,7 +26,7 @@ const FarmerController = () => {
 
   return (
 <div>
-      <h1>Farmer Control</h1>
+      <h1>Farmer Panel</h1>
       <Table striped bordered hover>
         <thead>
           <tr>

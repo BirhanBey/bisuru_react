@@ -23,7 +23,7 @@ const AdminControl = () => {
 
   return (
     <div>
-      <h1>Admin Control</h1>
+      <h1>Admin Panel</h1>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -34,8 +34,6 @@ const AdminControl = () => {
             <th>Phone Number</th>
             <th>Status</th>
             <th>Image</th>
-            <th>UserInfo</th>
-
           </tr>
         </thead>
         <tbody>

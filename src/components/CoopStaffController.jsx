@@ -26,7 +26,7 @@ const CoopStaffController = () => {
 
   return (
 <div>
-      <h1>Cooperative Staff Control</h1>
+      <h1>Cooperative Staff Panel</h1>
       <Table striped bordered hover>
         <thead>
           <tr>
