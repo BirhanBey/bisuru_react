@@ -15,7 +15,7 @@ const CooperativesControl = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          'http://localhost:8000/api/cooperatives',
+          'https://s3.syntradeveloper.be/bisurularavel/api/cooperatives',
           {
             headers: {
               Authorization: `Bearer ${token}`,

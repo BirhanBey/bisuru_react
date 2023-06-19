@@ -10,7 +10,7 @@ const AnimalController = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/animals', {
+        const response = await axios.get('/https://s3.syntradeveloper.be/bisurularavel/api/animals', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

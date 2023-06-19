@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
@@ -29,7 +30,6 @@ const UpdateCoopStaff = ({ coopStaff, onClose }) => {
       onClose(); // Modalı kapat
 
       // Güncellenmiş verileri tabloya yansıt
-      onUpdate(editedCoopStaff);
     } catch (error) {
       console.error('Request Error:', error);
       // Handle error
@@ -146,5 +146,11 @@ const UpdateCoopStaff = ({ coopStaff, onClose }) => {
     </Modal>
   );
 };
+
+UpdateCoopStaff.propTypes = {
+    coopStaff: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
+};
+
 
 export default UpdateCoopStaff;

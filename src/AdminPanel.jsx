@@ -34,8 +34,8 @@ function AdminPanel() {
         </div>
       </Navbar>
       <Container className="">
-        <div className="d-flex">
-          <div className="sidebar">
+        <div className="d-flex flex-row gap-4">
+          <div className="sidebar w-25">
             <Nav className="flex-column bg-light mt-2">
               <Nav.Link
                 active={activePage === 'admin'}
@@ -81,8 +81,7 @@ function AdminPanel() {
               </Nav.Link>
             </Nav>
           </div>
-
-          <div className="content ms-2">
+          <div className="content ms-2 w-75">
             {userInfo === 'SuperUser' && activePage === 'admin' && (
               <AdminControl />
             )}

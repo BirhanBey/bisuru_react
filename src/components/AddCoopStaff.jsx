@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
-const AddCoopStaff = ({ onClose, onCoopStaffAdd }) => {
+const AddCoopStaff = ({ onSubmit,coopID, onClose, onCoopStaffAdd }) => {
   const [addedCoopStaff, setAddedCoopStaff] = useState('');
   const token = localStorage.getItem('token');
+  useEffect(() => {
+    setAddedCoopStaff({ ['cooperatives_id']: coopID });
+  }, []);
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
     const newValue = type === 'checkbox' ? (checked ? 1 : 0) : value;
@@ -16,20 +20,22 @@ const AddCoopStaff = ({ onClose, onCoopStaffAdd }) => {
   };
 
   const handleSubmit = async () => {
+    console.log(addedCoopStaff);
     try {
-      await axios.post(
-        `http://localhost:8000/api/coopstaffs`,
-        addedCoopStaff,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post(`https://s3.syntradeveloper.be/bisurularavel/api/coopstaffs`, addedCoopStaff, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       onClose(); // Modalı kapat
 
       // Güncellenmiş verileri tabloya yansıt
-      onCoopStaffAdd(addedCoopStaff);
+      onClose(); // Kapatma işlemini çağır
+      if (response.status == '201') {
+        onSubmit("OK");
+      } else {
+        onSubmit(response);
+      }
     } catch (error) {
       console.error('Request Error:', error);
       // Handle error
@@ -88,7 +94,7 @@ const AddCoopStaff = ({ onClose, onCoopStaffAdd }) => {
             </label>
           </div>
           <div>
-            {/* <label>
+            <label>
               Status:
               <input
                 type="checkbox"
@@ -96,7 +102,7 @@ const AddCoopStaff = ({ onClose, onCoopStaffAdd }) => {
                 checked={addedCoopStaff.status}
                 onChange={handleInputChange}
               />
-            </label> */}
+            </label>
           </div>
           <div>
             <label>
@@ -146,8 +152,9 @@ const AddCoopStaff = ({ onClose, onCoopStaffAdd }) => {
 };
 
 AddCoopStaff.propTypes = {
-    onCoopStaffAdd: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
+  onCoopStaffAdd: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  coopID: propTypes.string,
 };
 
 export default AddCoopStaff;

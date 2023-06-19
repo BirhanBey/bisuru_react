@@ -11,7 +11,7 @@ const AdminControl = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/admins');
+        const response = await axios.get('https://s3.syntradeveloper.be/bisurularavel/api/admins');
         setAllAdmins(response.data);
       } catch (error) {
         console.error('Request Error:', error);

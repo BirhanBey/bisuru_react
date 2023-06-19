@@ -18,7 +18,7 @@ const LogoutModal = () => {
       .request({
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:8000/api/logout',
+        url: 'https://s3.syntradeveloper.be/bisurularavel/api/logout',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -36,7 +36,9 @@ const LogoutModal = () => {
   return (
     <Container>
       <Row>
-        <Button className='w-25 ms-auto ' onClick={handleShow}>Logout</Button>
+        <Button className="w-25 ms-auto " onClick={handleShow}>
+          Logout
+        </Button>
         <Modal
           show={show}
           onHide={handleClose}

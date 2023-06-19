@@ -1,15 +1,14 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 
-const DeleteCoopStaff = ({ coopStaff, onClose, onCoopStaffDelete }) => {
+const DeleteCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
   let token = localStorage.getItem('token');
-  console.log(token);
 
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:8000/api/coopstaffs/${coopStaff.id}`,
+        `https://s3.syntradeveloper.be/bisurularavel/api/coopstaffs/${coopStaff}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -19,14 +18,18 @@ const DeleteCoopStaff = ({ coopStaff, onClose, onCoopStaffDelete }) => {
         }
       );
 
-      console.log(response.data);
-      onCoopStaffDelete(coopStaff); // Silinen veriyi tablodan kaldır
+ 
+      //onCoopStaffDelete(coopStaff); // Silinen veriyi tablodan kaldır
       onClose(); // Kapatma işlemini çağır
+      if (response.statusText == 'OK') {
+        onSubmit(response.statusText);
+      } else {
+        onSubmit(response);
+      }
     } catch (error) {
       console.error(error);
     }
   };
-
   return (
     <Modal show={true} onHide={onClose}>
       <Modal.Header closeButton>
@@ -45,6 +48,13 @@ const DeleteCoopStaff = ({ coopStaff, onClose, onCoopStaffDelete }) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+DeleteCoopStaff.propTypes = {
+  coopStaff: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onCoopStaffDelete: PropTypes.func.isRequired,
 };
 
 export default DeleteCoopStaff;

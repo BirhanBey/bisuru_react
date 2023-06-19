@@ -3,10 +3,11 @@ import { useState } from 'react';
 import axios from 'axios';
 
 function LoginPage() {
-  let userInfo = localStorage.getItem('userInfo') ? localStorage.getItem('userInfo') : 'guest';  
+  let userInfo = localStorage.getItem('userInfo')
+    ? localStorage.getItem('userInfo')
+    : 'guest';
   let token = localStorage.getItem('token');
   const isLoggedIn = useState(null);
-
 
   const handleLogin = async (email, password) => {
     // Login işlemini gerçekleştir ve gerekli API çağrılarını yap
@@ -14,7 +15,7 @@ function LoginPage() {
       .request({
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:8000/api/login',
+        url: 'https://s3.syntradeveloper.be/bisurularavel/api/login',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -23,19 +24,20 @@ function LoginPage() {
       })
       .then((response) => {
         userInfo = response.data.adminInfo.roles[0].title;
-        localStorage.setItem('userInfo', response.data.adminInfo.roles[0].title);
+        localStorage.setItem(
+          'userInfo',
+          response.data.adminInfo.roles[0].title
+        );
 
-        
         localStorage.setItem('token', response.data.token);
         // if (userInfo == 'SuperUser') {
-          window.location.href = '/adminpanel';
-        // } 
+        window.location.href = '/adminpanel';
+        // }
         // else if (userInfo == 'Customer') {
         //   window.location.href = '/cooperativescontrol';
         // }else if (userInfo == 'farmers') {
         //   window.location.href = '/cooperativescontrol';
         // }
-        
       })
       .catch((error) => {
         console.error('Login Error:', error);
