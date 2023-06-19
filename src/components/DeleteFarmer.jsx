@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 
-const DeleteCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
+const DeleteFarmer = ({ onSubmit, farmer, onClose }) => {
   let token = localStorage.getItem('token');
-
-  const handleDelete = async () => {
+console.log(farmer);
+  const handleFarmerDelete = async () => {
     try {
       const response = await axios.delete(
-        `https://s3.syntradeveloper.be/bisurularavel/api/coopstaffs/${coopStaff}`,
+        `https://s3.syntradeveloper.be/bisurularavel/api/farmers/${farmer}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -23,7 +23,7 @@ const DeleteCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
       onClose(); // Kapatma işlemini çağır
       if (response.status == '200') {
         onSubmit('OK');
-        console.log(response.statusText);
+        console.log(response.status);
       } else {
         onSubmit(response);
       }
@@ -34,16 +34,16 @@ const DeleteCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
   return (
     <Modal show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Delete Cooperative Staff</Modal.Title>
+        <Modal.Title>Delete Farmer</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Are you sure you want to delete this cooperative staff?</p>
+        <p>Are you sure you want to delete this farmer?</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
           Close
         </Button>
-        <Button variant="danger" onClick={handleDelete}>
+        <Button variant="danger" onClick={handleFarmerDelete}>
           Delete
         </Button>
       </Modal.Footer>
@@ -51,11 +51,11 @@ const DeleteCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
   );
 };
 
-DeleteCoopStaff.propTypes = {
-  coopStaff: PropTypes.func.isRequired,
+DeleteFarmer.propTypes = {
+  farmer: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   // onCoopStaffDelete: PropTypes.func.isRequired,
 };
 
-export default DeleteCoopStaff;
+export default DeleteFarmer;

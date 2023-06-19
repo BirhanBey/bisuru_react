@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Table, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 import CoopStaffDetail from './CoopStaffDetail'; // Eğer CoopStaffDetail bileşeni başka bir dosyada bulunuyorsa import edin
+import FarmerDetail from './FarmerDetail';
 
 const CooperativesControl = () => {
   const [allCooperatives, setAllCooperatives] = useState([]);
   const [showCoopStaffDetail, setShowCoopStaffDetail] = useState(false); // Yeni bileşenin açılıp açılmayacağını kontrol etmek için bir durum kullanın
   const [selectedCooperative, setSelectedCooperative] = useState(null); // Seçilen kooperatifin bilgilerini saklamak için bir durum kullanın
-
+  const [showFarmersDetail, setShowFarmersDetail] = useState(false);
   let token = localStorage.getItem('token');
   // console.log(allCooperatives);
 
@@ -36,8 +37,14 @@ const CooperativesControl = () => {
     setShowCoopStaffDetail(!showCoopStaffDetail); // "Cooperative Staff" seçeneğine tıklandığında yeni bileşeni aç/kapat
   };
 
+  const handleFarmersClick = (cooperative) => {
+    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
+    setShowFarmersDetail(!showFarmersDetail); // "Farmers" seçeneğine tıklandığında yeni bileşeni aç/kapat
+  };
+
   const handleClose = () => {
     setShowCoopStaffDetail(false);
+    setShowFarmersDetail(false);
   };
   return (
     <div>
@@ -77,7 +84,11 @@ const CooperativesControl = () => {
                       >
                         Cooperative Staff
                       </Dropdown.Item>
-                      <Dropdown.Item>Farmers</Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => handleFarmersClick(cooperative)}
+                      >
+                        Farmers
+                      </Dropdown.Item>
                       <Dropdown.Item>Farms</Dropdown.Item>
                       {/* Diğer özelliklerinizi burada listeye ekleyebilirsin */}
                     </Dropdown.Menu>
@@ -89,7 +100,16 @@ const CooperativesControl = () => {
         </tbody>
       </Table>
       {showCoopStaffDetail && selectedCooperative && (
-        <CoopStaffDetail cooperative={selectedCooperative} onClose={handleClose} />
+        <CoopStaffDetail
+          cooperative={selectedCooperative}
+          onClose={handleClose}
+        />
+      )}
+      {showFarmersDetail && selectedCooperative && (
+        <FarmerDetail
+          cooperative={selectedCooperative}
+          onClose={handleClose}
+        />
       )}
     </div>
   );

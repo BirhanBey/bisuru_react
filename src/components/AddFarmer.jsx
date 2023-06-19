@@ -1,26 +1,31 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
-const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
-  const [editedCoopStaff, setEditedCoopStaff] = useState(coopStaff);
+const AddFarmer = ({ onSubmit, coopID, onClose }) => {
+  const [addedFarmer, setAddedFarmer] = useState('');
   const token = localStorage.getItem('token');
-  const coopstaff = coopStaff;
+  useEffect(() => {
+    setAddedFarmer({ ['cooperatives_id']: coopID });
+  }, []);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setEditedCoopStaff((prevState) => ({
+  const handleFarmerInputChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    const newValue = type === 'checkbox' ? (checked ? 1 : 0) : value;
+    setAddedFarmer((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: newValue,
     }));
   };
 
-  const handleSubmit = async () => {
+  const handleFarmerSubmit = async () => {
+    console.log(addedFarmer);
     try {
-      const response =await axios.put(
-        `https://s3.syntradeveloper.be/bisurularavel/api/coopstaffs/${coopstaff.id}`,
-        editedCoopStaff,
+      const response = await axios.post(
+        `https://s3.syntradeveloper.be/bisurularavel/api/farmers`,
+        addedFarmer,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -28,11 +33,11 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
         }
       );
       onClose(); // Modalı kapat
-
+      // console.log(response.data);
       // Güncellenmiş verileri tabloya yansıt
       onClose(); // Kapatma işlemini çağır
-      if (response.status == '200') {
-        onSubmit("OK");
+      if (response.status == '201') {
+        onSubmit('OK');
       } else {
         onSubmit(response);
       }
@@ -45,7 +50,7 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
   return (
     <Modal show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Update Cooperative Staff</Modal.Title>
+        <Modal.Title>Add Farmer</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form>
@@ -55,8 +60,8 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
               <input
                 type="text"
                 name="name"
-                value={editedCoopStaff.name}
-                onChange={handleInputChange}
+                value={addedFarmer.name}
+                onChange={handleFarmerInputChange}
               />
             </label>
           </div>
@@ -66,8 +71,8 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
               <input
                 type="text"
                 name="surname"
-                value={editedCoopStaff.surname}
-                onChange={handleInputChange}
+                value={addedFarmer.surname}
+                onChange={handleFarmerInputChange}
               />
             </label>
           </div>
@@ -77,8 +82,8 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
               <input
                 type="text"
                 name="address"
-                value={editedCoopStaff.address}
-                onChange={handleInputChange}
+                value={addedFarmer.address}
+                onChange={handleFarmerInputChange}
               />
             </label>
           </div>
@@ -88,8 +93,8 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
               <input
                 type="text"
                 name="phoneNumber"
-                value={editedCoopStaff.phoneNumber}
-                onChange={handleInputChange}
+                value={addedFarmer.phoneNumber}
+                onChange={handleFarmerInputChange}
               />
             </label>
           </div>
@@ -99,8 +104,8 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
               <input
                 type="checkbox"
                 name="status"
-                checked={editedCoopStaff.status}
-                onChange={handleInputChange}
+                checked={addedFarmer.status}
+                onChange={handleFarmerInputChange}
               />
             </label>
           </div>
@@ -110,8 +115,8 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
               <input
                 type="text"
                 name="dateOfBirth"
-                value={editedCoopStaff.dateOfBirth}
-                onChange={handleInputChange}
+                value={addedFarmer.dateOfBirth}
+                onChange={handleFarmerInputChange}
               />
             </label>
           </div>
@@ -121,9 +126,8 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
               <input
                 type="text"
                 name="identityNumber"
-                value={editedCoopStaff.identityNumber}
-                onChange={handleInputChange}
-                disabled
+                value={addedFarmer.identityNumber}
+                onChange={handleFarmerInputChange}
               />
             </label>
           </div>
@@ -133,9 +137,8 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
               <input
                 type="text"
                 name="placeOfBirth"
-                value={editedCoopStaff.placeOfBirth}
-                onChange={handleInputChange}
-                disabled
+                value={addedFarmer.placeOfBirth}
+                onChange={handleFarmerInputChange}
               />
             </label>
           </div>
@@ -145,7 +148,7 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
         <Button variant="secondary" onClick={onClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button variant="primary" onClick={handleFarmerSubmit}>
           Save Changes
         </Button>
       </Modal.Footer>
@@ -153,11 +156,10 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
   );
 };
 
-UpdateCoopStaff.propTypes = {
-    coopStaff: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
+AddFarmer.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  coopID: propTypes.string,
+  onSubmit: PropTypes.func.isRequired,
 };
 
-
-export default UpdateCoopStaff;
+export default AddFarmer;

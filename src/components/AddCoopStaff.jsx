@@ -4,12 +4,13 @@ import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
-const AddCoopStaff = ({ onSubmit,coopID, onClose, onCoopStaffAdd }) => {
+const AddCoopStaff = ({ onSubmit, coopID, onClose }) => {
   const [addedCoopStaff, setAddedCoopStaff] = useState('');
   const token = localStorage.getItem('token');
   useEffect(() => {
     setAddedCoopStaff({ ['cooperatives_id']: coopID });
   }, []);
+
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
     const newValue = type === 'checkbox' ? (checked ? 1 : 0) : value;
@@ -152,9 +153,9 @@ const AddCoopStaff = ({ onSubmit,coopID, onClose, onCoopStaffAdd }) => {
 };
 
 AddCoopStaff.propTypes = {
-  onCoopStaffAdd: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   coopID: propTypes.string,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default AddCoopStaff;

@@ -5,7 +5,7 @@ import axios from 'axios';
 const CoopStaffController = () => {
   const [allCoopStaff, setAllCoopStaff] = useState([]);
   let token = localStorage.getItem('token');
-    console.log(allCoopStaff);
+    // console.log(allCoopStaff);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -2,52 +2,52 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import axios from 'axios';
-import UpdateCoopStaff from './UpdateCoopStaff';
-import DeleteCoopStaff from './DeleteCoopStaff';
-import AddCoopStaff from './AddCoopStaff'; // Ekledik
+import UpdateFarmer from './UpdateFarmer';
+import DeleteFarmer from './DeleteFarmer';
+import AddFarmer from './AddFarmer'; // Ekledik
 
-const CoopStaffDetail = ({ cooperative, onClose }) => {
+const FarmersDetail = ({ cooperative, onClose }) => {
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isAddModalOpen, setAddModalOpen] = useState(false); // Ekledik
-  const [selectedCoopStaff, setSelectedCoopStaff] = useState(null);
-  const [coopData, setCoopData] = useState(cooperative.cooperative_staffs);
+  const [selectedFarmer, setSelectedFarmer] = useState(null);
+  const [farmerData, setFarmerData] = useState(cooperative.farmers);
   let token = localStorage.getItem('token');
-
-  const handleUpdateClick = (coopstaff) => {
-    setSelectedCoopStaff(coopstaff);
+  // console.log(cooperative);
+  const handleFarmerUpdateClick = (farmers) => {
+    setSelectedFarmer(farmers);
     setUpdateModalOpen(true);
   };
 
-  const handleDeleteClick = (coopstaff) => {
-    setSelectedCoopStaff(coopstaff);
+  const handleDeleteClick = (farmers) => {
+    setSelectedFarmer(farmers);
     setDeleteModalOpen(true);
   };
 
-  const handleAddClick = () => {
+  const handleAddFarmerClick = () => {
     // Ekledik
     setAddModalOpen(true);
   };
 
-  const handleCoopStaffUpdate = (updatedCooperative) => {
-    const staffs = cooperative.cooperative_staffs;
-    const updatedCoopStaffList = staffs.map((coopstaff) => {
-      if (coopstaff.id === updatedCooperative.id) {
+  const handleFarmersUpdate = (updatedCooperative) => {
+    const farmers = cooperative.farmers;
+    const updatedFarmersList = farmers.map((farmer) => {
+      if (farmer.id === updatedCooperative.id) {
         return updatedCooperative;
       }
-      return coopstaff;
+      return farmer;
     });
-    setCoopStaff((prevState) => ({
+    setFarmer((prevState) => ({
       ...prevState,
-      cooperative_staffs: updatedCoopStaffList,
+      farmers: updatedFarmersList,
     }));
   };
 
-  const handleCoopStaffAdd = async (newCoopStaff) => {
+  const handleFarmerAdd = async (newFarmer) => {
     try {
       const response = await axios.post(
-        'https://s3.syntradeveloper.be/bisurularavel/api/coopstaffs/',
-        newCoopStaff,
+        'https://s3.syntradeveloper.be/bisurularavel/api/farmers/',
+        newFarmer,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -55,12 +55,12 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
         }
       );
 
-      const addedCoopStaff = response.data;
+      const addedFarmer = response.data;
 
       // Yeni iş birimi personelini tabloya ekleme
-      setCoopStaff((prevState) => ({
+      setFarmer((prevState) => ({
         ...prevState,
-        cooperative_staffs: [...prevState.cooperative_staffs, addedCoopStaff],
+        farmers: [...prevState.farmers, addedFarmer],
       }));
 
       onClose(); // Modalı kapat
@@ -70,11 +70,6 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
     }
   };
 
-  // //newfuncts
-  // const openModal = () => {
-  //   setDeleteModalOpen(true);
-  // };
-
   const closeModal = () => {
     setDeleteModalOpen(false);
   };
@@ -82,14 +77,14 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
     if (data == 'OK') {
       try {
         const response = await axios.get(
-          `https://s3.syntradeveloper.be/bisurularavel/api/cooperative/${cooperative.id}/staff`,
+          `https://s3.syntradeveloper.be/bisurularavel/api/cooperative/${cooperative.id}/farmers`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        setCoopData(response.data.cooperative_staffs);
+        setFarmerData(response.data.farmers);
       } catch (error) {
         console.error('Request Error:', error);
       }
@@ -101,13 +96,13 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
   return (
     <>
       <div className="d-flex justify-content-between">
-        <h2 className="ms-5">{cooperative.name} Staff Detail</h2>
+        <h2 className="ms-5"> Farmers Detail</h2>
         <button className="btn btn-danger" onClick={onClose}>
           X
         </button>
       </div>
-      <Button variant="primary" onClick={handleAddClick}>
-        Add Staff
+      <Button variant="primary" onClick={handleAddFarmerClick}>
+        Add Farmer
       </Button>{' '}
       {/* Ekledik */}
       <Table striped bordered hover>
@@ -127,23 +122,23 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
           </tr>
         </thead>
         <tbody>
-          {coopData.map((coopstaff) => (
-            <tr id={coopstaff.id} key={coopstaff.id}>
-              <td>{coopstaff.id}</td>
-              <td>{coopstaff.cooperatives_id}</td>
-              <td>{coopstaff.name}</td>
-              <td>{coopstaff.surname}</td>
-              <td>{coopstaff.address}</td>
-              <td>{coopstaff.phoneNumber}</td>
-              <td>{coopstaff.status ? 'Active' : 'Inactive'}</td>
-              <td>{coopstaff.dateOfBirth}</td>
-              <td>{coopstaff.identityNumber}</td>
-              <td>{coopstaff.placeOfBirth}</td>
+          {farmerData.map((farmer) => (
+            <tr id={farmer.id} key={farmer.id}>
+              <td>{farmer.id}</td>
+              <td>{farmer.cooperatives_id}</td>
+              <td>{farmer.name}</td>
+              <td>{farmer.surname}</td>
+              <td>{farmer.address}</td>
+              <td>{farmer.phoneNumber}</td>
+              <td>{farmer.status ? 'Active' : 'Inactive'}</td>
+              <td>{farmer.dateOfBirth}</td>
+              <td>{farmer.identityNumber}</td>
+              <td>{farmer.placeOfBirth}</td>
               <td>
-                <Button onClick={() => handleUpdateClick(coopstaff)}>
+                <Button onClick={() => handleFarmerUpdateClick(farmer)}>
                   Update
                 </Button>
-                <Button onClick={() => handleDeleteClick(coopstaff.id)}>
+                <Button onClick={() => handleDeleteClick(farmer.id)}>
                   Delete
                 </Button>
               </td>
@@ -152,37 +147,36 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
         </tbody>
       </Table>
       {isUpdateModalOpen && (
-        <UpdateCoopStaff
-          coopStaff={selectedCoopStaff}
+        <UpdateFarmer
+          farmer={selectedFarmer}
           onClose={() => setUpdateModalOpen(false)}
           onSubmit={handleModalSubmit}
-          onCoopStaffUpdate={handleCoopStaffUpdate}
+          onFarmerUpdate={handleFarmersUpdate}
         />
       )}
       {isDeleteModalOpen && (
-        <DeleteCoopStaff
+        <DeleteFarmer
           onSubmit={handleModalSubmit}
-          coopStaff={selectedCoopStaff}
+          farmer={selectedFarmer}
           onClose={closeModal}
         />
       )}
       {isAddModalOpen && ( // Ekledik
-        <AddCoopStaff
-        
-            onSubmit={handleModalSubmit}
-            coopID={cooperative.id}
-          coopStaff={selectedCoopStaff}
+        <AddFarmer
+          onSubmit={handleModalSubmit}
+          coopID={cooperative.id}
+          farmer={selectedFarmer}
           onClose={() => setAddModalOpen(false)}
-          onCoopStaffAdd={handleCoopStaffAdd}
+          onFarmerAdd={handleFarmerAdd}
         />
       )}
     </>
   );
 };
 
-CoopStaffDetail.propTypes = {
+FarmersDetail.propTypes = {
   cooperative: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-export default CoopStaffDetail;
+export default FarmersDetail;
