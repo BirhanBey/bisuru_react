@@ -4,38 +4,39 @@ import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
-const AddFarmer = ({ onSubmit, coopID, onClose }) => {
-  const [addedFarmer, setAddedFarmer] = useState('');
+const AddFarm = ({ onSubmit, coopID, onClose }) => {
+  const [addedFarm, setAddedFarm] = useState('');
   const token = localStorage.getItem('token');
+  console.log(addedFarm);
   useEffect(() => {
-    setAddedFarmer({ ['cooperatives_id']: coopID });
-  }, []);
+    setAddedFarm({ ['cooperatives_id']: coopID });
+  }, [coopID]);
 
-  const handleFarmerInputChange = (event) => {
+  const handleFarmInputChange = (event) => {
     const { name, value, type, checked } = event.target;
     const newValue = type === 'checkbox' ? (checked ? 1 : 0) : value;
-    setAddedFarmer((prevState) => ({
+    setAddedFarm((prevState) => ({
       ...prevState,
       [name]: newValue,
     }));
   };
 
-  const handleFarmerSubmit = async () => {
-    console.log(addedFarmer);
+  const handleFarmSubmit = async () => {
+    // console.log(addedFarm);
     try {
       const response = await axios.post(
-        `https://s3.syntradeveloper.be/bisurularavel/api/farmers`,
-        addedFarmer,
+        `https://s3.syntradeveloper.be/bisurularavel/api/farms`,
+        addedFarm,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'Application/json',
+            Accept: 'Application/json',
           },
         }
       );
-      onClose(); // Modalı kapat
-      // console.log(response.data);
-      // Güncellenmiş verileri tabloya yansıt
-      onClose(); // Kapatma işlemini çağır
+      onClose(); 
+
       if (response.status == '201') {
         onSubmit('OK');
       } else {
@@ -50,29 +51,29 @@ const AddFarmer = ({ onSubmit, coopID, onClose }) => {
   return (
     <Modal show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Add Farmer</Modal.Title>
+        <Modal.Title>Add Farm</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form>
           <div>
             <label>
-              Name:
+              Farmer Id:
               <input
                 type="text"
-                name="name"
-                value={addedFarmer.name}
-                onChange={handleFarmerInputChange}
+                name="farmers_id"
+                value={addedFarm.farmers_id}
+                onChange={handleFarmInputChange}
               />
             </label>
           </div>
           <div>
             <label>
-              Surname:
+              Cooperative Id:
               <input
                 type="text"
-                name="surname"
-                value={addedFarmer.surname}
-                onChange={handleFarmerInputChange}
+                name="cooperatives_id"
+                value={addedFarm.cooperatives_id}
+                onChange={handleFarmInputChange}
               />
             </label>
           </div>
@@ -82,8 +83,8 @@ const AddFarmer = ({ onSubmit, coopID, onClose }) => {
               <input
                 type="text"
                 name="address"
-                value={addedFarmer.address}
-                onChange={handleFarmerInputChange}
+                value={addedFarm.address}
+                onChange={handleFarmInputChange}
               />
             </label>
           </div>
@@ -93,30 +94,52 @@ const AddFarmer = ({ onSubmit, coopID, onClose }) => {
               <input
                 type="text"
                 name="phoneNumber"
-                value={addedFarmer.phoneNumber}
-                onChange={handleFarmerInputChange}
+                value={addedFarm.phoneNumber}
+                onChange={handleFarmInputChange}
               />
             </label>
           </div>
           <div>
             <label>
-              Status:
-              <input
-                type="checkbox"
-                name="status"
-                checked={addedFarmer.status}
-                onChange={handleFarmerInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Date of Birth:
+              Latitude:
               <input
                 type="text"
-                name="dateOfBirth"
-                value={addedFarmer.dateOfBirth}
-                onChange={handleFarmerInputChange}
+                name="latitude"
+                value={addedFarm.latitude}
+                onChange={handleFarmInputChange}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Longitude:
+              <input
+                type="text"
+                name="longitude"
+                value={addedFarm.longitude}
+                onChange={handleFarmInputChange}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Surface Area:
+              <input
+                type="text"
+                name="surfaceArea"
+                value={addedFarm.surfaceArea}
+                onChange={handleFarmInputChange}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              City:
+              <input
+                type="text"
+                name="placeOfBirth"
+                value={addedFarm.placeOfBirth}
+                onChange={handleFarmInputChange}
               />
             </label>
           </div>
@@ -126,19 +149,19 @@ const AddFarmer = ({ onSubmit, coopID, onClose }) => {
               <input
                 type="text"
                 name="identityNumber"
-                value={addedFarmer.identityNumber}
-                onChange={handleFarmerInputChange}
+                value={addedFarm.identityNumber}
+                onChange={handleFarmInputChange}
               />
             </label>
           </div>
           <div>
             <label>
-              Place of Birth:
+              Status:
               <input
-                type="text"
-                name="placeOfBirth"
-                value={addedFarmer.placeOfBirth}
-                onChange={handleFarmerInputChange}
+                type="checkbox"
+                name="status"
+                checked={addedFarm.status}
+                onChange={handleFarmInputChange}
               />
             </label>
           </div>
@@ -148,7 +171,7 @@ const AddFarmer = ({ onSubmit, coopID, onClose }) => {
         <Button variant="secondary" onClick={onClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleFarmerSubmit}>
+        <Button variant="primary" onClick={handleFarmSubmit}>
           Save Changes
         </Button>
       </Modal.Footer>
@@ -156,10 +179,10 @@ const AddFarmer = ({ onSubmit, coopID, onClose }) => {
   );
 };
 
-AddFarmer.propTypes = {
+AddFarm.propTypes = {
   onClose: PropTypes.func.isRequired,
   coopID: propTypes.string,
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default AddFarmer;
+export default AddFarm;

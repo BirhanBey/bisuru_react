@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
-import CoopStaffDetail from './CoopStaffDetail'; // Eğer CoopStaffDetail bileşeni başka bir dosyada bulunuyorsa import edin
-import FarmerDetail from './FarmerDetail';
+import CoopStaffDetail from './Cooperatives/CoopStaffREQ/CoopStaffDetail'; // Eğer CoopStaffDetail bileşeni başka bir dosyada bulunuyorsa import edin
+import FarmerDetail from './Cooperatives/FarmersREQ/FarmerDetail';
+import FarmDetail from './Cooperatives/FarmsREQ/FarmDetail';
+import FarmStaffDetail from './Cooperatives/FarmStaffREQ/FarmStaffDetail';
 
 const CooperativesControl = () => {
   const [allCooperatives, setAllCooperatives] = useState([]);
   const [showCoopStaffDetail, setShowCoopStaffDetail] = useState(false); // Yeni bileşenin açılıp açılmayacağını kontrol etmek için bir durum kullanın
   const [selectedCooperative, setSelectedCooperative] = useState(null); // Seçilen kooperatifin bilgilerini saklamak için bir durum kullanın
   const [showFarmersDetail, setShowFarmersDetail] = useState(false);
+  const [showFarmsDetail, setShowFarmsDetail] = useState(false);
+  const [showFarmStaffDetail, setShowFarmStaffDetail] = useState(false);
   let token = localStorage.getItem('token');
   // console.log(allCooperatives);
 
@@ -42,9 +46,20 @@ const CooperativesControl = () => {
     setShowFarmersDetail(!showFarmersDetail); // "Farmers" seçeneğine tıklandığında yeni bileşeni aç/kapat
   };
 
+  const handleFarmsClick = (cooperative) => {
+    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
+    setShowFarmsDetail(!showFarmsDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+  };
+  const handleFarmStaffClick = (cooperative) => {
+    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
+    setShowFarmStaffDetail(!showFarmStaffDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+  };
+
   const handleClose = () => {
     setShowCoopStaffDetail(false);
     setShowFarmersDetail(false);
+    setShowFarmsDetail(false);
+    setShowFarmStaffDetail(false);
   };
   return (
     <div>
@@ -89,8 +104,16 @@ const CooperativesControl = () => {
                       >
                         Farmers
                       </Dropdown.Item>
-                      <Dropdown.Item>Farms</Dropdown.Item>
-                      {/* Diğer özelliklerinizi burada listeye ekleyebilirsin */}
+                      <Dropdown.Item
+                        onClick={() => handleFarmsClick(cooperative)}
+                      >
+                        Farms
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => handleFarmStaffClick(cooperative)}
+                      >
+                        Farm Staff
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
@@ -106,7 +129,13 @@ const CooperativesControl = () => {
         />
       )}
       {showFarmersDetail && selectedCooperative && (
-        <FarmerDetail
+        <FarmerDetail cooperative={selectedCooperative} onClose={handleClose} />
+      )}
+      {showFarmsDetail && selectedCooperative && (
+        <FarmDetail cooperative={selectedCooperative} onClose={handleClose} />
+      )}
+      {showFarmStaffDetail && selectedCooperative && (
+        <FarmStaffDetail
           cooperative={selectedCooperative}
           onClose={handleClose}
         />

@@ -5,7 +5,7 @@ import axios from 'axios';
 const FarmController = () => {
   const [allFarms, setAllFarms] = useState([]);
   let token = localStorage.getItem('token');
-    console.log(allFarms);
+    // console.log(allFarms);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +63,6 @@ const FarmController = () => {
                     <Dropdown.Menu>
                       <Dropdown.Item>Farm Staff</Dropdown.Item>
                       
-                      {/* Diğer özelliklerinizi burada listeye ekleyebilirsin */}
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>

@@ -4,10 +4,10 @@ import LogoutModal from './components/LogoutModal';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import CooperativesControl from './components/CooperativesControl';
 import AdminControl from './components/AdminControl';
-import FarmerController from './components/FarmerController';
-import FarmController from './components/FarmController';
-import FarmStaffController from './components/FarmStaffController';
-import CoopStaffController from './components/CoopStaffController';
+import FarmerController from './components/Cooperatives/FarmersREQ/FarmerController';
+import FarmController from './components/Cooperatives/FarmsREQ/FarmController';
+import FarmStaffController from './components/Cooperatives/FarmStaffREQ/FarmStaffController';
+import CoopStaffController from './components/Cooperatives/CoopStaffREQ/CoopStaffController';
 import AnimalController from './components/AnimalController';
 
 function AdminPanel() {

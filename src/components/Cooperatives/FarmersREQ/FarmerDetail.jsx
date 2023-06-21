@@ -13,7 +13,7 @@ const FarmersDetail = ({ cooperative, onClose }) => {
   const [selectedFarmer, setSelectedFarmer] = useState(null);
   const [farmerData, setFarmerData] = useState(cooperative.farmers);
   let token = localStorage.getItem('token');
-  // console.log(cooperative);
+  console.log(cooperative);
   const handleFarmerUpdateClick = (farmers) => {
     setSelectedFarmer(farmers);
     setUpdateModalOpen(true);
@@ -37,7 +37,7 @@ const FarmersDetail = ({ cooperative, onClose }) => {
       }
       return farmer;
     });
-    setFarmer((prevState) => ({
+    setFarmerData((prevState) => ({
       ...prevState,
       farmers: updatedFarmersList,
     }));
@@ -58,7 +58,7 @@ const FarmersDetail = ({ cooperative, onClose }) => {
       const addedFarmer = response.data;
 
       // Yeni iş birimi personelini tabloya ekleme
-      setFarmer((prevState) => ({
+      setFarmerData((prevState) => ({
         ...prevState,
         farmers: [...prevState.farmers, addedFarmer],
       }));
