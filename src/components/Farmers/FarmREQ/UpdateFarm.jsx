@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Dropdown  } from 'react-bootstrap';
 import axios from 'axios';
 
 const UpdateFarm = ({ onSubmit, farm, onClose }) => {
@@ -16,6 +16,14 @@ const UpdateFarm = ({ onSubmit, farm, onClose }) => {
     }));
   };
 
+  const handleStatusChange = (eventKey) => {
+    const newStatus = parseInt(eventKey, 10); // Seçilen değeri tamsayıya çeviriyoruz
+    setEditedFarm((prevFarm) => ({
+      ...prevFarm,
+      status: newStatus,
+    }));
+  };
+
   const handleSubmit = async () => {
     try {
       const response = await axios.put(
@@ -27,11 +35,11 @@ const UpdateFarm = ({ onSubmit, farm, onClose }) => {
           },
         }
       );
-  
+
       onClose(); // Modalı kapat
-  
+
       if (response.status === 200) {
-        onSubmit("OK");
+        onSubmit('OK');
       } else {
         onSubmit(response);
       }
@@ -83,7 +91,7 @@ const UpdateFarm = ({ onSubmit, farm, onClose }) => {
           </div>
           <div>
             <label>
-            Longitude:
+              Longitude:
               <input
                 type="text"
                 name="longitude"
@@ -137,15 +145,16 @@ const UpdateFarm = ({ onSubmit, farm, onClose }) => {
             </label>
           </div>
           <div>
-            <label>
-              Status:
-              <input
-                type="checkbox"
-                name="status"
-                checked={editedFarm.status}
-                onChange={handleInputChange}
-              />
-            </label>
+            <label>Status:</label>
+            <Dropdown onSelect={handleStatusChange}>
+              <Dropdown.Toggle variant="secondary" id="status-dropdown">
+                {editedFarm.status === 1 ? 'Active' : 'Inactive'}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
+                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </form>
       </Modal.Body>
@@ -162,10 +171,9 @@ const UpdateFarm = ({ onSubmit, farm, onClose }) => {
 };
 
 UpdateFarm.propTypes = {
-    farm: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
+  farm: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
-
 
 export default UpdateFarm;

@@ -70,26 +70,26 @@ const FarmDetail = ({ farmer, onClose }) => {
           </tr>
         </thead>
         <tbody>
-          {farmData.map((farm) =>           
-              <tr id={farm.id} key={farm.id}>
-                <td>{farm.id}</td>
-                <td>{farm.cooperatives_id}</td>
-                <td>{farm.farmers_id}</td>
-                <td>{farm.address}</td>
-                <td>{farm.phoneNumber}</td>
-                <td>{farm.latitude}</td>
-                <td>{farm.longitude}</td>
-                <td>{farm.surfaceArea}</td>
-                <td>{farm.placeOfBirth}</td>
-                <td>{farm.identityNumber}</td>
-                <td>{farm.status ? 'Active' : 'Inactive'}</td>
-                <td>
-                  <Button onClick={() => handleFarmUpdateClick(farm)}>
-                    Update
-                  </Button>
-                </td>
-              </tr>            
-          )}
+          {farmData.map((farm) => (
+            <tr id={farm.id} key={farm.id}>
+              <td>{farm.id}</td>
+              <td>{farm.cooperatives_id}</td>
+              <td>{farm.farmers_id}</td>
+              <td>{farm.address}</td>
+              <td>{farm.phoneNumber}</td>
+              <td>{farm.latitude}</td>
+              <td>{farm.longitude}</td>
+              <td>{farm.surfaceArea}</td>
+              <td>{farm.placeOfBirth}</td>
+              <td>{farm.identityNumber}</td>
+              <td>{farm.status ? 'Active' : 'Inactive'}</td>
+              <td>
+                <Button onClick={() => handleFarmUpdateClick(farm)}>
+                  Update
+                </Button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </Table>
       {isUpdateModalOpen && (

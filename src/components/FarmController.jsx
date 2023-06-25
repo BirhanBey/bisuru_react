@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Dropdown  } from 'react-bootstrap';
+import { Table, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
+import FarmStaffDetail from './Farms/FarmStaffREQ/FarmStaffDetail';
+import AnimalDetail from './Farms/AnimalREQ/AnimalDetail';
 
 const FarmController = () => {
   const [allFarms, setAllFarms] = useState([]);
+  const [selectedFarm, setSelectedFarm] = useState(null);
+  const [showFarmStaffDetail, setShowFarmStaffDetail] = useState(false);
+  const [showAnimalsDetail, setShowAnimalsDetail] = useState(false);
   let token = localStorage.getItem('token');
-    // console.log(allFarms);
+  // console.log(allFarms);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://s3.syntradeveloper.be/bisurularavel/api/farms', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          'https://s3.syntradeveloper.be/bisurularavel/api/farms',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setAllFarms(response.data);
       } catch (error) {
         console.error('Request Error:', error);
@@ -24,8 +32,22 @@ const FarmController = () => {
     fetchData();
   }, [token]);
 
+  const handleFarmStaffClick = (farm) => {
+    setSelectedFarm(farm); // Seçilen kooperatifin bilgilerini ayarla
+    setShowFarmStaffDetail(!showFarmStaffDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+  };
+  const handleAnimalsClick = (farm) => {
+    setSelectedFarm(farm); // Seçilen kooperatifin bilgilerini ayarla
+    setShowAnimalsDetail(!showAnimalsDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+  };
+
+  const handleClose = () => {
+    setShowFarmStaffDetail(false);
+    setShowAnimalsDetail(false);
+  };
+
   return (
-<div>
+    <div>
       <h1>Farm Panel</h1>
       <Table striped bordered hover>
         <thead>
@@ -61,18 +83,30 @@ const FarmController = () => {
                       View Details
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item>Farm Staff</Dropdown.Item>
-                      
+                      <Dropdown.Item onClick={() => handleFarmStaffClick(farm)}>
+                        Farm Staff
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleAnimalsClick(farm)}>
+                        Animals
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
               </tr>
-              <tr>
-              </tr>
+              <tr></tr>
             </React.Fragment>
           ))}
         </tbody>
       </Table>
+      {showFarmStaffDetail && selectedFarm && (
+        <FarmStaffDetail
+          farm={selectedFarm}
+          onClose={handleClose}
+        />
+      )}
+      {showAnimalsDetail && selectedFarm && (
+        <AnimalDetail farm={selectedFarm} onClose={handleClose} />
+      )}
     </div>
   );
 };

@@ -4,13 +4,13 @@ import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
-const AddFarmStaff = ({ onSubmit, farmerID, onClose }) => {
+const AddFarmStaff = ({ onSubmit, farmID, onClose }) => {
   const [addedFarmStaff, setAddedFarmStaff] = useState('');
   console.log(addedFarmStaff);
   const token = localStorage.getItem('token');
   useEffect(() => {
-    setAddedFarmStaff({ ['farmer_id']: farmerID });
-  }, [farmerID]);
+    setAddedFarmStaff({ ['farms_id']: farmID });
+  }, [farmID]);
 
   const handleFarmStaffInputChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -22,7 +22,7 @@ const AddFarmStaff = ({ onSubmit, farmerID, onClose }) => {
   };
 
   const handleFarmStaffSubmit = async () => {
-    console.log(addedFarmStaff);
+    // console.log(addedFarmStaff);
     try {
       const response = await axios.post(
         `https://s3.syntradeveloper.be/bisurularavel/api/farmstaff`,
@@ -62,17 +62,6 @@ const AddFarmStaff = ({ onSubmit, farmerID, onClose }) => {
                 type="text"
                 name="farms_id"
                 value={addedFarmStaff.farms_id}
-                onChange={handleFarmStaffInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Farmer Id:
-              <input
-                type="text"
-                name="farmer_id"
-                value={addedFarmStaff.farmer_id}
                 onChange={handleFarmStaffInputChange}
                 disabled
               />
@@ -172,7 +161,7 @@ const AddFarmStaff = ({ onSubmit, farmerID, onClose }) => {
 
 AddFarmStaff.propTypes = {
   onClose: PropTypes.func.isRequired,
-  farmerID: propTypes.string,
+  farmID: propTypes.string,
   onSubmit: PropTypes.func.isRequired,
 };
 

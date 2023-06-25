@@ -7,15 +7,14 @@ import AddFarmStaff from './AddFarmStaff';
 import DeleteFarmStaff from './DeleteFarmStaff';
 import { FarmStaffDataRefresh } from '../FarmStaffDataRefresh';
 
-const FarmStaffDetail = ({ farmer, onClose }) => {
+const FarmStaffDetail = ({ farm, onClose }) => {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [selectedFarmStaff, setSelectedFarmStaff] = useState(null);
-  const [farmData, setFarmData] = useState(farmer.farms);
+  const [farmStaffData, setFarmStaffData] = useState(farm.farmstaff);
   let token = localStorage.getItem('token;')
-
-console.log(farmer);
+console.log(farm.farmstaff);
 
 const handleFarmStaffUpdateClick = (farmsStaff) => {
   setSelectedFarmStaff(farmsStaff);
@@ -28,18 +27,17 @@ const handleFarmStaffDeleteClick = (farmsStaff) => {
 };
 
 const handleAddFarmStaffClick = () => {
-  // Ekledik
   setAddModalOpen(true);
 };
-  const handleFarmStaffUpdate = (updatedFarmer) => {
-    const farms = farmer.farms;
-    const updatedFarmsList = farms.map((farm) => {
-      if (farm.id === updatedFarmer.id) {
-        return updatedFarmer;
+  const handleFarmStaffUpdate = (updatedFarm) => {
+    const farmsStaff = farm.farmsstaff;
+    const updatedFarmsList = farmsStaff.map((farm) => {
+      if (farm.id === updatedFarm.id) {
+        return updatedFarm;
       }
       return farm;
     });
-    setFarmData((prevState) => ({
+    setFarmStaffData((prevState) => ({
       ...prevState,
       farms: updatedFarmsList,
     }));
@@ -61,7 +59,7 @@ const handleAddFarmStaffClick = () => {
       const addedFarmStaff = response.data;
 
       // Yeni iş birimi personelini tabloya ekleme
-      setFarmData((prevState) => ({
+      setFarmStaffData((prevState) => ({
         ...prevState,
         farmsStaff: [...prevState.farmsStaff, addedFarmStaff],
       }));
@@ -80,10 +78,11 @@ const handleAddFarmStaffClick = () => {
   const handleModalSubmit = async (data) => {
     if (data == 'OK') {
       try {
-        const response = await FarmStaffDataRefresh(farmer);
+        const response = await FarmStaffDataRefresh(farm);
         //response.data.farmers.map((farmer) => console.log(farmer));
-        setFarmData(response.farms);
-        // console.log(farmer);
+        setFarmStaffData(response);
+        console.log(response);
+
       } catch (error) {
         console.error('Request Error:', error);
       }
@@ -121,8 +120,7 @@ const handleAddFarmStaffClick = () => {
           </tr>
         </thead>
         <tbody>
-        {farmData.map((farm) =>
-          farm.farmstaff.map((staff) => (
+        {farmStaffData.map((staff) =>
             <tr id={staff.id} key={staff.id}>
               <td>{staff.id}</td>
               {/* <td>{staff.cooperatives_id}</td> */}
@@ -143,8 +141,7 @@ const handleAddFarmStaffClick = () => {
                   Delete
                 </Button>
               </td>
-            </tr>
-          ))
+            </tr>          
         )}
         </tbody>
       </Table>
@@ -166,7 +163,7 @@ const handleAddFarmStaffClick = () => {
       {isAddModalOpen && ( // Ekledik
         <AddFarmStaff
           onSubmit={handleModalSubmit}
-          farmID={farmer.id}
+          farmID={farm.id}
           farmStaff={selectedFarmStaff}
           onClose={() => setAddModalOpen(false)}
           onFarmAdd={handleFarmStaffAdd}
@@ -177,7 +174,7 @@ const handleAddFarmStaffClick = () => {
 };
 
 FarmStaffDetail.propTypes = {
-  farmer: PropTypes.func.isRequired,
+  farm: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
