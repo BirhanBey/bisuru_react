@@ -1,42 +1,48 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
-const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
-  const [editedAnimal, setEditedAnimal] = useState(animal);
+const AddAnimal = ({ onSubmit, farmID, onClose }) => {
+  const [addedAnimal, setAddedAnimal] = useState('');
   const token = localStorage.getItem('token');
-  console.log(animal);
+  useEffect(() => {
+    setAddedAnimal({ ['farms_id']: farmID });
+  }, [farmID]);
+
   const handleAnimalInputChange = (event) => {
-    const { name, value } = event.target;
-    setEditedAnimal((prevState) => ({
+    const { name, value, type, checked } = event.target;
+    const newValue = type === 'checkbox' ? (checked ? 1 : 0) : value;
+    setAddedAnimal((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: newValue,
     }));
   };
 
   const handleAnimalSubmit = async () => {
     try {
-      const response = await axios.put(
-        `https://s3.syntradeveloper.be/bisurularavel/api/animals/${animal}`,
-        editedAnimal,
+      const response = await axios.post(
+        `https://s3.syntradeveloper.be/bisurularavel/api/animals`,
+        addedAnimal,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'Application/json',
+            Accept: 'Application/json',
           },
         }
-      );
+        );
 
-      onClose(); 
+      onClose();
 
-      if (response.status === 200) {
+      if (response.status == '201') {
         onSubmit('OK');
       } else {
         onSubmit(response);
       }
     } catch (error) {
       console.error('Request Error:', error);
-      // Handle error
     }
   };
 
@@ -53,7 +59,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
               <input
                 type="text"
                 name="farms_id"
-                value={editedAnimal.farm_id}
+                value={addedAnimal.farms_id}
                 onChange={handleAnimalInputChange}
                 disabled
               />
@@ -65,7 +71,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
               <input
                 type="text"
                 name="earing_number"
-                value={editedAnimal.earing_number}
+                value={addedAnimal.earing_number}
                 onChange={handleAnimalInputChange}
               />
             </label>
@@ -76,7 +82,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
               <input
                 type="text"
                 name="dateOfBirth"
-                value={editedAnimal.dateOfBirth}
+                value={addedAnimal.dateOfBirth}
                 onChange={handleAnimalInputChange}
               />
             </label>
@@ -87,7 +93,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
               <input
                 type="text"
                 name="dateOfLastBirthGiving"
-                value={editedAnimal.dateOfLastBirthGiving}
+                value={addedAnimal.dateOfLastBirthGiving}
                 onChange={handleAnimalInputChange}
               />
             </label>
@@ -98,7 +104,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
               <input
                 type="text"
                 name="birthNummber"
-                value={editedAnimal.birthNummber}
+                value={addedAnimal.birthNummber}
                 onChange={handleAnimalInputChange}
               />
             </label>
@@ -110,7 +116,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
               <input
                 type="checkbox"
                 name="lactaionStatus"
-                value={editedAnimal.lactaionStatus}
+                value={addedAnimal.lactaionStatus}
                 onChange={handleAnimalInputChange}
               />
             </label>
@@ -129,10 +135,10 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
   );
 };
 
-UpdateAnimal.propTypes = {
-  animal: PropTypes.func.isRequired,
+AddAnimal.propTypes = {
   onClose: PropTypes.func.isRequired,
+  farmID: propTypes.string,
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default UpdateAnimal;
+export default AddAnimal;

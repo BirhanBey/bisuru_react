@@ -33,12 +33,12 @@ const FarmController = () => {
   }, [token]);
 
   const handleFarmStaffClick = (farm) => {
-    setSelectedFarm(farm); // Seçilen kooperatifin bilgilerini ayarla
-    setShowFarmStaffDetail(!showFarmStaffDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+    setSelectedFarm(farm); 
+    setShowFarmStaffDetail(!showFarmStaffDetail);
   };
   const handleAnimalsClick = (farm) => {
-    setSelectedFarm(farm); // Seçilen kooperatifin bilgilerini ayarla
-    setShowAnimalsDetail(!showAnimalsDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+    setSelectedFarm(farm); 
+    setShowAnimalsDetail(!showAnimalsDetail);
   };
 
   const handleClose = () => {

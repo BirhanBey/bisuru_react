@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 
-const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
+const UpdateAnimal = ({ onSubmit, animal, onClose, farmID }) => {
   const [editedAnimal, setEditedAnimal] = useState(animal);
   const token = localStorage.getItem('token');
-  console.log(animal);
+  useEffect(() => {
+    setEditedAnimal({ ['farms_id']: farmID });
+  }, [farmID]);
+
   const handleAnimalInputChange = (event) => {
     const { name, value } = event.target;
     setEditedAnimal((prevState) => ({
@@ -15,7 +18,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
     }));
   };
 
-  const handleAnimalSubmit = async () => {
+  const handleSubmit = async () => {
     try {
       const response = await axios.put(
         `https://s3.syntradeveloper.be/bisurularavel/api/animals/${animal}`,
@@ -28,7 +31,6 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
       );
 
       onClose(); 
-
       if (response.status === 200) {
         onSubmit('OK');
       } else {
@@ -43,17 +45,18 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
   return (
     <Modal show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Add Animal</Modal.Title>
+        <Modal.Title>Update Animal</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form>
+
           <div>
             <label>
               Farm Id:
               <input
                 type="text"
                 name="farms_id"
-                value={editedAnimal.farm_id}
+                value={editedAnimal.farms_id}
                 onChange={handleAnimalInputChange}
                 disabled
               />
@@ -121,7 +124,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
         <Button variant="secondary" onClick={onClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleAnimalSubmit}>
+        <Button variant="primary" onClick={handleSubmit}>
           Save Changes
         </Button>
       </Modal.Footer>
