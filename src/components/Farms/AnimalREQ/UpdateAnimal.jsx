@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 
 const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
@@ -27,7 +27,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
         }
       );
 
-      onClose(); 
+      onClose();
 
       if (response.status === 200) {
         onSubmit('OK');
@@ -36,8 +36,15 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
       }
     } catch (error) {
       console.error('Request Error:', error);
-      // Handle error
     }
+  };
+
+  const handleStatusChange = (eventKey) => {
+    const newStatus = parseInt(eventKey, 10);
+    setEditedAnimal((prevFarm) => ({
+      ...prevFarm,
+      status: newStatus,
+    }));
   };
 
   return (
@@ -104,16 +111,17 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
             </label>
           </div>
 
-          <div>
-            <label>
-              Lactation:
-              <input
-                type="checkbox"
-                name="lactaionStatus"
-                value={editedAnimal.lactaionStatus}
-                onChange={handleAnimalInputChange}
-              />
-            </label>
+          <div className="d-flex">
+            <label>Status:</label>
+            <Dropdown onSelect={handleStatusChange}>
+              <Dropdown.Toggle variant="secondary" id="status-dropdown">
+                {editedAnimal.status === 1 ? 'Active' : 'Inactive'}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
+                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </form>
       </Modal.Body>

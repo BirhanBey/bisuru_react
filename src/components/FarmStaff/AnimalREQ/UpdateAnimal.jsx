@@ -136,6 +136,7 @@ UpdateAnimal.propTypes = {
   animal: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  farmID: PropTypes.string.isRequired
 };
 
 export default UpdateAnimal;

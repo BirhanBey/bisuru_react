@@ -1,18 +1,25 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 
 const UpdateFarm = ({ onSubmit, farm, onClose }) => {
   const [editedFarm, setEditedFarm] = useState(farm);
   const token = localStorage.getItem('token');
-  // const coopstaff = coopStaff;
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setEditedFarm((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  };
+
+  const handleStatusChange = (eventKey) => {
+    const newStatus = parseInt(eventKey, 10); 
+    setEditedFarm((prevFarm) => ({
+      ...prevFarm,
+      status: newStatus,
     }));
   };
 
@@ -139,16 +146,17 @@ const UpdateFarm = ({ onSubmit, farm, onClose }) => {
               />
             </label>
           </div>
-          <div>
-            <label>
-              Status:
-              <input
-                type="checkbox"
-                name="status"
-                checked={editedFarm.status}
-                onChange={handleInputChange}
-              />
-            </label>
+          <div className="d-flex">
+            <label>Status:</label>
+            <Dropdown onSelect={handleStatusChange}>
+              <Dropdown.Toggle variant="secondary" id="status-dropdown">
+                {editedFarm.status === 1 ? 'Active' : 'Inactive'}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
+                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </form>
       </Modal.Body>

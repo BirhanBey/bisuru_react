@@ -7,6 +7,7 @@ import { propTypes } from 'react-bootstrap/esm/Image';
 const AddAnimal = ({ onSubmit, farmID, onClose }) => {
   const [addedAnimal, setAddedAnimal] = useState('');
   const token = localStorage.getItem('token');
+
   useEffect(() => {
     setAddedAnimal({ ['farms_id']: farmID });
   }, [farmID]);
@@ -32,7 +33,7 @@ const AddAnimal = ({ onSubmit, farmID, onClose }) => {
             Accept: 'Application/json',
           },
         }
-        );
+      );
 
       onClose();
 
@@ -109,7 +110,6 @@ const AddAnimal = ({ onSubmit, farmID, onClose }) => {
               />
             </label>
           </div>
-
           <div>
             <label>
               Lactation:

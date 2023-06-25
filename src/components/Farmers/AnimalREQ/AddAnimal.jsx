@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
@@ -20,8 +20,15 @@ const AddAnimal = ({ onSubmit, farmerID, onClose }) => {
     }));
   };
 
+  const handleStatusChange = (eventKey) => {
+    const newStatus = parseInt(eventKey, 10); // Seçilen değeri tamsayıya çeviriyoruz
+    setAddedAnimal((prevFarm) => ({
+      ...prevFarm,
+      status: newStatus,
+    }));
+  };
+
   const handleAnimalSubmit = async () => {
-    // console.log(addedAnimal);
     try {
       const response = await axios.post(
         `https://s3.syntradeveloper.be/bisurularavel/api/animals`,
@@ -121,17 +128,17 @@ const AddAnimal = ({ onSubmit, farmerID, onClose }) => {
               />
             </label>
           </div>
-
-          <div>
-            <label>
-              Lactation:
-              <input
-                type="checkbox"
-                name="lactaionStatus"
-                value={addedAnimal.lactaionStatus}
-                onChange={handleAnimalInputChange}
-              />
-            </label>
+          <div className="d-flex">
+            <label>Status:</label>
+            <Dropdown onSelect={handleStatusChange}>
+              <Dropdown.Toggle variant="secondary" id="status-dropdown">
+                {addedAnimal.status === 1 ? 'Active' : 'Inactive'}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
+                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </form>
       </Modal.Body>

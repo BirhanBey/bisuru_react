@@ -1,17 +1,27 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 
 const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
   const [editedFarmStaff, setEditedFarmStaff] = useState(farmStaff);
   const token = localStorage.getItem('token');
   console.log(farmStaff);
+
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setEditedFarmStaff((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  };
+
+  const handleStatusChange = (eventKey) => {
+    const newStatus = parseInt(eventKey, 10); // Seçilen değeri tamsayıya çeviriyoruz
+    setEditedFarmStaff((prevFarm) => ({
+      ...prevFarm,
+      status: newStatus,
     }));
   };
 
@@ -27,7 +37,7 @@ const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
         }
       );
 
-      onClose(); // Modalı kapat
+      onClose();
 
       if (response.status === 200) {
         onSubmit('OK');
@@ -36,7 +46,7 @@ const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
       }
     } catch (error) {
       console.error('Request Error:', error);
-      // Handle error
+      
     }
   };
 
@@ -102,16 +112,17 @@ const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
               />
             </label>
           </div>
-          <div>
-            <label>
-              Status:
-              <input
-                type="checkbox"
-                name="status"
-                checked={editedFarmStaff.status}
-                onChange={handleInputChange}
-              />
-            </label>
+          <div className="d-flex">
+            <label>Status:</label>
+            <Dropdown onSelect={handleStatusChange}>
+              <Dropdown.Toggle variant="secondary" id="status-dropdown">
+                {editedFarmStaff.status === 1 ? 'Active' : 'Inactive'}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
+                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
           <div>
             <label>

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 
 const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
@@ -13,6 +13,14 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
     setEditedCoopStaff((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  };
+
+  const handleStatusChange = (eventKey) => {
+    const newStatus = parseInt(eventKey, 10); // Seçilen değeri tamsayıya çeviriyoruz
+    setEditedCoopStaff((prevFarm) => ({
+      ...prevFarm,
+      status: newStatus,
     }));
   };
 
@@ -94,15 +102,16 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
             </label>
           </div>
           <div>
-            <label>
-              Status:
-              <input
-                type="checkbox"
-                name="status"
-                checked={editedCoopStaff.status}
-                onChange={handleInputChange}
-              />
-            </label>
+            <label>Status:</label>
+            <Dropdown onSelect={handleStatusChange}>
+              <Dropdown.Toggle variant="secondary" id="status-dropdown">
+                {editedCoopStaff.status === 1 ? 'Active' : 'Inactive'}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
+                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
           <div>
             <label>

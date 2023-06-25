@@ -48,6 +48,7 @@ const FarmStaffControl = () => {
             <th>Farm Id</th>
             <th>Name</th>
             <th>Surname</th>
+            <th>Address</th>
             <th>Department</th>
             <th>Phone Number</th>
             <th>Date of Birth</th>
@@ -64,13 +65,13 @@ const FarmStaffControl = () => {
                   <td>{staff.farms_id}</td>
                   <td>{staff.name}</td>
                   <td>{staff.surname}</td>
-                  <td>{farm.address}</td>{' '}
+                  <td>{farm.address}</td>
+                  <td>{staff.department}</td>
                   {/* Not: farm.address olarak güncellendi */}
                   <td>{staff.phoneNumber}</td>
-                  <td>{staff.status ? 'Active' : 'Inactive'}</td>
                   <td>{staff.dateOfBirth}</td>
-                  <td>{staff.identityNumber}</td>
-                  <td>{staff.placeOfBirth}</td>
+                  <td>{staff.education}</td>
+                  <td>{staff.status ? 'Active' : 'Inactive'}</td>
                   <td colSpan="7">
                     <Dropdown>
                       <Dropdown.Toggle variant="secondary" id="dropdown-basic">

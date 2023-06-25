@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Dropdown  } from 'react-bootstrap';
 import axios from 'axios';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
@@ -8,6 +8,8 @@ const AddFarmStaff = ({ onSubmit, farmerID, onClose }) => {
   const [addedFarmStaff, setAddedFarmStaff] = useState('');
   console.log(addedFarmStaff);
   const token = localStorage.getItem('token');
+
+
   useEffect(() => {
     setAddedFarmStaff({ ['farmer_id']: farmerID });
   }, [farmerID]);
@@ -18,6 +20,14 @@ const AddFarmStaff = ({ onSubmit, farmerID, onClose }) => {
     setAddedFarmStaff((prevState) => ({
       ...prevState,
       [name]: newValue,
+    }));
+  };
+
+  const handleStatusChange = (eventKey) => {
+    const newStatus = parseInt(eventKey, 10); // Seçilen değeri tamsayıya çeviriyoruz
+    setAddedFarmStaff((prevFarm) => ({
+      ...prevFarm,
+      status: newStatus,
     }));
   };
 
@@ -145,16 +155,17 @@ const AddFarmStaff = ({ onSubmit, farmerID, onClose }) => {
               />
             </label>
           </div>
-          <div>
-            <label>
-              Status:
-              <input
-                type="checkbox"
-                name="status"
-                checked={addedFarmStaff.status}
-                onChange={handleFarmStaffInputChange}
-              />
-            </label>
+          <div className="d-flex">
+            <label>Status:</label>
+            <Dropdown onSelect={handleStatusChange}>
+              <Dropdown.Toggle variant="secondary" id="status-dropdown">
+                {addedFarmStaff.status === 1 ? 'Active' : 'Inactive'}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
+                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </form>
       </Modal.Body>
