@@ -37,12 +37,11 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
       }
       return coopstaff;
     });
-    setCoopStaff((prevState) => ({
+    setCoopData((prevState) => ({
       ...prevState,
       cooperative_staffs: updatedCoopStaffList,
     }));
   };
-
   const handleCoopStaffAdd = async (newCoopStaff) => {
     try {
       const response = await axios.post(
@@ -58,7 +57,7 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
       const addedCoopStaff = response.data;
 
       // Yeni iş birimi personelini tabloya ekleme
-      setCoopStaff((prevState) => ({
+      setCoopData((prevState) => ({
         ...prevState,
         cooperative_staffs: [...prevState.cooperative_staffs, addedCoopStaff],
       }));

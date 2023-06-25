@@ -5,13 +5,16 @@ import axios from 'axios';
 import UpdateFarmer from './UpdateFarmer';
 import DeleteFarmer from './DeleteFarmer';
 import AddFarmer from './AddFarmer'; // Ekledik
+import { CoopDataRefresh } from '../../../functions/CoopDataRefresh';
 
 const FarmersDetail = ({ cooperative, onClose }) => {
+  console.log(cooperative.cooperative_staffs);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isAddModalOpen, setAddModalOpen] = useState(false); // Ekledik
   const [selectedFarmer, setSelectedFarmer] = useState(null);
   const [farmerData, setFarmerData] = useState(cooperative.farmers);
+
   let token = localStorage.getItem('token');
   console.log(cooperative);
   const handleFarmerUpdateClick = (farmers) => {
@@ -76,15 +79,10 @@ const FarmersDetail = ({ cooperative, onClose }) => {
   const handleModalSubmit = async (data) => {
     if (data == 'OK') {
       try {
-        const response = await axios.get(
-          `https://s3.syntradeveloper.be/bisurularavel/api/cooperative/${cooperative.id}/farmers`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setFarmerData(response.data.farmers);
+        const response = await CoopDataRefresh(cooperative.id);
+        //response.data.farmers.map((farmer) => console.log(farmer));
+        setFarmerData(response.farmers);
+        console.log(cooperative);
       } catch (error) {
         console.error('Request Error:', error);
       }
@@ -103,8 +101,7 @@ const FarmersDetail = ({ cooperative, onClose }) => {
       </div>
       <Button variant="primary" onClick={handleAddFarmerClick}>
         Add Farmer
-      </Button>{' '}
-      {/* Ekledik */}
+      </Button>
       <Table striped bordered hover>
         <thead>
           <tr>

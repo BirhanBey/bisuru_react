@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
-import CoopStaffDetail from './Cooperatives/CoopStaffREQ/CoopStaffDetail'; // Eğer CoopStaffDetail bileşeni başka bir dosyada bulunuyorsa import edin
 import FarmerDetail from './Cooperatives/FarmersREQ/FarmerDetail';
 import FarmDetail from './Cooperatives/FarmsREQ/FarmDetail';
 import FarmStaffDetail from './Cooperatives/FarmStaffREQ/FarmStaffDetail';
 import AnimalDetail from './Cooperatives/AnimalsREQ/AnimalDetail';
 
-const CooperativesControl = () => {
-  const [allCooperatives, setAllCooperatives] = useState([]);
-  const [showCoopStaffDetail, setShowCoopStaffDetail] = useState(false); // Yeni bileşenin açılıp açılmayacağını kontrol etmek için bir durum kullanın
-  const [selectedCooperative, setSelectedCooperative] = useState(null); // Seçilen kooperatifin bilgilerini saklamak için bir durum kullanın
+const CoopStaffControl = () => {
+  const [allCoopStaff, setAllCoopStaff] = useState([]);
+  const [selectedCoopStaff, setSelectedCoopStaff] = useState(null); // Seçilen kooperatifin bilgilerini saklamak için bir durum kullanın
   const [showFarmersDetail, setShowFarmersDetail] = useState(false);
   const [showFarmsDetail, setShowFarmsDetail] = useState(false);
   const [showFarmStaffDetail, setShowFarmStaffDetail] = useState(false);
   const [showAnimalsDetail, setShowAnimalsDetail] = useState(false);
   let token = localStorage.getItem('token');
-console.log(selectedCooperative);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,7 +26,8 @@ console.log(selectedCooperative);
             },
           }
         );
-        setAllCooperatives(response.data);
+        setAllCoopStaff(response.data);
+        console.log(response.data.cooperative_staff);
       } catch (error) {
         console.error('Request Error:', error);
       }
@@ -37,62 +36,66 @@ console.log(selectedCooperative);
     fetchData();
   }, [token]);
 
-  const handleCoopStaffClick = (cooperative) => {
-    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
-    setShowCoopStaffDetail(!showCoopStaffDetail); // "Cooperative Staff" seçeneğine tıklandığında yeni bileşeni aç/kapat
-  };
-
-  const handleFarmersClick = (cooperative) => {
-    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
+  const handleFarmersClick = (coopstaff) => {
+    setSelectedCoopStaff(coopstaff); // Seçilen kooperatifin bilgilerini ayarla
     setShowFarmersDetail(!showFarmersDetail); // "Farmers" seçeneğine tıklandığında yeni bileşeni aç/kapat
   };
 
-  const handleFarmsClick = (cooperative) => {
-    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
+  const handleFarmsClick = (coopstaff) => {
+    setSelectedCoopStaff(coopstaff); // Seçilen kooperatifin bilgilerini ayarla
     setShowFarmsDetail(!showFarmsDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
   };
-  const handleFarmStaffClick = (cooperative) => {
-    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
+  const handleFarmStaffClick = (coopstaff) => {
+    setSelectedCoopStaff(coopstaff); // Seçilen kooperatifin bilgilerini ayarla
     setShowFarmStaffDetail(!showFarmStaffDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
   };
-  const handleAnimalsClick = (cooperative) => {
-    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
+  const handleAnimalsClick = (coopstaff) => {
+    setSelectedCoopStaff(coopstaff); // Seçilen kooperatifin bilgilerini ayarla
     setShowAnimalsDetail(!showAnimalsDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
   };
 
   const handleClose = () => {
-    setShowCoopStaffDetail(false);
     setShowFarmersDetail(false);
     setShowFarmsDetail(false);
     setShowFarmStaffDetail(false);
     setShowAnimalsDetail(false);
   };
+  console.log(allCoopStaff);
+
   return (
     <div>
-      <h1>Cooperatives Panel</h1>
+      <h1>Cooperative Staff Panel</h1>
       <Table striped bordered hover>
         <thead>
-          <tr>
+        <tr>
             <th>id</th>
+            <th>cooperatives_id</th>
             <th>Name</th>
+            <th>Surname</th>
             <th>Address</th>
+            <th>Phone Number</th>
             <th>Status</th>
-            <th>Field</th>
-            <th>Founded</th>
-            <th>License Number</th>
+            <th>Date of Birth</th>
+            <th>Identity Number</th>
+            <th>Place of Birth</th>
           </tr>
         </thead>
         <tbody>
-          {allCooperatives.map((cooperative) => (
-            <React.Fragment key={cooperative.id}>
+        {allCoopStaff.length > 0 && allCoopStaff.map((cooperative) => 
+          cooperative.cooperative_staffs && cooperative.cooperative_staffs.map((coopstaff) => (
+
+            <React.Fragment key={coopstaff.id}>
               <tr>
-                <td>{cooperative.id}</td>
-                <td>{cooperative.name}</td>
-                <td>{cooperative.address}</td>
-                <td>{cooperative.status ? 'Active' : 'Inactive'}</td>
-                <td>{cooperative.field}</td>
-                <td>{cooperative.founded}</td>
-                <td>{cooperative.licenseNo}</td>
+                <td>{coopstaff.id}</td>
+                <td>{coopstaff.cooperatives_id}</td>
+                <td>{coopstaff.name}</td>
+                <td>{coopstaff.surname}</td>
+                <td>{coopstaff.address}</td>
+                <td>{coopstaff.phoneNumber}</td>
+                <td>{coopstaff.status ? 'Active' : 'Inactive'}</td>
+                <td>{coopstaff.dateOfBirth}</td>
+                <td>{coopstaff.identityNumber}</td>
+                <td>{coopstaff.placeOfBirth}</td>
 
                 <td colSpan="7">
                   <Dropdown>
@@ -100,11 +103,6 @@ console.log(selectedCooperative);
                       View Details
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() => handleCoopStaffClick(cooperative)}
-                      >
-                        Cooperative Staff
-                      </Dropdown.Item>
                       <Dropdown.Item
                         onClick={() => handleFarmersClick(cooperative)}
                       >
@@ -130,35 +128,24 @@ console.log(selectedCooperative);
                 </td>
               </tr>
             </React.Fragment>
-          ))}
+          ))
+        )}
         </tbody>
       </Table>
-      {showCoopStaffDetail && selectedCooperative && (
-        <CoopStaffDetail
-          cooperative={selectedCooperative}
-          onClose={handleClose}
-        />
+      {showFarmersDetail && selectedCoopStaff && (
+        <FarmerDetail cooperative={selectedCoopStaff} onClose={handleClose} />
       )}
-      {showFarmersDetail && selectedCooperative && (
-        <FarmerDetail cooperative={selectedCooperative} onClose={handleClose} />
+      {showFarmsDetail && selectedCoopStaff && (
+        <FarmDetail cooperative={selectedCoopStaff} onClose={handleClose} />
       )}
-      {showFarmsDetail && selectedCooperative && (
-        <FarmDetail cooperative={selectedCooperative} onClose={handleClose} />
+      {showFarmStaffDetail && selectedCoopStaff && (
+        <FarmStaffDetail cooperative={selectedCoopStaff} onClose={handleClose} />
       )}
-      {showFarmStaffDetail && selectedCooperative && (
-        <FarmStaffDetail
-          cooperative={selectedCooperative}
-          onClose={handleClose}
-        />
-      )}
-      {showAnimalsDetail && selectedCooperative && (
-        <AnimalDetail
-          cooperative={selectedCooperative}
-          onClose={handleClose}
-        />
+      {showAnimalsDetail && selectedCoopStaff && (
+        <AnimalDetail cooperative={selectedCoopStaff} onClose={handleClose} />
       )}
     </div>
   );
 };
 
-export default CooperativesControl;
+export default CoopStaffControl;

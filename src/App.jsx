@@ -4,8 +4,8 @@ import AdminPanel from './AdminPanel';
 import CooperativesControl from './components/CooperativesControl';
 import Register from './Register';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import FarmerController from './components/Cooperatives/FarmersREQ/FarmerController';
-import FarmController from './components/Cooperatives/FarmsREQ/FarmController';
+import FarmerController from './components/FarmerController';
+import FarmController from './components/FarmController';
 
 function App() {
   const router = createBrowserRouter([
