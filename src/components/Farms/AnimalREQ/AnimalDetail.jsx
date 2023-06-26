@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useState } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 import UpdateAnimal from './UpdateAnimal';
 import AddAnimal from './AddAnimal';
 import DeleteAnimal from './DeleteAnimal';
@@ -13,23 +13,23 @@ const AnimalDetail = ({ farm, onClose }) => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState(null);
   const [animalData, setAnimalData] = useState(farm.animals);
-  let token = localStorage.getItem('token;')
+  let token = localStorage.getItem('token;');
 
-// console.log(animalData);
+  // console.log(animalData);
 
-const handleAnimalUpdateClick = (animal) => {
-  setSelectedAnimal(animal);
-  setUpdateModalOpen(true);
-};
+  const handleAnimalUpdateClick = (animal) => {
+    setSelectedAnimal(animal);
+    setUpdateModalOpen(true);
+  };
 
-const handleAnimalDeleteClick = (animal) => {
-  setSelectedAnimal(animal);
-  setDeleteModalOpen(true);
-};
+  const handleAnimalDeleteClick = (animal) => {
+    setSelectedAnimal(animal);
+    setDeleteModalOpen(true);
+  };
 
-const handleAddAnimalClick = () => {
-  setAddModalOpen(true);
-};
+  const handleAddAnimalClick = () => {
+    setAddModalOpen(true);
+  };
   const handleAnimalUpdate = (updatedFarm) => {
     const animals = farm.animals;
     const updatedFarmsList = animals.map((farm) => {
@@ -42,7 +42,6 @@ const handleAddAnimalClick = () => {
       ...prevState,
       farms: updatedFarmsList,
     }));
-    
   };
 
   const handleAnimalAdd = async (newAnimal) => {
@@ -92,77 +91,81 @@ const handleAddAnimalClick = () => {
   };
 
   return (
-    <>
-      <div className="d-flex justify-content-between">
-        <h2 className="ms-5"> Animal Detail</h2>
-        <button className="btn btn-danger" onClick={onClose}>
-          X
-        </button>
-      </div>
-      <Button variant="primary" onClick={handleAddAnimalClick}>
-        Add Animal
-      </Button>      
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>Farm id</th>
-            <th>Earing Number</th>
-            <th>Date of Birth</th>
-            <th>Date of Last Birth Giving</th>
-            <th>Number of Births</th>
-            <th>Lactaion Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {animalData.map((animal) =>
-            <tr id={animal.id} key={animal.id}>
-                  <td>{animal.id}</td>
-                  <td>{animal.farms_id}</td>
-                  <td>{animal.earing_number}</td>
-                  <td>{animal.dateOfBirth}</td>
-                  <td>{animal.dateOfLastBirthGiving}</td>
-                  <td>{animal.birthNummber}</td>
-                  <td>{animal.lactaionStatus}</td>
-                  <td>
-                    <Button onClick={() => handleAnimalUpdateClick(animal.id)}>
-                      Update
-                    </Button>
-                    <Button onClick={() => handleAnimalDeleteClick(animal.id)}>
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              
-           
-          )}
-        </tbody>
-      </Table>
-      {isUpdateModalOpen && (
-        <UpdateAnimal
-          animal={selectedAnimal}
-          onClose={() => setUpdateModalOpen(false)}
-          onSubmit={handleModalSubmit}
-          onAnimalUpdate={handleAnimalUpdate}
-        />
-      )}
-      {isDeleteModalOpen && (
-        <DeleteAnimal
-          onSubmit={handleModalSubmit}
-          animal={selectedAnimal}
-          onClose={closeModal}
-        />
-      )}
-      {isAddModalOpen && ( // Ekledik
-        <AddAnimal
-          onSubmit={handleModalSubmit}
-          farmID={farm.id}
-          animal={selectedAnimal}
-          onClose={() => setAddModalOpen(false)}
-          onAnimalAdd={handleAnimalAdd}
-        />
-      )}
-    </>
+    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
+      <Modal.Header closeButton>
+        <Modal.Title>Animal List of Farmer {farm.id} </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <div className="d-flex justify-content-around mb-3">
+          <div className="d-flex justify-content-between">
+            <h2 className="ms-5"> Animal Detail</h2>
+
+          </div>
+          <Button variant="primary" onClick={handleAddAnimalClick}>
+            Add Animal
+          </Button>
+        </div>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Farm id</th>
+              <th>Earing Number</th>
+              <th>Date of Birth</th>
+              <th>Date of Last Birth Giving</th>
+              <th>Number of Births</th>
+              <th>Lactaion Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {animalData.map((animal) => (
+              <tr id={animal.id} key={animal.id}>
+                <td>{animal.id}</td>
+                <td>{animal.farms_id}</td>
+                <td>{animal.earing_number}</td>
+                <td>{animal.dateOfBirth}</td>
+                <td>{animal.dateOfLastBirthGiving}</td>
+                <td>{animal.birthNummber}</td>
+                <td>{animal.lactaionStatus}</td>
+                <td>
+                  <Button onClick={() => handleAnimalUpdateClick(animal.id)}>
+                    Update
+                  </Button>
+                  <Button onClick={() => handleAnimalDeleteClick(animal.id)}>
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+        {isUpdateModalOpen && (
+          <UpdateAnimal
+            animal={selectedAnimal}
+            onClose={() => setUpdateModalOpen(false)}
+            onSubmit={handleModalSubmit}
+            onAnimalUpdate={handleAnimalUpdate}
+          />
+        )}
+        {isDeleteModalOpen && (
+          <DeleteAnimal
+            onSubmit={handleModalSubmit}
+            animal={selectedAnimal}
+            onClose={closeModal}
+          />
+        )}
+        {isAddModalOpen && ( // Ekledik
+          <AddAnimal
+            onSubmit={handleModalSubmit}
+            farmID={farm.id}
+            animal={selectedAnimal}
+            onClose={() => setAddModalOpen(false)}
+            onAnimalAdd={handleAnimalAdd}
+          />
+        )}
+      </Modal.Body>
+      <Modal.Footer>{/* Footer içeriği */}</Modal.Footer>
+    </Modal>
   );
 };
 

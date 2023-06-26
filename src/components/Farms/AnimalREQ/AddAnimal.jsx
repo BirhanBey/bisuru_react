@@ -40,7 +40,7 @@ const AddAnimal = ({ onSubmit, farmID, onClose }) => {
             Accept: 'Application/json',
           },
         }
-        );
+      );
 
       onClose();
 
@@ -88,7 +88,7 @@ const AddAnimal = ({ onSubmit, farmID, onClose }) => {
             <label>
               Date of Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfBirth"
                 value={addedAnimal.dateOfBirth}
                 onChange={handleAnimalInputChange}
@@ -99,7 +99,7 @@ const AddAnimal = ({ onSubmit, farmID, onClose }) => {
             <label>
               Last Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfLastBirthGiving"
                 value={addedAnimal.dateOfLastBirthGiving}
                 onChange={handleAnimalInputChange}
@@ -119,10 +119,10 @@ const AddAnimal = ({ onSubmit, farmID, onClose }) => {
           </div>
 
           <div className="d-flex">
-            <label>Status:</label>
+            <label>Lactation:</label>
             <Dropdown onSelect={handleStatusChange}>
               <Dropdown.Toggle variant="secondary" id="status-dropdown">
-                {addedAnimal.status === 1 ? 'Active' : 'Inactive'}
+                {addedAnimal.lactaionStatus === 1 ? 'Active' : 'Inactive'}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item eventKey="1">Active</Dropdown.Item>

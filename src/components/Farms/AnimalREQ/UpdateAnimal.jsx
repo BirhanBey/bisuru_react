@@ -6,7 +6,7 @@ import axios from 'axios';
 const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
   const [editedAnimal, setEditedAnimal] = useState(animal);
   const token = localStorage.getItem('token');
-  console.log(animal);
+
   const handleAnimalInputChange = (event) => {
     const { name, value } = event.target;
     setEditedAnimal((prevState) => ({
@@ -81,7 +81,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
             <label>
               Date of Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfBirth"
                 value={editedAnimal.dateOfBirth}
                 onChange={handleAnimalInputChange}
@@ -92,7 +92,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
             <label>
               Last Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfLastBirthGiving"
                 value={editedAnimal.dateOfLastBirthGiving}
                 onChange={handleAnimalInputChange}
@@ -110,9 +110,8 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
               />
             </label>
           </div>
-
           <div className="d-flex">
-            <label>Status:</label>
+            <label>Lactation:</label>
             <Dropdown onSelect={handleStatusChange}>
               <Dropdown.Toggle variant="secondary" id="status-dropdown">
                 {editedAnimal.status === 1 ? 'Active' : 'Inactive'}

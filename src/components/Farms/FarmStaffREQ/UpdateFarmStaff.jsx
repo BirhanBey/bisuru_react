@@ -84,7 +84,7 @@ const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
               Department:
               <input
                 type="text"
-                name="Department"
+                name="department"
                 value={editedFarmStaff.department}
                 onChange={handleInputChange}
               />
@@ -103,11 +103,33 @@ const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
           </div>
           <div>
             <label>
+              Date of Birth:
+              <input
+                type="date"
+                name="dateOfBirth"
+                value={editedFarmStaff.dateOfBirth}
+                onChange={handleInputChange}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
               Marital Status:
               <input
                 type="text"
                 name="maritalStatus"
                 value={editedFarmStaff.maritalStatus}
+                onChange={handleInputChange}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Education:
+              <input
+                type="text"
+                name="education"
+                value={editedFarmStaff.education}
                 onChange={handleInputChange}
               />
             </label>
@@ -123,41 +145,6 @@ const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
                 <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-          </div>
-          <div>
-            <label>
-              Date of Birth:
-              <input
-                type="text"
-                name="dateOfBirth"
-                value={editedFarmStaff.dateOfBirth}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Identity Number:
-              <input
-                type="text"
-                name="identityNumber"
-                value={editedFarmStaff.identityNumber}
-                onChange={handleInputChange}
-                disabled
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Place of Birth:
-              <input
-                type="text"
-                name="placeOfBirth"
-                value={editedFarmStaff.placeOfBirth}
-                onChange={handleInputChange}
-                disabled
-              />
-            </label>
           </div>
         </form>
       </Modal.Body>
