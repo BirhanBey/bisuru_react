@@ -117,7 +117,7 @@ const UpdateCoopStaff = ({ onSubmit, coopStaff, onClose }) => {
             <label>
               Date of Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfBirth"
                 value={editedCoopStaff.dateOfBirth}
                 onChange={handleInputChange}

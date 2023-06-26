@@ -94,7 +94,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
             <label>
               Date of Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfBirth"
                 value={editedAnimal.dateOfBirth}
                 onChange={handleAnimalInputChange}
@@ -105,7 +105,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
             <label>
               Last Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfLastBirthGiving"
                 value={editedAnimal.dateOfLastBirthGiving}
                 onChange={handleAnimalInputChange}

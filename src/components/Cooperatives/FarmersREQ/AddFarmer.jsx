@@ -121,7 +121,7 @@ const AddFarmer = ({ onSubmit, coopID, onClose }) => {
             <label>
               Date of Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfBirth"
                 value={addedFarmer.dateOfBirth}
                 onChange={handleFarmerInputChange}

@@ -53,7 +53,7 @@ const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
   return (
     <Modal show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Update Farm</Modal.Title>
+        <Modal.Title>Update Farm Staff</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form>
@@ -128,7 +128,7 @@ const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
             <label>
               Date of Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfBirth"
                 value={editedFarmStaff.dateOfBirth}
                 onChange={handleInputChange}

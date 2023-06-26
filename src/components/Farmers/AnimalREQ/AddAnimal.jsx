@@ -99,7 +99,7 @@ const AddAnimal = ({ onSubmit, farmerID, onClose }) => {
             <label>
               Date of Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfBirth"
                 value={addedAnimal.dateOfBirth}
                 onChange={handleAnimalInputChange}
@@ -110,7 +110,7 @@ const AddAnimal = ({ onSubmit, farmerID, onClose }) => {
             <label>
               Last Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfLastBirthGiving"
                 value={addedAnimal.dateOfLastBirthGiving}
                 onChange={handleAnimalInputChange}

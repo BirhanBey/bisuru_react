@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Button, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 import { propTypes } from 'react-bootstrap/esm/Image';
@@ -9,7 +9,7 @@ const AddCoopStaff = ({ onSubmit, coopID, onClose }) => {
   const token = localStorage.getItem('token');
   useEffect(() => {
     setAddedCoopStaff({ ['cooperatives_id']: coopID });
-  }, []);
+  }, [coopID]);
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -31,17 +31,21 @@ const AddCoopStaff = ({ onSubmit, coopID, onClose }) => {
   const handleSubmit = async () => {
     console.log(addedCoopStaff);
     try {
-      const response = await axios.post(`https://s3.syntradeveloper.be/bisurularavel/api/coopstaffs`, addedCoopStaff, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        `https://s3.syntradeveloper.be/bisurularavel/api/coopstaffs`,
+        addedCoopStaff,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       onClose(); // Modalı kapat
 
       // Güncellenmiş verileri tabloya yansıt
       onClose(); // Kapatma işlemini çağır
       if (response.status == '201') {
-        onSubmit("OK");
+        onSubmit('OK');
       } else {
         onSubmit(response);
       }
@@ -118,7 +122,7 @@ const AddCoopStaff = ({ onSubmit, coopID, onClose }) => {
             <label>
               Date of Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfBirth"
                 value={addedCoopStaff.dateOfBirth}
                 onChange={handleInputChange}

@@ -137,7 +137,7 @@ const AddFarmStaff = ({ onSubmit, farmerID, onClose }) => {
             <label>
               Date of Birth:
               <input
-                type="text"
+                type="date"
                 name="dateOfBirth"
                 value={addedFarmStaff.dateOfBirth}
                 onChange={handleFarmStaffInputChange}
