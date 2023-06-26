@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import UpdateFarmer from './UpdateFarmer';
 import DeleteFarmer from './DeleteFarmer';
@@ -92,82 +92,87 @@ const FarmersDetail = ({ cooperative, onClose }) => {
     closeModal();
   };
   return (
-    <>
-      <div className="d-flex justify-content-between">
-        <h2 className="ms-5"> Farmers Detail</h2>
-        <button className="btn btn-danger" onClick={onClose}>
-          X
-        </button>
-      </div>
-      <Button variant="primary" onClick={handleAddFarmerClick}>
-        Add Farmer
-      </Button>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>cooperatives_id</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Address</th>
-            <th>Phone Number</th>
-            <th>Status</th>
-            <th>Date of Birth</th>
-            <th>Identity Number</th>
-            <th>Place of Birth</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {farmerData.map((farmer) => (
-            <tr id={farmer.id} key={farmer.id}>
-              <td>{farmer.id}</td>
-              <td>{farmer.cooperatives_id}</td>
-              <td>{farmer.name}</td>
-              <td>{farmer.surname}</td>
-              <td>{farmer.address}</td>
-              <td>{farmer.phoneNumber}</td>
-              <td>{farmer.status ? 'Active' : 'Inactive'}</td>
-              <td>{farmer.dateOfBirth}</td>
-              <td>{farmer.identityNumber}</td>
-              <td>{farmer.placeOfBirth}</td>
-              <td>
-                <Button onClick={() => handleFarmerUpdateClick(farmer)}>
-                  Update
-                </Button>
-                <Button onClick={() => handleDeleteClick(farmer.id)}>
-                  Delete
-                </Button>
-              </td>
+    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
+      <Modal.Header closeButton>
+        <Modal.Title>{cooperative.name} Staff Detail</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="d-flex justify-content-around mb-3">
+          <div className="d-flex ">
+            <h2 className="ms-5"> Farmers Detail</h2>
+          </div>
+          <Button variant="primary" onClick={handleAddFarmerClick}>
+            Add Farmer
+          </Button>
+        </div>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>cooperatives_id</th>
+              <th>Name</th>
+              <th>Surname</th>
+              <th>Address</th>
+              <th>Phone Number</th>
+              <th>Status</th>
+              <th>Date of Birth</th>
+              <th>Identity Number</th>
+              <th>Place of Birth</th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
-      {isUpdateModalOpen && (
-        <UpdateFarmer
-          farmer={selectedFarmer}
-          onClose={() => setUpdateModalOpen(false)}
-          onSubmit={handleModalSubmit}
-          onFarmerUpdate={handleFarmersUpdate}
-        />
-      )}
-      {isDeleteModalOpen && (
-        <DeleteFarmer
-          onSubmit={handleModalSubmit}
-          farmer={selectedFarmer}
-          onClose={closeModal}
-        />
-      )}
-      {isAddModalOpen && ( // Ekledik
-        <AddFarmer
-          onSubmit={handleModalSubmit}
-          coopID={cooperative.id}
-          farmer={selectedFarmer}
-          onClose={() => setAddModalOpen(false)}
-          onFarmerAdd={handleFarmerAdd}
-        />
-      )}
-    </>
+          </thead>
+          <tbody>
+            {farmerData.map((farmer) => (
+              <tr id={farmer.id} key={farmer.id}>
+                <td>{farmer.id}</td>
+                <td>{farmer.cooperatives_id}</td>
+                <td>{farmer.name}</td>
+                <td>{farmer.surname}</td>
+                <td>{farmer.address}</td>
+                <td>{farmer.phoneNumber}</td>
+                <td>{farmer.status ? 'Active' : 'Inactive'}</td>
+                <td>{farmer.dateOfBirth}</td>
+                <td>{farmer.identityNumber}</td>
+                <td>{farmer.placeOfBirth}</td>
+                <td>
+                  <Button onClick={() => handleFarmerUpdateClick(farmer)}>
+                    Update
+                  </Button>
+                  <Button onClick={() => handleDeleteClick(farmer.id)}>
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+        {isUpdateModalOpen && (
+          <UpdateFarmer
+            farmer={selectedFarmer}
+            onClose={() => setUpdateModalOpen(false)}
+            onSubmit={handleModalSubmit}
+            onFarmerUpdate={handleFarmersUpdate}
+          />
+        )}
+        {isDeleteModalOpen && (
+          <DeleteFarmer
+            onSubmit={handleModalSubmit}
+            farmer={selectedFarmer}
+            onClose={closeModal}
+          />
+        )}
+        {isAddModalOpen && ( // Ekledik
+          <AddFarmer
+            onSubmit={handleModalSubmit}
+            coopID={cooperative.id}
+            farmer={selectedFarmer}
+            onClose={() => setAddModalOpen(false)}
+            onFarmerAdd={handleFarmerAdd}
+          />
+        )}
+      </Modal.Body>
+      <Modal.Footer>{/* Footer içeriği */}</Modal.Footer>
+    </Modal>
   );
 };
 

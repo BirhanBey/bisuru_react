@@ -16,7 +16,7 @@ const CooperativesControl = () => {
   const [showFarmStaffDetail, setShowFarmStaffDetail] = useState(false);
   const [showAnimalsDetail, setShowAnimalsDetail] = useState(false);
   let token = localStorage.getItem('token');
-console.log(selectedCooperative);
+
   useEffect(() => {
     const fetchData = async () => {
       try {

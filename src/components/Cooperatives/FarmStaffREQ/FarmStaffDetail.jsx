@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import UpdateFarmStaff from './UpdateFarmStaff';
 import DeleteFarmStaff from './DeleteFarmStaff';
@@ -95,7 +95,12 @@ const FarmStaffDetail = ({ cooperative, onClose }) => {
     closeModal();
   };
   return (
-    <>
+    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
+    <Modal.Header closeButton>
+      <Modal.Title>{cooperative.name} Staff Detail</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+    <div className="d-flex justify-content-around mb-3">
       <div className="d-flex justify-content-between">
         <h2 className="ms-5"> Farm Staff Detail</h2>
         <button className="btn btn-danger" onClick={onClose}>
@@ -104,8 +109,8 @@ const FarmStaffDetail = ({ cooperative, onClose }) => {
       </div>
       <Button variant="primary" onClick={handleAddFarmStaffClick}>
         Add Farm Staff
-      </Button>{' '}
-      {/* Ekledik */}
+      </Button>
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -179,7 +184,14 @@ const FarmStaffDetail = ({ cooperative, onClose }) => {
           onFarmAdd={handleFarmStaffAdd}
         />
       )}
-    </>
+    
+
+    </Modal.Body>
+    <Modal.Footer>{/* Footer içeriği */}</Modal.Footer>
+  </Modal>
+
+
+
   );
 };
 

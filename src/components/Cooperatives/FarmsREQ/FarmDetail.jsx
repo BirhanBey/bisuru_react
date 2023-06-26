@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import UpdateFarm from './UpdateFarm';
 import DeleteFarm from './DeleteFarm';
@@ -92,16 +92,19 @@ const FarmDetail = ({ cooperative, onClose }) => {
   };
 
   return (
-    <>
+    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
+    <Modal.Header closeButton>
+      <Modal.Title>{cooperative.name} Staff Detail</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+    <div className="d-flex justify-content-around mb-3">
       <div className="d-flex justify-content-between">
         <h2 className="ms-5"> Farm Detail</h2>
-        <button className="btn btn-danger" onClick={onClose}>
-          X
-        </button>
       </div>
       <Button variant="primary" onClick={handleAddFarmClick}>
         Add Farm
-      </Button>{' '}
+      </Button>
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -171,7 +174,13 @@ const FarmDetail = ({ cooperative, onClose }) => {
           onFarmAdd={handleFarmAdd}
         />
       )}
-    </>
+    
+
+    </Modal.Body>
+    <Modal.Footer>{/* Footer içeriği */}</Modal.Footer>
+  </Modal>
+
+
   );
 };
 
