@@ -30,14 +30,14 @@ function LoginPage() {
         );
 
         localStorage.setItem('token', response.data.token);
-        // if (userInfo == 'SuperUser') {
+        if (userInfo == 'SuperUser') {
         window.location.href = '/adminpanel';
-        // }
-        // else if (userInfo == 'Customer') {
-        //   window.location.href = '/cooperativescontrol';
-        // }else if (userInfo == 'farmers') {
-        //   window.location.href = '/cooperativescontrol';
-        // }
+        }
+        else if (userInfo == 'Cooperative') {
+          window.location.href = '/cooperativescontrol';
+        }else if (userInfo == 'CoopStaff') {
+          window.location.href = '/cooperativescontrol';
+        }
       })
       .catch((error) => {
         console.error('Login Error:', error);

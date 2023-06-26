@@ -48,16 +48,16 @@ const CooperativesControl = () => {
   };
 
   const handleFarmsClick = (cooperative) => {
-    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
-    setShowFarmsDetail(!showFarmsDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+    setSelectedCooperative(cooperative); 
+    setShowFarmsDetail(!showFarmsDetail); 
   };
   const handleFarmStaffClick = (cooperative) => {
-    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
-    setShowFarmStaffDetail(!showFarmStaffDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+    setSelectedCooperative(cooperative); 
+    setShowFarmStaffDetail(!showFarmStaffDetail);
   };
   const handleAnimalsClick = (cooperative) => {
-    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
-    setShowAnimalsDetail(!showAnimalsDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+    setSelectedCooperative(cooperative); 
+    setShowAnimalsDetail(!showAnimalsDetail);
   };
 
   const handleClose = () => {

@@ -4,12 +4,12 @@ import { Table, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import UpdateCoopStaff from './UpdateCoopStaff';
 import DeleteCoopStaff from './DeleteCoopStaff';
-import AddCoopStaff from './AddCoopStaff'; // Ekledik
+import AddCoopStaff from './AddCoopStaff'; 
 
 const CoopStaffDetail = ({ cooperative, onClose }) => {
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [isAddModalOpen, setAddModalOpen] = useState(false); // Ekledik
+  const [isAddModalOpen, setAddModalOpen] = useState(false); 
   const [selectedCoopStaff, setSelectedCoopStaff] = useState(null);
   const [coopData, setCoopData] = useState(cooperative.cooperative_staffs);
   let token = localStorage.getItem('token');
@@ -25,7 +25,6 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
   };
 
   const handleAddClick = () => {
-    // Ekledik
     setAddModalOpen(true);
   };
 
@@ -62,17 +61,13 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
         cooperative_staffs: [...prevState.cooperative_staffs, addedCoopStaff],
       }));
 
-      onClose(); // Modalı kapat
+      onClose(); 
     } catch (error) {
       console.error('Request Error:', error);
-      // Handle error
     }
   };
 
-  // //newfuncts
-  // const openModal = () => {
-  //   setDeleteModalOpen(true);
-  // };
+
 
   const closeModal = () => {
     setDeleteModalOpen(false);
@@ -124,7 +119,6 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
               <th>Date of Birth</th>
               <th>Identity Number</th>
               <th>Place of Birth</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -183,7 +177,7 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
 };
 
 CoopStaffDetail.propTypes = {
-  cooperative: PropTypes.func.isRequired,
+  cooperative: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
