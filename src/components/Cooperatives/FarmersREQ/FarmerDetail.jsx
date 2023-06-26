@@ -94,7 +94,7 @@ const FarmersDetail = ({ cooperative, onClose }) => {
   return (
     <Modal className="p-0" show={true} onHide={onClose} fullscreen>
       <Modal.Header closeButton>
-        <Modal.Title>{cooperative.name} Staff Detail</Modal.Title>
+      <Modal.Title>Farmers List of {cooperative.name} </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="d-flex justify-content-around mb-3">

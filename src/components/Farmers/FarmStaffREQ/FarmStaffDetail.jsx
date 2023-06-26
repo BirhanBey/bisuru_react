@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useState } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 import UpdateFarmStaff from './UpdateFarmStaff';
 import AddFarmStaff from './AddFarmStaff';
 import DeleteFarmStaff from './DeleteFarmStaff';
@@ -13,24 +13,24 @@ const FarmStaffDetail = ({ farmer, onClose }) => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [selectedFarmStaff, setSelectedFarmStaff] = useState(null);
   const [farmData, setFarmData] = useState(farmer.farms);
-  let token = localStorage.getItem('token;')
+  let token = localStorage.getItem('token;');
 
-console.log(farmer);
+  console.log(farmer);
 
-const handleFarmStaffUpdateClick = (farmsStaff) => {
-  setSelectedFarmStaff(farmsStaff);
-  setUpdateModalOpen(true);
-};
+  const handleFarmStaffUpdateClick = (farmsStaff) => {
+    setSelectedFarmStaff(farmsStaff);
+    setUpdateModalOpen(true);
+  };
 
-const handleFarmStaffDeleteClick = (farmsStaff) => {
-  setSelectedFarmStaff(farmsStaff);
-  setDeleteModalOpen(true);
-};
+  const handleFarmStaffDeleteClick = (farmsStaff) => {
+    setSelectedFarmStaff(farmsStaff);
+    setDeleteModalOpen(true);
+  };
 
-const handleAddFarmStaffClick = () => {
-  // Ekledik
-  setAddModalOpen(true);
-};
+  const handleAddFarmStaffClick = () => {
+    // Ekledik
+    setAddModalOpen(true);
+  };
   const handleFarmStaffUpdate = (updatedFarmer) => {
     const farms = farmer.farms;
     const updatedFarmsList = farms.map((farm) => {
@@ -43,7 +43,6 @@ const handleAddFarmStaffClick = () => {
       ...prevState,
       farms: updatedFarmsList,
     }));
-    
   };
 
   const handleFarmStaffAdd = async (newFarmStaff) => {
@@ -93,86 +92,93 @@ const handleAddFarmStaffClick = () => {
   };
 
   return (
-    <>
-      <div className="d-flex justify-content-between">
-        <h2 className="ms-5"> Farm Staff Detail</h2>
-        <button className="btn btn-danger" onClick={onClose}>
-          X
-        </button>
-      </div>
-      <Button variant="primary" onClick={handleAddFarmStaffClick}>
-        Add Farm Staff
-      </Button>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>id</th>
-            {/* <th>Cooperative id</th> */}
-            <th>Farm id</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Department</th>
-            <th>Phone Number</th>
-            <th>Date of Birth</th>
-            <th>Marital Status</th>
-            <th>Education</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-        {farmData.map((farm) =>
-          farm.farmstaff.map((staff) => (
-            <tr id={staff.id} key={staff.id}>
-              <td>{staff.id}</td>
-              {/* <td>{staff.cooperatives_id}</td> */}
-              <td>{staff.farms_id}</td>
-              <td>{staff.name}</td>
-              <td>{staff.surname}</td>
-              <td>{staff.department}</td>
-              <td>{staff.phoneNumber}</td>
-              <td>{staff.dateOfBirth}</td>
-              <td>{staff.maritalStatus}</td>
-              <td>{staff.education}</td>
-              <td>{staff.status ? 'Active' : 'Inactive'}</td>
-              <td>
-                <Button onClick={() => handleFarmStaffUpdateClick(staff)}>
-                  Update
-                </Button>
-                <Button onClick={() => handleFarmStaffDeleteClick(staff.id)}>
-                  Delete
-                </Button>
-              </td>
+    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
+      <Modal.Header closeButton>
+        <Modal.Title>Farm Staff List of Farmer {farmer.name} </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="d-flex justify-content-around mb-3">
+          <div>
+            <h2 className="ms-5"> Farm Staff Detail</h2>
+          </div>
+          <Button variant="primary" onClick={handleAddFarmStaffClick}>
+            Add Farm Staff
+          </Button>
+        </div>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>id</th>
+              {/* <th>Cooperative id</th> */}
+              <th>Farm id</th>
+              <th>Name</th>
+              <th>Surname</th>
+              <th>Department</th>
+              <th>Phone Number</th>
+              <th>Date of Birth</th>
+              <th>Marital Status</th>
+              <th>Education</th>
+              <th>Status</th>
+              <th></th>
             </tr>
-          ))
+          </thead>
+          <tbody>
+            {farmData.map((farm) =>
+              farm.farmstaff.map((staff) => (
+                <tr id={staff.id} key={staff.id}>
+                  <td>{staff.id}</td>
+                  {/* <td>{staff.cooperatives_id}</td> */}
+                  <td>{staff.farms_id}</td>
+                  <td>{staff.name}</td>
+                  <td>{staff.surname}</td>
+                  <td>{staff.department}</td>
+                  <td>{staff.phoneNumber}</td>
+                  <td>{staff.dateOfBirth}</td>
+                  <td>{staff.maritalStatus}</td>
+                  <td>{staff.education}</td>
+                  <td>{staff.status ? 'Active' : 'Inactive'}</td>
+                  <td>
+                    <Button onClick={() => handleFarmStaffUpdateClick(staff)}>
+                      Update
+                    </Button>
+                    <Button
+                      onClick={() => handleFarmStaffDeleteClick(staff.id)}
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+        {isUpdateModalOpen && (
+          <UpdateFarmStaff
+            farmStaff={selectedFarmStaff}
+            onClose={() => setUpdateModalOpen(false)}
+            onSubmit={handleModalSubmit}
+            onFarmStaffUpdate={handleFarmStaffUpdate}
+          />
         )}
-        </tbody>
-      </Table>
-      {isUpdateModalOpen && (
-        <UpdateFarmStaff
-          farmStaff={selectedFarmStaff}
-          onClose={() => setUpdateModalOpen(false)}
-          onSubmit={handleModalSubmit}
-          onFarmStaffUpdate={handleFarmStaffUpdate}
-        />
-      )}
-      {isDeleteModalOpen && (
-        <DeleteFarmStaff
-          onSubmit={handleModalSubmit}
-          farmStaff={selectedFarmStaff}
-          onClose={closeModal}
-        />
-      )}
-      {isAddModalOpen && ( // Ekledik
-        <AddFarmStaff
-          onSubmit={handleModalSubmit}
-          farmID={farmer.id}
-          farmStaff={selectedFarmStaff}
-          onClose={() => setAddModalOpen(false)}
-          onFarmAdd={handleFarmStaffAdd}
-        />
-      )}
-    </>
+        {isDeleteModalOpen && (
+          <DeleteFarmStaff
+            onSubmit={handleModalSubmit}
+            farmStaff={selectedFarmStaff}
+            onClose={closeModal}
+          />
+        )}
+        {isAddModalOpen && ( // Ekledik
+          <AddFarmStaff
+            onSubmit={handleModalSubmit}
+            farmID={farmer.id}
+            farmStaff={selectedFarmStaff}
+            onClose={() => setAddModalOpen(false)}
+            onFarmAdd={handleFarmStaffAdd}
+          />
+        )}
+      </Modal.Body>
+      <Modal.Footer>{/* Footer içeriği */}</Modal.Footer>
+    </Modal>
   );
 };
 

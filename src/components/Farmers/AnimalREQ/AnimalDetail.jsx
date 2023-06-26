@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useState } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 import UpdateAnimal from './UpdateAnimal';
 import AddAnimal from './AddAnimal';
 import DeleteAnimal from './DeleteAnimal';
@@ -92,16 +92,20 @@ const handleAddAnimalClick = () => {
   };
 
   return (
-    <>
+    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
+    <Modal.Header closeButton>
+      <Modal.Title>Animal List of Farmer {farmer.name} </Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+    <div className="d-flex justify-content-around mb-3">
       <div className="d-flex justify-content-between">
         <h2 className="ms-5"> Animal Detail</h2>
-        <button className="btn btn-danger" onClick={onClose}>
-          X
-        </button>
+
       </div>
       <Button variant="primary" onClick={handleAddAnimalClick}>
         Add Animal
-      </Button>      
+      </Button>  
+    </div>    
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -164,7 +168,12 @@ const handleAddAnimalClick = () => {
           onAnimalAdd={handleAnimalAdd}
         />
       )}
-    </>
+
+    </Modal.Body>
+    <Modal.Footer>{/* Footer içeriği */}</Modal.Footer>
+  </Modal>
+
+
   );
 };
 

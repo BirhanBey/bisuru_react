@@ -93,94 +93,90 @@ const FarmDetail = ({ cooperative, onClose }) => {
 
   return (
     <Modal className="p-0" show={true} onHide={onClose} fullscreen>
-    <Modal.Header closeButton>
-      <Modal.Title>{cooperative.name} Staff Detail</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-    <div className="d-flex justify-content-around mb-3">
-      <div className="d-flex justify-content-between">
-        <h2 className="ms-5"> Farm Detail</h2>
-      </div>
-      <Button variant="primary" onClick={handleAddFarmClick}>
-        Add Farm
-      </Button>
-      </div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>Cooperative id</th>
-            <th>Farmer id</th>
-            <th>Address</th>
-            <th>Phone Number</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Surface Area</th>
-            <th>City</th>
-            <th>Identity Number</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {farmData.map((farmer) =>
-            farmer.farms.map((farm) => (
-              <tr id={farm.id} key={farm.id}>
-                <td>{farm.id}</td>
-                <td>{farm.cooperatives_id}</td>
-                <td>{farm.farmers_id}</td>
-                <td>{farm.address}</td>
-                <td>{farm.phoneNumber}</td>
-                <td>{farm.latitude}</td>
-                <td>{farm.longitude}</td>
-                <td>{farm.surfaceArea}</td>
-                <td>{farm.placeOfBirth}</td>
-                <td>{farm.identityNumber}</td>
-                <td>{farm.status ? 'Active' : 'Inactive'}</td>
-                <td>
-                  <Button onClick={() => handleFarmUpdateClick(farm)}>
-                    Update
-                  </Button>
-                  <Button onClick={() => handleFarmDeleteClick(farm.id)}>
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
-      {isUpdateModalOpen && (
-        <UpdateFarm
-          farm={selectedFarm}
-          onClose={() => setUpdateModalOpen(false)}
-          onSubmit={handleModalSubmit}
-          onFarmUpdate={handleFarmUpdate}
-        />
-      )}
-      {isDeleteModalOpen && (
-        <DeleteFarm
-          onSubmit={handleModalSubmit}
-          farm={selectedFarm}
-          onClose={closeModal}
-        />
-      )}
-      {isAddModalOpen && ( // Ekledik
-        <AddFarm
-          onSubmit={handleModalSubmit}
-          coopID={cooperative.id}
-          farm={selectedFarm}
-          onClose={() => setAddModalOpen(false)}
-          onFarmAdd={handleFarmAdd}
-        />
-      )}
-    
-
-    </Modal.Body>
-    <Modal.Footer>{/* Footer içeriği */}</Modal.Footer>
-  </Modal>
-
-
+      <Modal.Header closeButton>
+        <Modal.Title>Farms List of {cooperative.name} </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="d-flex justify-content-around mb-3">
+          <div className="d-flex justify-content-between">
+            <h2 className="ms-5"> Farm Detail</h2>
+          </div>
+          <Button variant="primary" onClick={handleAddFarmClick}>
+            Add Farm
+          </Button>
+        </div>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Cooperative id</th>
+              <th>Farmer id</th>
+              <th>Address</th>
+              <th>Phone Number</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Surface Area</th>
+              <th>City</th>
+              <th>Identity Number</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {farmData.map((farmer) =>
+              farmer.farms.map((farm) => (
+                <tr id={farm.id} key={farm.id}>
+                  <td>{farm.id}</td>
+                  <td>{farm.cooperatives_id}</td>
+                  <td>{farm.farmers_id}</td>
+                  <td>{farm.address}</td>
+                  <td>{farm.phoneNumber}</td>
+                  <td>{farm.latitude}</td>
+                  <td>{farm.longitude}</td>
+                  <td>{farm.surfaceArea}</td>
+                  <td>{farm.placeOfBirth}</td>
+                  <td>{farm.identityNumber}</td>
+                  <td>{farm.status ? 'Active' : 'Inactive'}</td>
+                  <td>
+                    <Button onClick={() => handleFarmUpdateClick(farm)}>
+                      Update
+                    </Button>
+                    <Button onClick={() => handleFarmDeleteClick(farm.id)}>
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+        {isUpdateModalOpen && (
+          <UpdateFarm
+            farm={selectedFarm}
+            onClose={() => setUpdateModalOpen(false)}
+            onSubmit={handleModalSubmit}
+            onFarmUpdate={handleFarmUpdate}
+          />
+        )}
+        {isDeleteModalOpen && (
+          <DeleteFarm
+            onSubmit={handleModalSubmit}
+            farm={selectedFarm}
+            onClose={closeModal}
+          />
+        )}
+        {isAddModalOpen && ( // Ekledik
+          <AddFarm
+            onSubmit={handleModalSubmit}
+            coopID={cooperative.id}
+            farm={selectedFarm}
+            onClose={() => setAddModalOpen(false)}
+            onFarmAdd={handleFarmAdd}
+          />
+        )}
+      </Modal.Body>
+      <Modal.Footer>{/* Footer içeriği */}</Modal.Footer>
+    </Modal>
   );
 };
 
