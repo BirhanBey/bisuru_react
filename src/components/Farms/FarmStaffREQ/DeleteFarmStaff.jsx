@@ -31,12 +31,12 @@ const DeleteFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
     }
   };
   return (
-    <Modal show={true} onHide={onClose}>
+    <Modal className="p-0 my-modal" show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Delete FarmStaff</Modal.Title>
+        <Modal.Title style={{ color: 'white' }}>Delete Farm Staff</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Are you sure you want to delete this farmStaff?</p>
+        <p style={{ color: 'white' }}>Are you sure you want to delete this farmStaff?</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>

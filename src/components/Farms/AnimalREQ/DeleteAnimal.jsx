@@ -31,12 +31,12 @@ const DeleteAnimal = ({ onSubmit, animal, onClose }) => {
     }
   };
   return (
-    <Modal show={true} onHide={onClose}>
+    <Modal className="my-modal" show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Delete Animal</Modal.Title>
+        <Modal.Title style={{ color: 'white' }}>Delete Animal</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Are you sure you want to delete this animal?</p>
+        <p style={{ color: 'white' }}>Are you sure you want to delete this animal?</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>

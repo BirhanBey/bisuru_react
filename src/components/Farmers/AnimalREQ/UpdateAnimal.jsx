@@ -23,14 +23,14 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
       ...prevAnimal,
       status: newStatus,
     }));
-  
+
     const updatedAnimal = {
       ...editedAnimal,
       status: newStatus,
     };
-    onSubmit(updatedAnimal); 
-  
-    console.log('handleStatusChange çalıştı'); 
+    onSubmit(updatedAnimal);
+
+    console.log('handleStatusChange çalıştı');
   };
 
   const handleSubmit = async () => {
@@ -45,7 +45,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
         }
       );
 
-      onClose(); // Modalı kapat
+      onClose();
 
       if (response.status === 200) {
         onSubmit('OK');
@@ -54,7 +54,6 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
       }
     } catch (error) {
       console.error('Request Error:', error);
-      // Handle error
     }
   };
 
@@ -64,7 +63,7 @@ const UpdateAnimal = ({ onSubmit, animal, onClose }) => {
         <Modal.Title style={{ color: 'white' }}>Update Animal</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <Form>
+        <Form>
           <FloatingLabel
             controlId="floatingInput"
             label="Farmer ID"

@@ -8,7 +8,6 @@ const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
   const token = localStorage.getItem('token');
   console.log(farmStaff);
 
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setEditedFarmStaff((prevState) => ({
@@ -55,7 +54,6 @@ const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
       }
     } catch (error) {
       console.error('Request Error:', error);
-      
     }
   };
 
@@ -65,7 +63,7 @@ const UpdateFarmStaff = ({ onSubmit, farmStaff, onClose }) => {
         <Modal.Title style={{ color: 'white' }}>Update Farm Staff</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <Form>
+        <Form>
           <FloatingLabel
             controlId="floatingInput"
             label="Farm ID"

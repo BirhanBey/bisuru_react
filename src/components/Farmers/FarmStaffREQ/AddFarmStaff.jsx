@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Modal, Button, Form, FloatingLabel  } from 'react-bootstrap';
+import { Modal, Button, Form, FloatingLabel } from 'react-bootstrap';
 import axios from 'axios';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
@@ -8,7 +8,6 @@ const AddFarmStaff = ({ onSubmit, farmerID, onClose }) => {
   const [addedFarmStaff, setAddedFarmStaff] = useState('');
   console.log(addedFarmStaff);
   const token = localStorage.getItem('token');
-
 
   useEffect(() => {
     setAddedFarmStaff({ ['farmer_id']: farmerID });
@@ -64,7 +63,7 @@ const AddFarmStaff = ({ onSubmit, farmerID, onClose }) => {
         <Modal.Title style={{ color: 'white' }}>Add Farm Staff</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <Form>
+        <Form>
           <FloatingLabel
             controlId="floatingInput"
             label="Farm ID"
