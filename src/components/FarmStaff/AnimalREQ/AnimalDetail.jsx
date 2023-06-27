@@ -91,16 +91,30 @@ const AnimalDetail = ({ farm, onClose }) => {
   };
 
   return (
-    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
+    <Modal className="p-0 my-modal" show={true} onHide={onClose} fullscreen>
       <Modal.Header closeButton>
-        <Modal.Title>Animals List of Farmer {farm.id} </Modal.Title>
+        <Modal.Title style={{ color: 'white' }}>
+          Animals List of Farmer {farm.id}{' '}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <div className="d-flex justify-content-around mb-3">
+        <div className="d-flex justify-content-around mb-3">
           <div className="d-flex justify-content-between">
-            <h2 className="ms-5"> Animal Detail</h2>
+            <h2 className="ms-5" style={{ color: 'white' }}>
+              {' '}
+              Animal Detail
+            </h2>
           </div>
-          <Button variant="primary" onClick={handleAddAnimalClick}>
+          <Button
+            style={{
+              boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+              backgroundColor: '#DEE2FF',
+              border: '0px',
+              color: 'black',
+            }}
+            variant="primary"
+            onClick={handleAddAnimalClick}
+          >
             Add Animal
           </Button>
         </div>
@@ -114,6 +128,7 @@ const AnimalDetail = ({ farm, onClose }) => {
               <th>Date of Last Birth Giving</th>
               <th>Number of Births</th>
               <th>Lactaion Status</th>
+              <th>Control</th>
             </tr>
           </thead>
           <tbody>
@@ -126,11 +141,27 @@ const AnimalDetail = ({ farm, onClose }) => {
                 <td>{animal.dateOfLastBirthGiving}</td>
                 <td>{animal.birthNummber}</td>
                 <td>{animal.lactaionStatus}</td>
-                <td>
-                  <Button onClick={() => handleAnimalUpdateClick(animal.id)}>
+                <td className='d-flex gap-3'>
+                  <Button
+                    style={{
+                      boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                      backgroundColor: '#DEE2FF',
+                      border: '0px',
+                      color: 'black',
+                    }}
+                    onClick={() => handleAnimalUpdateClick(animal.id)}
+                  >
                     Update
                   </Button>
-                  <Button onClick={() => handleAnimalDeleteClick(animal.id)}>
+                  <Button
+                    style={{
+                      boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                      backgroundColor: '#DEE2FF',
+                      border: '0px',
+                      color: 'black',
+                    }}
+                    onClick={() => handleAnimalDeleteClick(animal.id)}
+                  >
                     Delete
                   </Button>
                 </td>

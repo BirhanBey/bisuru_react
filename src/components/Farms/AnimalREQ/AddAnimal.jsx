@@ -27,10 +27,10 @@ const AddAnimal = ({ onSubmit, farmID, onClose }) => {
       ...prevAnimal,
       status: newStatus,
     }));
-  
+
     console.log('handleStatusChange çalıştı');
   };
-  
+
   const handleAnimalSubmit = async () => {
     try {
       const response = await axios.post(
@@ -44,9 +44,9 @@ const AddAnimal = ({ onSubmit, farmID, onClose }) => {
           },
         }
       );
-  
+
       onClose();
-  
+
       if (response.status === 201) {
         onSubmit('OK');
       } else {
@@ -56,7 +56,6 @@ const AddAnimal = ({ onSubmit, farmID, onClose }) => {
       console.error('Request Error:', error);
     }
   };
-  
 
   return (
     <Modal className="p-0 my-modal" show={true} onHide={onClose}>
@@ -64,7 +63,7 @@ const AddAnimal = ({ onSubmit, farmID, onClose }) => {
         <Modal.Title style={{ color: 'white' }}>Add Animal</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <Form>
+        <Form>
           <FloatingLabel
             controlId="floatingInput"
             label="Farm ID"
@@ -139,11 +138,11 @@ const AddAnimal = ({ onSubmit, farmID, onClose }) => {
             <Form.Select
               name="lactaionStatus"
               placeholder="Lactation"
-              value={addedAnimal.lactaionStatus} 
+              value={addedAnimal.lactaionStatus}
               onChange={handleStatusChange}
             >
-              <option value="1">Active</option> 
-              <option value="0">Inactive</option> 
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>
             </Form.Select>
           </FloatingLabel>
         </Form>
