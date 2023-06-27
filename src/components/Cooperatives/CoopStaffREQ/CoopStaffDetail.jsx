@@ -93,19 +93,23 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
   return (
     <Modal className="p-0 my-modal" show={true} onHide={onClose} fullscreen>
       <Modal.Header closeButton>
-        <Modal.Title style={{color:"white"}}>Staff List of {cooperative.name} </Modal.Title>
+        <Modal.Title style={{ color: 'white' }}>
+          Staff List of {cooperative.name}{' '}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="d-flex justify-content-center mb-3">
           <div className="d-flex ms-auto me-auto">
-            <h2 className="ms-5">{cooperative.name} Staff Detail</h2>
+            <h2 style={{ color: 'white' }} className="ms-5">
+              {cooperative.name} Staff Detail
+            </h2>
           </div>
           <Button
             style={{
               boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
               backgroundColor: '#DEE2FF',
               border: '0px',
-              color: 'white',
+              color: 'black',
             }}
             variant="primary"
             onClick={handleAddClick}
@@ -142,11 +146,27 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
                 <td>{coopstaff.dateOfBirth}</td>
                 <td>{coopstaff.identityNumber}</td>
                 <td>{coopstaff.placeOfBirth}</td>
-                <td>
-                  <Button onClick={() => handleUpdateClick(coopstaff)}>
+                <td className='d-flex gap-2'>
+                  <Button
+                    style={{
+                      boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                      backgroundColor: '#DEE2FF',
+                      border: '0px',
+                      color: 'black',
+                    }}
+                    onClick={() => handleUpdateClick(coopstaff)}
+                  >
                     Update
                   </Button>
-                  <Button onClick={() => handleDeleteClick(coopstaff.id)}>
+                  <Button
+                    style={{
+                      boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                      backgroundColor: '#DEE2FF',
+                      border: '0px',
+                      color: 'black',
+                    }}
+                    onClick={() => handleDeleteClick(coopstaff.id)}
+                  >
                     Delete
                   </Button>
                 </td>

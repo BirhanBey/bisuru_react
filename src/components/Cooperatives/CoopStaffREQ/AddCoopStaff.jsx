@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Modal, Button, Dropdown } from 'react-bootstrap';
+import { Modal, Button, FloatingLabel, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
@@ -56,102 +56,132 @@ const AddCoopStaff = ({ onSubmit, coopID, onClose }) => {
   };
 
   return (
-    <Modal show={true} onHide={onClose}>
-      <Modal.Header closeButton>
+    <Modal className="my-modal" show={true} onHide={onClose}>
+      <Modal.Header style={{ color: 'white' }} closeButton>
         <Modal.Title>Add Cooperative Staff</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form>
-          <div>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="name"
-                value={addedCoopStaff.name}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Surname:
-              <input
-                type="text"
-                name="surname"
-                value={addedCoopStaff.surname}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Address:
-              <input
-                type="text"
-                name="address"
-                value={addedCoopStaff.address}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Phone Number:
-              <input
-                type="text"
-                name="phoneNumber"
-                value={addedCoopStaff.phoneNumber}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>Status:</label>
-            <Dropdown onSelect={handleStatusChange}>
-              <Dropdown.Toggle variant="secondary" id="status-dropdown">
-                {addedCoopStaff.status === 1 ? 'Active' : 'Inactive'}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
-                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-          <div>
-            <label>
-              Date of Birth:
-              <input
-                type="date"
-                name="dateOfBirth"
-                value={addedCoopStaff.dateOfBirth}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Identity Number:
-              <input
-                type="text"
-                name="identityNumber"
-                value={addedCoopStaff.identityNumber}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Place of Birth:
-              <input
-                type="text"
-                name="placeOfBirth"
-                value={addedCoopStaff.placeOfBirth}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-        </form>
+        <Form>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Name"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={addedCoopStaff.name}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Surname"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="surname"
+              placeholder="Surname"
+              value={addedCoopStaff.surname}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Address"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={addedCoopStaff.address}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Phone Number"
+            className="mb-3"
+          >
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Phone Number"
+              value={addedCoopStaff.password}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Department"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="department"
+              placeholder="Department"
+              value={addedCoopStaff.department}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Date of Birth"
+            className="mb-3"
+          >
+            <Form.Control
+              type="date"
+              name="dateOfBirth"
+              placeholder="Date of Birth"
+              value={addedCoopStaff.dateOfBirth}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Status"
+            className="mb-3"
+          >
+            <Form.Select
+              value={addedCoopStaff.status}
+              name="status"
+              onChange={handleStatusChange}
+            >
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>
+            </Form.Select>
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Place of Birth"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="placeOfBirth"
+              placeholder="Place of Birth"
+              value={addedCoopStaff.placeOfBirth}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Marital Status"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="maritalStatus"
+              placeholder="Marital Status"
+              value={addedCoopStaff.maritalStatus}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+        </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>

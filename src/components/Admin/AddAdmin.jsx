@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Modal, Button, Dropdown } from 'react-bootstrap';
+import { Modal, Button, FloatingLabel, Form } from 'react-bootstrap';
 import axios from 'axios';
 
 const AddAdmin = ({ onSubmit, adminID, onClose }) => {
@@ -10,19 +10,20 @@ const AddAdmin = ({ onSubmit, adminID, onClose }) => {
     setAddedAdmin({ ['admins_id']: adminID });
   }, [adminID]);
 
-const handleInputChange = (event) => {
-  const { name, value, type, checked } = event.target;
-  const newValue = type === 'checkbox' ? (checked ? 1 : 0) : value;
+  const handleInputChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    const newValue = type === 'checkbox' ? (checked ? 1 : 0) : value;
 
-  if (!value) {
-    throw new Error('This field is required.');
-  }
+    if (!value) {
+      console.log('Empty field:', name);
+      throw new Error('This field is required.');
+    }
 
-  setAddedAdmin((prevState) => ({
-    ...prevState,
-    [name]: newValue,
-  }));
-};
+    setAddedAdmin((prevState) => ({
+      ...prevState,
+      [name]: newValue,
+    }));
+  };
 
   const handleStatusChange = (eventKey) => {
     const newStatus = parseInt(eventKey, 10);
@@ -57,102 +58,114 @@ const handleInputChange = (event) => {
   };
 
   return (
-    <Modal show={true} onHide={onClose}>
-      <Modal.Header closeButton>
+    <Modal className="my-modal" show={true} onHide={onClose}>
+      <Modal.Header style={{ color: 'white' }} closeButton>
         <Modal.Title>Add Admin</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form>
-          <div>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="name"
-                value={addedAdmin.name}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Surname:
-              <input
-                type="text"
-                name="surname"
-                value={addedAdmin.surname}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              E-mail:
-              <input
-                type="email"
-                name="email"
-                value={addedAdmin.email}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Password:
-              <input
-                type="text"
-                name="password"
-                value={addedAdmin.password}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Password Confirm:
-              <input
-                type="text"
-                name="password_confirmation"
-                value={addedAdmin.password_confirmation}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Phone Number:
-              <input
-                type="text"
-                name="phone_number"
-                value={addedAdmin.phone_number}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div className='d-flex'>
-            <label>Status:</label>
-            <Dropdown onSelect={handleStatusChange}>
-              <Dropdown.Toggle variant="secondary" id="status-dropdown">
-                {addedAdmin.status === 1 ? 'Active' : 'Inactive'}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
-                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-          <div>
-            <label>
-              Image:
-              <input
-                type="file"
-                name="image"
-                value={addedAdmin.image}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-        </form>
+        <Form>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Name"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={addedAdmin.name}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Surname"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="surname"
+              placeholder="Surname"
+              value={addedAdmin.surname}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="E-mail"
+            className="mb-3"
+          >
+            <Form.Control
+              type="email"
+              name="email"
+              placeholder="E-mail"
+              value={addedAdmin.email}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Password"
+            className="mb-3"
+          >
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={addedAdmin.password}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Password Confirm"
+            className="mb-3"
+          >
+            <Form.Control
+              type="password"
+              name="password_confirmation"
+              placeholder="Password Confirm"
+              value={addedAdmin.password_confirmation}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Phone Number"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="phone_number"
+              placeholder="Phone Number"
+              value={addedAdmin.phone_number}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Status"
+            className="mb-3"
+          >
+            <Form.Select
+              value={addedAdmin.status}
+              name="status"
+              onChange={handleStatusChange}
+            >
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>
+            </Form.Select>
+          </FloatingLabel>
+          <Form.Group className="mb-3">
+            <Form.Label>Image:</Form.Label>
+            <Form.Control
+              type="file"
+              name="image"
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+        </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>

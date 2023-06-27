@@ -92,16 +92,30 @@ const FarmDetail = ({ cooperative, onClose }) => {
   };
 
   return (
-    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
+    <Modal className="p-0 my-modal" show={true} onHide={onClose} fullscreen>
       <Modal.Header closeButton>
-        <Modal.Title>Farms List of {cooperative.name} </Modal.Title>
+        <Modal.Title style={{ color: 'white' }}>
+          Farms List of {cooperative.name}{' '}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="d-flex justify-content-around mb-3">
-          <div className="d-flex justify-content-between">
-            <h2 className="ms-5"> Farm Detail</h2>
+        <div className="d-flex justify-content-center mb-3">
+          <div className="d-flex ms-auto me-auto">
+            <h2 className="ms-5" style={{ color: 'white' }}>
+              {' '}
+              Farm Detail
+            </h2>
           </div>
-          <Button variant="primary" onClick={handleAddFarmClick}>
+          <Button
+            style={{
+              boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+              backgroundColor: '#DEE2FF',
+              border: '0px',
+              color: 'black',
+            }}
+            variant="primary"
+            onClick={handleAddFarmClick}
+          >
             Add Farm
           </Button>
         </div>
@@ -137,11 +151,27 @@ const FarmDetail = ({ cooperative, onClose }) => {
                   <td>{farm.placeOfBirth}</td>
                   <td>{farm.identityNumber}</td>
                   <td>{farm.status ? 'Active' : 'Inactive'}</td>
-                  <td>
-                    <Button onClick={() => handleFarmUpdateClick(farm)}>
+                  <td className="d-flex gap-3">
+                    <Button
+                      style={{
+                        boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                        backgroundColor: '#DEE2FF',
+                        border: '0px',
+                        color: 'black',
+                      }}
+                      onClick={() => handleFarmUpdateClick(farm)}
+                    >
                       Update
                     </Button>
-                    <Button onClick={() => handleFarmDeleteClick(farm.id)}>
+                    <Button
+                      style={{
+                        boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                        backgroundColor: '#DEE2FF',
+                        border: '0px',
+                        color: 'black',
+                      }}
+                      onClick={() => handleFarmDeleteClick(farm.id)}
+                    >
                       Delete
                     </Button>
                   </td>

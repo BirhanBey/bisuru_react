@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const DeleteAdmin = ({ onSubmit, admin, onClose }) => {
   let token = localStorage.getItem('token');
-console.log(admin);
+  console.log(admin);
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
@@ -32,12 +32,12 @@ console.log(admin);
     }
   };
   return (
-    <Modal show={true} onHide={onClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Delete Cooperative Staff</Modal.Title>
+    <Modal className="my-modal" show={true} onHide={onClose}>
+      <Modal.Header style={{ color: 'white' }} closeButton>
+        <Modal.Title >Delete Admin</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Are you sure you want to delete this Admin?</p>
+        <p style={{ color: 'white' }}>Are you sure you want to delete this Admin?</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>

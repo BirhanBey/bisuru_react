@@ -92,16 +92,30 @@ const FarmersDetail = ({ cooperative, onClose }) => {
     closeModal();
   };
   return (
-    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
+    <Modal className="p-0 my-modal" show={true} onHide={onClose} fullscreen>
       <Modal.Header closeButton>
-      <Modal.Title>Farmers List of {cooperative.name} </Modal.Title>
+        <Modal.Title style={{ color: 'white' }}>
+          Farmers List of {cooperative.name}{' '}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="d-flex justify-content-around mb-3">
-          <div className="d-flex ">
-            <h2 className="ms-5"> Farmers Detail</h2>
+        <div className="d-flex justify-content-center mb-3">
+          <div className="d-flex ms-auto me-auto">
+            <h2 style={{ color: 'white' }} className="ms-5">
+              {' '}
+              Farmers Detail
+            </h2>
           </div>
-          <Button variant="primary" onClick={handleAddFarmerClick}>
+          <Button
+            style={{
+              boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+              backgroundColor: '#DEE2FF',
+              border: '0px',
+              color: 'black',
+            }}
+            variant="primary"
+            onClick={handleAddFarmerClick}
+          >
             Add Farmer
           </Button>
         </div>
@@ -134,11 +148,27 @@ const FarmersDetail = ({ cooperative, onClose }) => {
                 <td>{farmer.dateOfBirth}</td>
                 <td>{farmer.identityNumber}</td>
                 <td>{farmer.placeOfBirth}</td>
-                <td>
-                  <Button onClick={() => handleFarmerUpdateClick(farmer)}>
+                <td className='d-flex gap-3'>
+                  <Button
+                    style={{
+                      boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                      backgroundColor: '#DEE2FF',
+                      border: '0px',
+                      color: 'black',
+                    }}
+                    onClick={() => handleFarmerUpdateClick(farmer)}
+                  >
                     Update
                   </Button>
-                  <Button onClick={() => handleDeleteClick(farmer.id)}>
+                  <Button
+                    style={{
+                      boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                      backgroundColor: '#DEE2FF',
+                      border: '0px',
+                      color: 'black',
+                    }}
+                    onClick={() => handleDeleteClick(farmer.id)}
+                  >
                     Delete
                   </Button>
                 </td>

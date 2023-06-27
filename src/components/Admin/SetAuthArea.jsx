@@ -8,11 +8,11 @@ const SetAuthArea = ({ admin, onClose, onSubmit }) => {
   const [selectedAuthArea, setSelectedAuthArea] = useState('');
   let token = localStorage.getItem('token');
   console.log(admin);
-  
-  
+  const UserType = admin.roles[0].title;
+
   useEffect(() => {
-      const fetchAuthArea = async () => {
-          const UserType = admin.roles[0].title;
+    const fetchAuthArea = async () => {
+      const UserType = admin.roles[0].title;
       if (UserType === 'Cooperative') {
         try {
           const response = await axios.get(
@@ -25,6 +25,7 @@ const SetAuthArea = ({ admin, onClose, onSubmit }) => {
           );
 
           setAuthArea(response.data);
+          console.log(response.data);
         } catch (error) {
           console.error('Request Error:', error);
         }
@@ -47,6 +48,38 @@ const SetAuthArea = ({ admin, onClose, onSubmit }) => {
         try {
           const response = await axios.get(
             'https://s3.syntradeveloper.be/bisurularavel/api/farmers',
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          setAuthArea(response.data);
+          console.log(response.data);
+        } catch (error) {
+          console.error('Request Error:', error);
+        }
+      } else if (UserType === 'Farm') {
+        try {
+          const response = await axios.get(
+            'https://s3.syntradeveloper.be/bisurularavel/api/farms',
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          setAuthArea(response.data);
+          console.log(response.data);
+        } catch (error) {
+          console.error('Request Error:', error);
+        }
+      } else if (UserType === 'FarmStaff') {
+        try {
+          const response = await axios.get(
+            'https://s3.syntradeveloper.be/bisurularavel/api/farmstaffs',
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -85,7 +118,6 @@ const SetAuthArea = ({ admin, onClose, onSubmit }) => {
 
       onSubmit('OK');
       onClose();
-      
     } catch (error) {
       console.error('Request Error:', error);
       onSubmit(error);
@@ -93,24 +125,52 @@ const SetAuthArea = ({ admin, onClose, onSubmit }) => {
   };
 
   return (
-    <Modal show={true} onHide={onClose}>
+    <Modal className="my-modal" show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Set Authorization Area</Modal.Title>
+        <Modal.Title style={{ color: 'white' }}>
+          Set Authorization Area
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form.Group>
-          <Form.Label>Authorization Area:</Form.Label>
+          <Form.Label style={{ color: 'white' }}>
+            Authorization Area:
+          </Form.Label>
           <Form.Control
             as="select"
             value={selectedAuthArea}
             onChange={handleAuthAreaChange}
           >
-            <option value="">{admin.roles[0] ? 'Select Authorization Area' : 'Select UserType Firsft'}</option>
-            {authArea.map((authArea) => (
-              <option key={authArea.id} value={authArea.id}>
-                {authArea.name}
-              </option>
-            ))}
+            <option value="">
+              {admin.roles[0]
+                ? 'Select Authorization Area'
+                : 'Select UserType Firsft'}
+            </option>
+            {UserType !== 'Farm' ? (
+              authArea.map((authArea) => (
+                <option key={authArea.id} value={authArea.id}>
+                  {authArea.name}
+                </option>
+              ))
+            ) : (
+              authArea.map((authArea) => (
+                <option key={authArea.id} value={authArea.id}>
+                  {authArea.address}
+                </option>
+              ))
+            )}
+
+            {/* {authArea !== 'Farm'
+              ? authArea.map((authArea) => (
+                  <option key={authArea.id} value={authArea.id}>
+                    {authArea.name}
+                  </option>
+                ))
+              : authArea.map((authArea) => (
+                  <option key={authArea.id} value={authArea.id}>
+                    {authArea.address}
+                  </option>
+                ))} */}
           </Form.Control>
         </Form.Group>
       </Modal.Body>

@@ -5,13 +5,13 @@ const AnimalDetail = ({ cooperative, onClose }) => {
   const farmStaffData = cooperative.farmers;
 
   return (
-    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
-      <Modal.Header closeButton>
+    <Modal className="p-0 my-modal" show={true} onHide={onClose} fullscreen>
+      <Modal.Header style={{ color: 'white' }} closeButton>
       <Modal.Title>Animals List of {cooperative.name} </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="d-flex justify-content-center">
-          <h2 className="ms-5"> Animals Detail</h2>
+          <h2 className="ms-5" style={{ color: 'white' }}> Animals Detail</h2>
         </div>
         <Table striped bordered hover>
           <thead>

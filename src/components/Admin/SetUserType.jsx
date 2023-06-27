@@ -57,13 +57,13 @@ const SetUserType = ({ admin, onClose, onSubmit }) => {
   };
 
   return (
-    <Modal show={true} onHide={onClose}>
+    <Modal className='my-modal' show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Set User Type</Modal.Title>
+        <Modal.Title style={{color: "white"}}>Set User Type</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form.Group>
-          <Form.Label>User Type:</Form.Label>
+          <Form.Label style={{color: "white"}}>User Type:</Form.Label>
           <Form.Control
             as="select"
             value={selectedUserType}

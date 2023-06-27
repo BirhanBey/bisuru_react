@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Modal, Button, Dropdown } from 'react-bootstrap';
+import { Modal, Button, Form, FloatingLabel } from 'react-bootstrap';
 import axios from 'axios';
 
 const UpdateFarm = ({ onSubmit, farm, onClose }) => {
@@ -15,12 +15,21 @@ const UpdateFarm = ({ onSubmit, farm, onClose }) => {
     }));
   };
 
-  const handleStatusChange = (eventKey) => {
-    const newStatus = parseInt(eventKey, 10); 
+  const handleStatusChange = (event) => {
+    const selectedStatus = event.target.value;
+    const newStatus = parseInt(selectedStatus, 10);
     setEditedFarm((prevFarm) => ({
       ...prevFarm,
       status: newStatus,
     }));
+
+    const updatedFarm = {
+      ...editedFarm,
+      status: newStatus,
+    };
+    onSubmit(updatedFarm);
+
+    console.log('handleStatusChange çalıştı');
   };
 
   const handleSubmit = async () => {
@@ -34,11 +43,11 @@ const UpdateFarm = ({ onSubmit, farm, onClose }) => {
           },
         }
       );
-  
+
       onClose(); // Modalı kapat
-  
+
       if (response.status === 200) {
-        onSubmit("OK");
+        onSubmit('OK');
       } else {
         onSubmit(response);
       }
@@ -49,116 +58,134 @@ const UpdateFarm = ({ onSubmit, farm, onClose }) => {
   };
 
   return (
-    <Modal show={true} onHide={onClose}>
+    <Modal className="my-modal" show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Update Farm</Modal.Title>
+        <Modal.Title style={{ color: 'white' }}>Update Farm</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form>
-          <div>
-            <label>
-              Address:
-              <input
-                type="text"
-                name="address"
-                value={editedFarm.address}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Phone Number:
-              <input
-                type="text"
-                name="phoneNumber"
-                value={editedFarm.phoneNumber}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Latitude:
-              <input
-                type="text"
-                name="latitude"
-                value={editedFarm.latitude}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-            Longitude:
-              <input
-                type="text"
-                name="longitude"
-                value={editedFarm.longitude}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Surface Area:
-              <input
-                type="text"
-                name="surfaceArea"
-                value={editedFarm.surfaceArea}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              City:
-              <input
-                type="text"
-                name="city"
-                value={editedFarm.city}
-                onChange={handleInputChange}
-                disabled
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Identity Number:
-              <input
-                type="text"
-                name="identityNumber"
-                value={editedFarm.identityNumber}
-                onChange={handleInputChange}
-                disabled
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Place of Birth:
-              <input
-                type="text"
-                name="placeOfBirth"
-                value={editedFarm.placeOfBirth}
-                onChange={handleInputChange}
-                disabled
-              />
-            </label>
-          </div>
-          <div className="d-flex">
-            <label>Status:</label>
-            <Dropdown onSelect={handleStatusChange}>
-              <Dropdown.Toggle variant="secondary" id="status-dropdown">
-                {editedFarm.status === 1 ? 'Active' : 'Inactive'}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
-                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-        </form>
+        <Form>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Farmer ID"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="farmers_id"
+              placeholder="Farmer ID"
+              value={editedFarm.farmers_id}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Address"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={editedFarm.address}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Phone Number"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="phoneNumber"
+              placeholder="Phone Number"
+              value={editedFarm.phoneNumber}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Latitude"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="latitude"
+              placeholder="Latitude"
+              value={editedFarm.latitude}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Longitude"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="longitude"
+              placeholder="Longitude"
+              value={editedFarm.longitude}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Surface Area"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="surfaceArea"
+              placeholder="Surface Area"
+              value={editedFarm.surfaceArea}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="City"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="placeOfBirth"
+              placeholder="City"
+              value={editedFarm.placeOfBirth}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Identity Number"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="identityNumber"
+              placeholder="Identity Number"
+              value={editedFarm.identityNumber}
+              onChange={handleInputChange}
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Status"
+            className="mb-3"
+          >
+            <Form.Select
+              value={editedFarm.status}
+              name="status"
+              onChange={handleStatusChange}
+            >
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>
+            </Form.Select>
+          </FloatingLabel>
+        </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
@@ -173,10 +200,9 @@ const UpdateFarm = ({ onSubmit, farm, onClose }) => {
 };
 
 UpdateFarm.propTypes = {
-    farm: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
+  farm: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
-
 
 export default UpdateFarm;

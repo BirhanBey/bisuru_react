@@ -31,12 +31,12 @@ console.log(farm);
     }
   };
   return (
-    <Modal show={true} onHide={onClose}>
+    <Modal className="my-modal" show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Delete Farm</Modal.Title>
+        <Modal.Title style={{ color: 'white' }}>Delete Farm</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Are you sure you want to delete this farm?</p>
+        <p style={{ color: 'white' }}>Are you sure you want to delete this farm?</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
