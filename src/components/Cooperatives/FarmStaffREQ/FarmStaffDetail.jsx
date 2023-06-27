@@ -4,13 +4,13 @@ import { Table, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import UpdateFarmStaff from './UpdateFarmStaff';
 import DeleteFarmStaff from './DeleteFarmStaff';
-import AddFarmStaff from './AddFarmStaff'; // Ekledik
+import AddFarmStaff from './AddFarmStaff'; 
 import { CoopDataRefresh } from '../../../functions/CoopDataRefresh';
 
 const FarmStaffDetail = ({ cooperative, onClose }) => {
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [isAddModalOpen, setAddModalOpen] = useState(false); // Ekledik
+  const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [selectedFarmStaff, setSelectedFarmStaff] = useState(null);
   const [farmStaffData, setFarmStaffData] = useState(cooperative.farmers);
   console.log(cooperative);
@@ -32,7 +32,6 @@ const FarmStaffDetail = ({ cooperative, onClose }) => {
   };
 
   const handleAddFarmStaffClick = () => {
-    // Ekledik
     setAddModalOpen(true);
   };
 

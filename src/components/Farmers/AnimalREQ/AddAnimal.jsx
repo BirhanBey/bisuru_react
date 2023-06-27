@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Modal, Button, Dropdown } from 'react-bootstrap';
+import { Modal, Button, Form, FloatingLabel } from 'react-bootstrap';
 import axios from 'axios';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
@@ -20,12 +20,21 @@ const AddAnimal = ({ onSubmit, farmerID, onClose }) => {
     }));
   };
 
-  const handleStatusChange = (eventKey) => {
-    const newStatus = parseInt(eventKey, 10); // Seçilen değeri tamsayıya çeviriyoruz
-    setAddedAnimal((prevFarm) => ({
-      ...prevFarm,
+  const handleStatusChange = (event) => {
+    const selectedStatus = event.target.value;
+    const newStatus = parseInt(selectedStatus, 10);
+    setAddedAnimal((prevAnimal) => ({
+      ...prevAnimal,
       status: newStatus,
     }));
+
+    const updatedAnimal = {
+      ...addedAnimal,
+      status: newStatus,
+    };
+    onSubmit(updatedAnimal);
+
+    console.log('handleStatusChange çalıştı');
   };
 
   const handleAnimalSubmit = async () => {
@@ -55,92 +64,108 @@ const AddAnimal = ({ onSubmit, farmerID, onClose }) => {
   };
 
   return (
-    <Modal show={true} onHide={onClose}>
+    <Modal className="p-0 my-modal" show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Add Animal</Modal.Title>
+        <Modal.Title style={{ color: 'white' }}>Add Animal</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form>
-          <div>
-            <label>
-              Farmer Id:
-              <input
-                type="text"
-                name="farmer_id"
-                value={addedAnimal.farmer_id}
-                onChange={handleAnimalInputChange}
-                disabled
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Farm Id:
-              <input
-                type="text"
-                name="farms_id"
-                value={addedAnimal.farms_id}
-                onChange={handleAnimalInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Earing Number:
-              <input
-                type="text"
-                name="earing_number"
-                value={addedAnimal.earing_number}
-                onChange={handleAnimalInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Date of Birth:
-              <input
-                type="date"
-                name="dateOfBirth"
-                value={addedAnimal.dateOfBirth}
-                onChange={handleAnimalInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Last Birth:
-              <input
-                type="date"
-                name="dateOfLastBirthGiving"
-                value={addedAnimal.dateOfLastBirthGiving}
-                onChange={handleAnimalInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Birth Number:
-              <input
-                type="text"
-                name="birthNummber"
-                value={addedAnimal.birthNummber}
-                onChange={handleAnimalInputChange}
-              />
-            </label>
-          </div>
-          <div className="d-flex">
-            <label>Status:</label>
-            <Dropdown onSelect={handleStatusChange}>
-              <Dropdown.Toggle variant="secondary" id="status-dropdown">
-                {addedAnimal.status === 1 ? 'Active' : 'Inactive'}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
-                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-        </form>
+        <Form>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Farmer ID"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              disabled
+              name="farmer_id"
+              placeholder="Farmer ID"
+              value={addedAnimal.farmer_id}
+              onChange={handleAnimalInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Farm ID"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="farms_id"
+              placeholder="Farm ID"
+              value={addedAnimal.farms_id}
+              onChange={handleAnimalInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Earing Number"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="earing_number"
+              placeholder="Earing Number"
+              value={addedAnimal.earing_number}
+              onChange={handleAnimalInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Date of Birth"
+            className="mb-3"
+          >
+            <Form.Control
+              type="date"
+              name="dateOfBirth"
+              placeholder="Date of Birth"
+              value={addedAnimal.dateOfBirth}
+              onChange={handleAnimalInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Last Birth"
+            className="mb-3"
+          >
+            <Form.Control
+              type="date"
+              name="dateOfLastBirthGiving"
+              placeholder="Last Birth"
+              value={addedAnimal.dateOfLastBirthGiving}
+              onChange={handleAnimalInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Birth Nummber"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="birthNummber"
+              placeholder="Birth Nummber"
+              value={addedAnimal.birthNummber}
+              onChange={handleAnimalInputChange}
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Lactation"
+            className="mb-3"
+          >
+            <Form.Select
+              name="lactaionStatus"
+              placeholder="Lactation"
+              value={addedAnimal.lactaionStatus}
+              onChange={handleStatusChange}
+            >
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>
+            </Form.Select>
+          </FloatingLabel>
+        </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>

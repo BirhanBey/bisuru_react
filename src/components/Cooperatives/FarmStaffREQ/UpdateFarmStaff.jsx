@@ -48,14 +48,14 @@ const UpdateFarmStaff = ({ onSubmit, farmsStaff, onClose }) => {
       ...prevFarmStaff,
       status: newStatus,
     }));
-  
+
     const updatedFarmStaff = {
       ...editedFarmStaff,
       status: newStatus,
     };
-    onSubmit(updatedFarmStaff); 
-  
-    console.log('handleStatusChange çalıştı'); 
+    onSubmit(updatedFarmStaff);
+
+    console.log('handleStatusChange çalıştı');
   };
 
   return (
@@ -64,7 +64,7 @@ const UpdateFarmStaff = ({ onSubmit, farmsStaff, onClose }) => {
         <Modal.Title style={{ color: 'white' }}>Update Farm Staff</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <Form>
+        <Form>
           <FloatingLabel
             controlId="floatingInput"
             label="Farm ID"

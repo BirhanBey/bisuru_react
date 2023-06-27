@@ -13,23 +13,23 @@ const AnimalDetail = ({ farmer, onClose }) => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState(null);
   const [farmData, setFarmData] = useState(farmer.farms);
-  let token = localStorage.getItem('token;')
+  let token = localStorage.getItem('token;');
 
-console.log(farmData);
+  console.log(farmData);
 
-const handleAnimalUpdateClick = (farmsStaff) => {
-  setSelectedAnimal(farmsStaff);
-  setUpdateModalOpen(true);
-};
+  const handleAnimalUpdateClick = (farmsStaff) => {
+    setSelectedAnimal(farmsStaff);
+    setUpdateModalOpen(true);
+  };
 
-const handleAnimalDeleteClick = (farmsStaff) => {
-  setSelectedAnimal(farmsStaff);
-  setDeleteModalOpen(true);
-};
+  const handleAnimalDeleteClick = (farmsStaff) => {
+    setSelectedAnimal(farmsStaff);
+    setDeleteModalOpen(true);
+  };
 
-const handleAddAnimalClick = () => {
-  setAddModalOpen(true);
-};
+  const handleAddAnimalClick = () => {
+    setAddModalOpen(true);
+  };
   const handleAnimalUpdate = (updatedFarmer) => {
     const farms = farmer.farms;
     const updatedFarmsList = farms.map((farm) => {
@@ -42,7 +42,6 @@ const handleAddAnimalClick = () => {
       ...prevState,
       farms: updatedFarmsList,
     }));
-    
   };
 
   const handleAnimalAdd = async (newAnimal) => {
@@ -92,36 +91,44 @@ const handleAddAnimalClick = () => {
   };
 
   return (
-    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
-    <Modal.Header closeButton>
-      <Modal.Title>Animal List of Farmer {farmer.name} </Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-    <div className="d-flex justify-content-around mb-3">
-      <div className="d-flex justify-content-between">
-        <h2 className="ms-5"> Animal Detail</h2>
-
-      </div>
-      <Button variant="primary" onClick={handleAddAnimalClick}>
-        Add Animal
-      </Button>  
-    </div>    
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>Farm id</th>
-            <th>Earing Number</th>
-            <th>Date of Birth</th>
-            <th>Date of Last Birth Giving</th>
-            <th>Number of Births</th>
-            <th>Lactaion Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {farmData.map((farm) =>
-            farm.animals.map((animal) =>
-              
+    <Modal className="p-0 my-modal" show={true} onHide={onClose} fullscreen>
+      <Modal.Header closeButton>
+        <Modal.Title style={{ color: 'white' }}>Animal List of Farmer {farmer.name} </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="d-flex justify-content-center mb-3">
+          <div className="d-flex ms-auto me-auto">
+            <h2 className="ms-5" style={{ color: 'white' }}> Animal Detail</h2>
+          </div>
+          <Button
+            style={{
+              boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+              backgroundColor: '#DEE2FF',
+              border: '0px',
+              color: 'black',
+            }}
+            variant="primary"
+            onClick={handleAddAnimalClick}
+          >
+            Add Animal
+          </Button>
+        </div>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Farm id</th>
+              <th>Earing Number</th>
+              <th>Date of Birth</th>
+              <th>Date of Last Birth Giving</th>
+              <th>Number of Births</th>
+              <th>Lactation Status</th>
+              <th>Control</th>
+            </tr>
+          </thead>
+          <tbody>
+            {farmData.map((farm) =>
+              farm.animals.map((animal) => (
                 <tr id={animal.id} key={animal.id}>
                   <td>{animal.id}</td>
                   <td>{animal.farms_id}</td>
@@ -130,50 +137,62 @@ const handleAddAnimalClick = () => {
                   <td>{animal.dateOfLastBirthGiving}</td>
                   <td>{animal.birthNummber}</td>
                   <td>{animal.lactaionStatus}</td>
-                  <td>
-                    <Button onClick={() => handleAnimalUpdateClick(animal.id)}>
+                  <td className='d-flex gap-3'>
+                    <Button
+                      style={{
+                        boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                        backgroundColor: '#DEE2FF',
+                        border: '0px',
+                        color: 'black',
+                      }}
+                      onClick={() => handleAnimalUpdateClick(animal.id)}
+                    >
                       Update
                     </Button>
-                    <Button onClick={() => handleAnimalDeleteClick(animal.id)}>
+                    <Button
+                      style={{
+                        boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                        backgroundColor: '#DEE2FF',
+                        border: '0px',
+                        color: 'black',
+                      }}
+                      onClick={() => handleAnimalDeleteClick(animal.id)}
+                    >
                       Delete
                     </Button>
                   </td>
                 </tr>
-              
-            )
-          )}
-        </tbody>
-      </Table>
-      {isUpdateModalOpen && (
-        <UpdateAnimal
-          animal={selectedAnimal}
-          onClose={() => setUpdateModalOpen(false)}
-          onSubmit={handleModalSubmit}
-          onAnimalUpdate={handleAnimalUpdate}
-        />
-      )}
-      {isDeleteModalOpen && (
-        <DeleteAnimal
-          onSubmit={handleModalSubmit}
-          animal={selectedAnimal}
-          onClose={closeModal}
-        />
-      )}
-      {isAddModalOpen && ( // Ekledik
-        <AddAnimal
-          onSubmit={handleModalSubmit}
-          farmerID={farmer.id}
-          animal={selectedAnimal}
-          onClose={() => setAddModalOpen(false)}
-          onAnimalAdd={handleAnimalAdd}
-        />
-      )}
-
-    </Modal.Body>
-    <Modal.Footer>{/* Footer içeriği */}</Modal.Footer>
-  </Modal>
-
-
+              ))
+            )}
+          </tbody>
+        </Table>
+        {isUpdateModalOpen && (
+          <UpdateAnimal
+            animal={selectedAnimal}
+            onClose={() => setUpdateModalOpen(false)}
+            onSubmit={handleModalSubmit}
+            onAnimalUpdate={handleAnimalUpdate}
+          />
+        )}
+        {isDeleteModalOpen && (
+          <DeleteAnimal
+            onSubmit={handleModalSubmit}
+            animal={selectedAnimal}
+            onClose={closeModal}
+          />
+        )}
+        {isAddModalOpen && ( // Ekledik
+          <AddAnimal
+            onSubmit={handleModalSubmit}
+            farmerID={farmer.id}
+            animal={selectedAnimal}
+            onClose={() => setAddModalOpen(false)}
+            onAnimalAdd={handleAnimalAdd}
+          />
+        )}
+      </Modal.Body>
+      <Modal.Footer>{/* Footer içeriği */}</Modal.Footer>
+    </Modal>
   );
 };
 
