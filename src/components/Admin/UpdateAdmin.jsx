@@ -44,7 +44,6 @@ const UpdateAdmin = ({ onSubmit, admin, onClose }) => {
       );
       onClose(); // Modalı kapat
 
-      // Güncellenmiş verileri tabloya yansıt
       if (response.status === 200) {
         onSubmit('OK');
       } else {
@@ -52,7 +51,6 @@ const UpdateAdmin = ({ onSubmit, admin, onClose }) => {
       }
     } catch (error) {
       console.error('Request Error:', error);
-      // Hata durumunu ele al
     }
   };
 

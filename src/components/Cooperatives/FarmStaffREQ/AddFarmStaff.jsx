@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Modal, Button, Dropdown } from 'react-bootstrap';
+import { Modal, Button, Form, FloatingLabel } from 'react-bootstrap';
 import axios from 'axios';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
@@ -22,9 +22,9 @@ const AddFarmStaff = ({ onSubmit, coopID, onClose }) => {
   };
 
   const handleStatusChange = (eventKey) => {
-    const newStatus = parseInt(eventKey, 10); // Seçilen değeri tamsayıya çeviriyoruz
-    setAddedFarmStaff((prevFarm) => ({
-      ...prevFarm,
+    const newStatus = parseInt(eventKey, 10);
+    setAddedFarmStaff((prevFarmStaff) => ({
+      ...prevFarmStaff,
       status: newStatus,
     }));
   };
@@ -57,114 +57,146 @@ const AddFarmStaff = ({ onSubmit, coopID, onClose }) => {
   };
 
   return (
-    <Modal show={true} onHide={onClose}>
-      <Modal.Header closeButton>
+    <Modal className="my-modal" show={true} onHide={onClose}>
+      <Modal.Header style={{ color: 'white' }} closeButton>
         <Modal.Title>Add Farm Staff</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form>
-          <div>
-            <label>
-              Farm Id:
-              <input
-                type="text"
-                name="farms_id"
-                value={addedFarmStaff.farms_id}
-                onChange={handleFarmStaffInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Cooperative Id:
-              <input
-                type="text"
-                name="cooperatives_id"
-                value={addedFarmStaff.cooperatives_id}
-                onChange={handleFarmStaffInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="name"
-                value={addedFarmStaff.name}
-                onChange={handleFarmStaffInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Surname:
-              <input
-                type="text"
-                name="surname"
-                value={addedFarmStaff.surname}
-                onChange={handleFarmStaffInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Department:
-              <input
-                type="text"
-                name="address"
-                value={addedFarmStaff.department}
-                onChange={handleFarmStaffInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Phone Number:
-              <input
-                type="text"
-                name="phoneNumber"
-                value={addedFarmStaff.phoneNumber}
-                onChange={handleFarmStaffInputChange}
-              />
-            </label>
-          </div>
+        <Form>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Farm ID"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="farms_id"
+              placeholder="Farm ID"
+              value={addedFarmStaff.farms_id}
+              onChange={handleFarmStaffInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Cooperative ID"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="cooperatives_id"
+              placeholder="Cooperative ID"
+              value={addedFarmStaff.cooperatives_id}
+              onChange={handleFarmStaffInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Name"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={addedFarmStaff.name}
+              onChange={handleFarmStaffInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Surname"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="surname"
+              placeholder="Surname"
+              value={addedFarmStaff.surname}
+              onChange={handleFarmStaffInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Department"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="department"
+              placeholder="Department"
+              value={addedFarmStaff.department}
+              onChange={handleFarmStaffInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Phone Number"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="phoneNumber"
+              placeholder="Phone Number"
+              value={addedFarmStaff.phoneNumber}
+              onChange={handleFarmStaffInputChange}
+            />
+          </FloatingLabel>
 
-          <div>
-            <label>
-              Date of Birth:
-              <input
-                type="date"
-                name="dateOfBirth"
-                value={addedFarmStaff.dateOfBirth}
-                onChange={handleFarmStaffInputChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Education:
-              <input
-                type="text"
-                name="education"
-                value={addedFarmStaff.education}
-                onChange={handleFarmStaffInputChange}
-              />
-            </label>
-          </div>
-          <div className="d-flex">
-            <label>Status:</label>
-            <Dropdown onSelect={handleStatusChange}>
-              <Dropdown.Toggle variant="secondary" id="status-dropdown">
-                {addedFarmStaff.status === 1 ? 'Active' : 'Inactive'}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item eventKey="1">Active</Dropdown.Item>
-                <Dropdown.Item eventKey="0">Inactive</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-        </form>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Education"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="education"
+              placeholder="Education"
+              value={addedFarmStaff.education}
+              onChange={handleFarmStaffInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Marital Status"
+            className="mb-3"
+          >
+            <Form.Control
+              type="text"
+              name="maritalStatus"
+              placeholder="Marital Status"
+              value={addedFarmStaff.maritalStatus}
+              onChange={handleFarmStaffInputChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Date of Birth"
+            className="mb-3"
+          >
+            <Form.Control
+              type="date"
+              name="dateOfBirth"
+              placeholder="Date of Birth"
+              value={addedFarmStaff.dateOfBirth}
+              onChange={handleFarmStaffInputChange}
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingInput"
+            label="Status"
+            className="mb-3"
+          >
+            <Form.Select
+              value={addedFarmStaff.status}
+              name="status"
+              onChange={handleStatusChange}
+            >
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>
+            </Form.Select>
+          </FloatingLabel>
+        </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
