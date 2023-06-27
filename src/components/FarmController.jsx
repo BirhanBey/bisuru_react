@@ -33,11 +33,11 @@ const FarmController = () => {
   }, [token]);
 
   const handleFarmStaffClick = (farm) => {
-    setSelectedFarm(farm); 
+    setSelectedFarm(farm);
     setShowFarmStaffDetail(!showFarmStaffDetail);
   };
   const handleAnimalsClick = (farm) => {
-    setSelectedFarm(farm); 
+    setSelectedFarm(farm);
     setShowAnimalsDetail(!showAnimalsDetail);
   };
 
@@ -48,7 +48,15 @@ const FarmController = () => {
 
   return (
     <div>
-      <h1>Farm Panel</h1>
+      <h1
+        style={{
+          color: 'white',
+          textShadow: ' 1px 3px 5px #f1f1f1',
+          fontSize: '32px',
+        }}
+      >
+        Farm Panel
+      </h1>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -61,6 +69,7 @@ const FarmController = () => {
             <th>Status</th>
             <th>Surface Area</th>
             <th>Identity Number</th>
+            <th>Control</th>
           </tr>
         </thead>
         <tbody>
@@ -79,10 +88,24 @@ const FarmController = () => {
 
                 <td colSpan="7">
                   <Dropdown>
-                    <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                    <Dropdown.Toggle
+                      style={{
+                        boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                        backgroundColor: '#cbc0d3',
+                        border: '0px',
+                        color: 'white',
+                      }}
+                      variant="secondary"
+                      id="dropdown-basic"
+                    >
                       View Details
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu
+                      style={{
+                        backgroundColor: '#cbc0d3',
+                        marginTop: '10px',
+                      }}
+                    >
                       <Dropdown.Item onClick={() => handleFarmStaffClick(farm)}>
                         Farm Staff
                       </Dropdown.Item>
@@ -99,10 +122,7 @@ const FarmController = () => {
         </tbody>
       </Table>
       {showFarmStaffDetail && selectedFarm && (
-        <FarmStaffDetail
-          farm={selectedFarm}
-          onClose={handleClose}
-        />
+        <FarmStaffDetail farm={selectedFarm} onClose={handleClose} />
       )}
       {showAnimalsDetail && selectedFarm && (
         <AnimalDetail farm={selectedFarm} onClose={handleClose} />

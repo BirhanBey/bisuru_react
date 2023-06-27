@@ -48,15 +48,15 @@ const CooperativesControl = () => {
   };
 
   const handleFarmsClick = (cooperative) => {
-    setSelectedCooperative(cooperative); 
-    setShowFarmsDetail(!showFarmsDetail); 
+    setSelectedCooperative(cooperative);
+    setShowFarmsDetail(!showFarmsDetail);
   };
   const handleFarmStaffClick = (cooperative) => {
-    setSelectedCooperative(cooperative); 
+    setSelectedCooperative(cooperative);
     setShowFarmStaffDetail(!showFarmStaffDetail);
   };
   const handleAnimalsClick = (cooperative) => {
-    setSelectedCooperative(cooperative); 
+    setSelectedCooperative(cooperative);
     setShowAnimalsDetail(!showAnimalsDetail);
   };
 
@@ -69,7 +69,15 @@ const CooperativesControl = () => {
   };
   return (
     <div>
-      <h1>Cooperatives Panel</h1>
+      <h1
+        style={{
+          color: 'white',
+          textShadow: ' 1px 3px 5px #f1f1f1',
+          fontSize: '32px',
+        }}
+      >
+        Cooperatives Panel
+      </h1>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -80,6 +88,7 @@ const CooperativesControl = () => {
             <th>Field</th>
             <th>Founded</th>
             <th>License Number</th>
+            <th>Control</th>
           </tr>
         </thead>
         <tbody>
@@ -96,10 +105,24 @@ const CooperativesControl = () => {
 
                 <td colSpan="7">
                   <Dropdown>
-                    <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                    <Dropdown.Toggle
+                      style={{
+                        boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                        backgroundColor: '#cbc0d3',
+                        border: '0px',
+                        color: 'white',
+                      }}
+                      variant="secondary"
+                      id="dropdown-basic"
+                    >
                       View Details
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu
+                      style={{
+                        backgroundColor: '#cbc0d3',
+                        marginTop: '10px',
+                      }}
+                    >
                       <Dropdown.Item
                         onClick={() => handleCoopStaffClick(cooperative)}
                       >
@@ -152,10 +175,7 @@ const CooperativesControl = () => {
         />
       )}
       {showAnimalsDetail && selectedCooperative && (
-        <AnimalDetail
-          cooperative={selectedCooperative}
-          onClose={handleClose}
-        />
+        <AnimalDetail cooperative={selectedCooperative} onClose={handleClose} />
       )}
     </div>
   );

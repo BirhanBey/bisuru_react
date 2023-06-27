@@ -12,7 +12,7 @@ const FarmerControl = () => {
   const [showFarmStaffDetail, setShowFarmStaffDetail] = useState(false);
   const [showAnimalsDetail, setShowAnimalsDetail] = useState(false);
   let token = localStorage.getItem('token');
-// console.log(selectedFarmer);
+  // console.log(selectedFarmer);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -53,7 +53,15 @@ const FarmerControl = () => {
   };
   return (
     <div>
-      <h1>Farmer Panel</h1>
+      <h1
+        style={{
+          color: 'white',
+          textShadow: ' 1px 3px 5px #f1f1f1',
+          fontSize: '32px',
+        }}
+      >
+        Farmer Panel
+      </h1>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -67,14 +75,14 @@ const FarmerControl = () => {
             <th>Date of Birth</th>
             <th>Identity Number</th>
             <th>Place of Birth</th>
-            <th></th>
+            <th>Control</th>
           </tr>
         </thead>
         <tbody>
           {allFarmers.map((farmer) => (
             <React.Fragment key={farmer.id}>
               <tr>
-              <td>{farmer.id}</td>
+                <td>{farmer.id}</td>
                 <td>{farmer.cooperatives_id}</td>
                 <td>{farmer.name}</td>
                 <td>{farmer.surname}</td>
@@ -87,18 +95,25 @@ const FarmerControl = () => {
 
                 <td colSpan="7">
                   <Dropdown>
-                    <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                    <Dropdown.Toggle
+                      style={{
+                        boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                        backgroundColor: '#cbc0d3',
+                        border: '0px',
+                        color: 'white',
+                      }}
+                      variant="secondary"
+                      id="dropdown-basic"
+                    >
                       View Details
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      {/* <Dropdown.Item
-                        onClick={() => handleFarmersClick(farmer)}
-                      >
-                        Farmers
-                      </Dropdown.Item> */}
-                      <Dropdown.Item
-                        onClick={() => handleFarmsClick(farmer)}
-                      >
+                    <Dropdown.Menu
+                      style={{
+                        backgroundColor: '#cbc0d3',
+                        marginTop: '10px',
+                      }}
+                    >
+                      <Dropdown.Item onClick={() => handleFarmsClick(farmer)}>
                         Farms
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -106,9 +121,7 @@ const FarmerControl = () => {
                       >
                         Farm Staff
                       </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleAnimalsClick(farmer)}
-                      >
+                      <Dropdown.Item onClick={() => handleAnimalsClick(farmer)}>
                         Animals
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -120,21 +133,14 @@ const FarmerControl = () => {
         </tbody>
       </Table>
 
-
       {showFarmsDetail && selectedFarmer && (
         <FarmDetail farmer={selectedFarmer} onClose={handleClose} />
       )}
       {showFarmStaffDetail && selectedFarmer && (
-        <FarmStaffDetail
-          farmer={selectedFarmer}
-          onClose={handleClose}
-        />
+        <FarmStaffDetail farmer={selectedFarmer} onClose={handleClose} />
       )}
       {showAnimalsDetail && selectedFarmer && (
-        <AnimalDetail
-          farmer={selectedFarmer}
-          onClose={handleClose}
-        />
+        <AnimalDetail farmer={selectedFarmer} onClose={handleClose} />
       )}
     </div>
   );

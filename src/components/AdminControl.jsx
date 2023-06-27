@@ -5,18 +5,17 @@ import UpdateAdmin from './Admin/UpdateAdmin';
 import DeleteAdmin from './Admin/DeleteAdmin';
 import AddAdmin from './Admin/AddAdmin';
 import SetUserType from './Admin/SetUserType';
+import SetAuthArea from './Admin/SetAuthArea';
 
 const AdminControl = () => {
   const [allAdmins, setAllAdmins] = useState([]);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isAddAdminModalOpen, setAddAdminModalOpen] = useState(false);
+  const [isAuthAreaModalOpen, setAuthAreaModalOpen] = useState(false);
   const [isSetUserTypeModalOpen, setSetUserTypeModalOpen] = useState(false);
-
   const [selectedAdmin, setSelectedAdmin] = useState(null);
   let token = localStorage.getItem('token');
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,6 +49,11 @@ const AdminControl = () => {
   const handleSetUserTypeClick = (admin) => {
     setSelectedAdmin(admin);
     setSetUserTypeModalOpen(true);
+  };
+
+  const handleSetAuthAreaClick = (area) => {
+    setSelectedAdmin(area);
+    setAuthAreaModalOpen(true);
   };
 
   const closeModal = () => {
@@ -88,7 +92,7 @@ const AdminControl = () => {
         admins: [...prevState.admins, addedCoopStaff],
       }));
 
-      // onClose(); 
+      // onClose();
     } catch (error) {
       console.error('Request Error:', error);
     }
@@ -117,9 +121,21 @@ const AdminControl = () => {
 
   return (
     <div>
-      <div className='d-flex justify-content-between mb-3'>
-        <h1>Admin Panel</h1>
-        <Button variant="primary" onClick={handleAddClick}>
+      <div className="d-flex justify-content-between mb-3">
+        <h2 style={{            
+            color: 'white',
+            textShadow: "1px 3px 0 #969696, 1px 5px 5px #f1f1f1",
+          }}>Admin Panel</h2>
+        <Button
+          variant="primary"
+          onClick={handleAddClick}
+          style={{
+            boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+            backgroundColor: '#DEE2FF',
+            border: '0px',
+            color: 'black',
+          }}
+        >
           Add Staff
         </Button>
       </div>
@@ -134,6 +150,8 @@ const AdminControl = () => {
             <th>Status</th>
             <th>Image</th>
             <th>Title</th>
+            <th>Authorization Area</th>
+            <th>Update / Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -146,15 +164,43 @@ const AdminControl = () => {
               <td>{admin.phone_number}</td>
               <td>{admin.status}</td>
               <td>{admin.image}</td>
-              <td>{admin.roles.length > 0 ? admin.roles[0].title : ''}</td>
               <td>
+                {!admin.roles[0] ? (
+                  <Button
+                    style={{ width: '130px' }}
+                    onClick={() => handleSetUserTypeClick(admin)}
+                  >
+                    Set User Type
+                  </Button>
+                ) : admin.roles.length > 0 ? (
+                  admin.roles[0].title
+                ) : (
+                  ''
+                )}
+              </td>
+              <td>
+                <Button
+                  style={{ width: '130px' }}
+                  onClick={() => handleSetAuthAreaClick(admin)}
+                >
+                  Set Auth Area
+                </Button>
+                {/* {!admin.roles[0] ? (
+                  <Button
+                    style={{ width: '130px' }}
+                    onClick={() => handleSetAuthAreaClick(admin)}
+                  >
+                    Set Auth Area
+                  </Button>
+                ) : (
+                  ''
+                )} */}
+              </td>
+              <td className="d-flex gap-2">
                 <Button onClick={() => handleUpdateClick(admin)}>Update</Button>
                 <Button onClick={() => handleDeleteClick(admin.id)}>
                   Delete
                 </Button>
-              </td>
-              <td>
-                <Button onClick={() => handleSetUserTypeClick(admin)}>Set User Type</Button>
               </td>
             </tr>
           ))}
@@ -175,7 +221,7 @@ const AdminControl = () => {
           onClose={closeModal}
         />
       )}
-      {isAddAdminModalOpen && ( 
+      {isAddAdminModalOpen && (
         <AddAdmin
           onSubmit={handleModalSubmit}
           // adminID={admin.id}
@@ -184,12 +230,21 @@ const AdminControl = () => {
           onCoopStaffAdd={handleCoopStaffAdd}
         />
       )}
-      {isSetUserTypeModalOpen && ( 
+      {isSetUserTypeModalOpen && (
         <SetUserType
           onSubmit={handleModalSubmit}
           // adminID={admin.id}
           admin={selectedAdmin}
           onClose={() => setSetUserTypeModalOpen(false)}
+          onCoopStaffAdd={handleCoopStaffAdd}
+        />
+      )}
+      {isAuthAreaModalOpen && (
+        <SetAuthArea
+          onSubmit={handleModalSubmit}
+          // adminID={admin.id}
+          admin={selectedAdmin}
+          onClose={() => setAuthAreaModalOpen(false)}
           onCoopStaffAdd={handleCoopStaffAdd}
         />
       )}

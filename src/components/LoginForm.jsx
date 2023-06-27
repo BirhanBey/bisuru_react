@@ -12,8 +12,8 @@ const LoginForm = ({ handleLogin }) => {
   };
 
   return (
-    <Container>
-      <Form className="form-signin" onSubmit={handleSubmit}>
+    <Container >
+      <Form className="form-signin d-flex flex-column align-items-center" onSubmit={handleSubmit}>
         <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label htmlFor="inputEmail" className="sr-only">
           Email address

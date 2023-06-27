@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Dropdown  } from 'react-bootstrap';
+import { Table, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 
 const AnimalController = () => {
   const [allAnimal, setAllAnimal] = useState([]);
   let token = localStorage.getItem('token');
-    console.log(allAnimal);
+  console.log(allAnimal);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://s3.syntradeveloper.be/bisurularavel/api/animals', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          'https://s3.syntradeveloper.be/bisurularavel/api/animals',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         console.log(response.data);
         setAllAnimal(response.data);
       } catch (error) {
@@ -26,8 +29,13 @@ const AnimalController = () => {
   }, [token]);
 
   return (
-<div>
-      <h1>Animal Panel</h1>
+    <div>
+      <h1
+        style={{
+          color: 'white',
+          textShadow: ' 1px 3px 5px #f1f1f1',
+          fontSize: '32px',
+        }}>Animal Panel</h1>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -38,7 +46,7 @@ const AnimalController = () => {
             <th>Last Birth Giving</th>
             <th>Number of Births</th>
             <th>Lactation Status</th>
-
+            <th>Control</th>
           </tr>
         </thead>
         <tbody>
@@ -53,22 +61,30 @@ const AnimalController = () => {
                 <td>{animal.birthNummber}</td>
                 <td>{animal.lactationStatus ? 'Active' : 'Inactive'}</td>
 
-
                 <td colSpan="7">
                   <Dropdown>
-                    <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                    <Dropdown.Toggle
+                      style={{
+                        boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                        backgroundColor: '#cbc0d3',
+                        border: '0px',
+                        color: 'white',
+                      }} variant="secondary" id="dropdown-basic">
                       View Details
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item>Farms</Dropdown.Item>
-                      
+                    <Dropdown.Menu
+                      style={{
+                        backgroundColor: '#cbc0d3',
+                        marginTop: '10px',
+                      }}>
+                      <Dropdown.Item>Next Feature</Dropdown.Item>
+
                       {/* Diğer özelliklerinizi burada listeye ekleyebilirsin */}
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
               </tr>
-              <tr>
-              </tr>
+              <tr></tr>
             </React.Fragment>
           ))}
         </tbody>

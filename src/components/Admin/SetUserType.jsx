@@ -49,6 +49,7 @@ const SetUserType = ({ admin, onClose, onSubmit }) => {
       );
 
       onSubmit('OK');
+      onClose();
     } catch (error) {
       console.error('Request Error:', error);
       onSubmit(error);

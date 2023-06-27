@@ -40,7 +40,15 @@ const FarmStaffControl = () => {
   };
   return (
     <div>
-      <h1>Farm Staff Panel</h1>
+      <h1
+        style={{
+          color: 'white',
+          textShadow: ' 1px 3px 5px #f1f1f1',
+          fontSize: '32px',
+        }}
+      >
+        Farm Staff Panel
+      </h1>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -54,6 +62,7 @@ const FarmStaffControl = () => {
             <th>Date of Birth</th>
             <th>Education</th>
             <th>Status</th>
+            <th>Control</th>
           </tr>
         </thead>
         <tbody>
@@ -67,17 +76,31 @@ const FarmStaffControl = () => {
                   <td>{staff.surname}</td>
                   <td>{farm.address}</td>
                   <td>{staff.department}</td>
-                  {/* Not: farm.address olarak güncellendi */}
                   <td>{staff.phoneNumber}</td>
                   <td>{staff.dateOfBirth}</td>
                   <td>{staff.education}</td>
                   <td>{staff.status ? 'Active' : 'Inactive'}</td>
                   <td colSpan="7">
                     <Dropdown>
-                      <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                      <Dropdown.Toggle
+                        style={{
+                          boxShadow:
+                            '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                          backgroundColor: '#cbc0d3',
+                          border: '0px',
+                          color: 'white',
+                        }}
+                        variant="secondary"
+                        id="dropdown-basic"
+                      >
                         View Details
                       </Dropdown.Toggle>
-                      <Dropdown.Menu>
+                      <Dropdown.Menu
+                        style={{
+                          backgroundColor: '#cbc0d3',
+                          marginTop: '10px',
+                        }}
+                      >
                         <Dropdown.Item onClick={() => handleAnimalsClick(farm)}>
                           Animals
                         </Dropdown.Item>

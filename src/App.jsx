@@ -1,7 +1,7 @@
 import './App.css';
 import LoginPage from './components/LoginPage';
 import AdminPanel from './AdminPanel';
-import CooperativesControl from './components/CooperativesControl';
+import CooperativesPanel from './CoopComponents/CooperativePanel';
 import Register from './Register';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import FarmerController from './components/FarmerController';
@@ -18,8 +18,8 @@ function App() {
       element: <AdminPanel />,
     },
     {
-      path: '/cooperativescontrol',
-      element: <CooperativesControl />,
+      path: '/cooperativepanel',
+      element: <CooperativesPanel />,
     },
     {
       path: '/farmers',
@@ -39,7 +39,7 @@ function App() {
     },
   ]);
   return (
-    <div className="App">
+    <div className="App" style={{backgroundColor: "#8E9AAF"}}>
       <RouterProvider router={router} />
     </div>
   );

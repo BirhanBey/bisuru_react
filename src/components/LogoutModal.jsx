@@ -34,9 +34,18 @@ const LogoutModal = () => {
   };
 
   return (
-    <Container>
-      <Row>
-        <Button className="w-25 ms-auto " onClick={handleShow}>
+    <Container style={{ backgroundColor: '#cbc0d3' }}>
+      <Row style={{ backgroundColor: '#cbc0d3' }}>
+        <Button
+          className="w-25 ms-auto mt-2 log-out"
+          style={{
+            boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+            backgroundColor: '#DEE2FF',
+            border: '0px',
+            color: 'black',
+          }}
+          onClick={handleShow}
+        >
           Logout
         </Button>
         <Modal

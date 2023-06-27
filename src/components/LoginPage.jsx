@@ -34,10 +34,16 @@ function LoginPage() {
         window.location.href = '/adminpanel';
         }
         else if (userInfo == 'Cooperative') {
-          window.location.href = '/cooperativescontrol';
+          window.location.href = '/cooperativepanel';
         }else if (userInfo == 'CoopStaff') {
-          window.location.href = '/cooperativescontrol';
-        }
+          window.location.href = '/cooperativepanel';
+        }else if (userInfo == 'Farmer') {
+          window.location.href = '/farmers';
+        }else if (userInfo == 'Farm') {
+          window.location.href = '/farms';
+        }else if (userInfo == 'FarmStaff') {
+          window.location.href = '/farmstaffcontrol';
+        }       
       })
       .catch((error) => {
         console.error('Login Error:', error);
@@ -45,14 +51,16 @@ function LoginPage() {
   };
 
   return (
-    <div>
+    <div className='d-flex flex-column justify-content-center align-items-center login-page'>
       <h2>Login Page </h2>
+      <div className='w-50'>
       <LoginForm
         handleLogin={handleLogin}
         isLoggedIn={isLoggedIn}
         userInfo={userInfo}
         token={token}
       />
+      </div>
       {<p>User Info: {token}</p>}
     </div>
   );

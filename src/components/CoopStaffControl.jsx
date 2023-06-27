@@ -64,10 +64,18 @@ const CoopStaffControl = () => {
 
   return (
     <div>
-      <h1>Cooperative Staff Panel</h1>
+      <h1
+        style={{
+          color: 'white',
+          textShadow: ' 1px 3px 5px #f1f1f1',
+          fontSize: '32px',
+        }}
+      >
+        Cooperative Staff Panel
+      </h1>
       <Table striped bordered hover>
         <thead>
-        <tr>
+          <tr>
             <th>id</th>
             <th>cooperatives_id</th>
             <th>Name</th>
@@ -78,58 +86,76 @@ const CoopStaffControl = () => {
             <th>Date of Birth</th>
             <th>Identity Number</th>
             <th>Place of Birth</th>
+            <th>Control</th>
           </tr>
         </thead>
         <tbody>
-        {allCoopStaff.length > 0 && allCoopStaff.map((cooperative) => 
-          cooperative.cooperative_staffs && cooperative.cooperative_staffs.map((coopstaff) => (
+          {allCoopStaff.length > 0 &&
+            allCoopStaff.map(
+              (cooperative) =>
+                cooperative.cooperative_staffs &&
+                cooperative.cooperative_staffs.map((coopstaff) => (
+                  <React.Fragment key={coopstaff.id}>
+                    <tr>
+                      <td>{coopstaff.id}</td>
+                      <td>{coopstaff.cooperatives_id}</td>
+                      <td>{coopstaff.name}</td>
+                      <td>{coopstaff.surname}</td>
+                      <td>{coopstaff.address}</td>
+                      <td>{coopstaff.phoneNumber}</td>
+                      <td>{coopstaff.status ? 'Active' : 'Inactive'}</td>
+                      <td>{coopstaff.dateOfBirth}</td>
+                      <td>{coopstaff.identityNumber}</td>
+                      <td>{coopstaff.placeOfBirth}</td>
 
-            <React.Fragment key={coopstaff.id}>
-              <tr>
-                <td>{coopstaff.id}</td>
-                <td>{coopstaff.cooperatives_id}</td>
-                <td>{coopstaff.name}</td>
-                <td>{coopstaff.surname}</td>
-                <td>{coopstaff.address}</td>
-                <td>{coopstaff.phoneNumber}</td>
-                <td>{coopstaff.status ? 'Active' : 'Inactive'}</td>
-                <td>{coopstaff.dateOfBirth}</td>
-                <td>{coopstaff.identityNumber}</td>
-                <td>{coopstaff.placeOfBirth}</td>
-
-                <td colSpan="7">
-                  <Dropdown>
-                    <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                      View Details
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() => handleFarmersClick(cooperative)}
-                      >
-                        Farmers
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleFarmsClick(cooperative)}
-                      >
-                        Farms
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleFarmStaffClick(cooperative)}
-                      >
-                        Farm Staff
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleAnimalsClick(cooperative)}
-                      >
-                        Animals
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </td>
-              </tr>
-            </React.Fragment>
-          ))
-        )}
+                      <td colSpan="7">
+                        <Dropdown>
+                          <Dropdown.Toggle
+                            style={{
+                              boxShadow:
+                                '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                              backgroundColor: '#cbc0d3',
+                              border: '0px',
+                              color: 'white',
+                            }}
+                            variant="secondary"
+                            id="dropdown-basic"
+                          >
+                            View Details
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu
+                            style={{
+                              backgroundColor: '#cbc0d3',
+                              marginTop: '10px',
+                            }}
+                          >
+                            <Dropdown.Item
+                              onClick={() => handleFarmersClick(cooperative)}
+                            >
+                              Farmers
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() => handleFarmsClick(cooperative)}
+                            >
+                              Farms
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() => handleFarmStaffClick(cooperative)}
+                            >
+                              Farm Staff
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() => handleAnimalsClick(cooperative)}
+                            >
+                              Animals
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </td>
+                    </tr>
+                  </React.Fragment>
+                ))
+            )}
         </tbody>
       </Table>
       {showFarmersDetail && selectedCoopStaff && (
@@ -139,7 +165,10 @@ const CoopStaffControl = () => {
         <FarmDetail cooperative={selectedCoopStaff} onClose={handleClose} />
       )}
       {showFarmStaffDetail && selectedCoopStaff && (
-        <FarmStaffDetail cooperative={selectedCoopStaff} onClose={handleClose} />
+        <FarmStaffDetail
+          cooperative={selectedCoopStaff}
+          onClose={handleClose}
+        />
       )}
       {showAnimalsDetail && selectedCoopStaff && (
         <AnimalDetail cooperative={selectedCoopStaff} onClose={handleClose} />

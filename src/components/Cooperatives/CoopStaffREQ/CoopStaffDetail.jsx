@@ -4,16 +4,16 @@ import { Table, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import UpdateCoopStaff from './UpdateCoopStaff';
 import DeleteCoopStaff from './DeleteCoopStaff';
-import AddCoopStaff from './AddCoopStaff'; 
+import AddCoopStaff from './AddCoopStaff';
 
 const CoopStaffDetail = ({ cooperative, onClose }) => {
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [isAddModalOpen, setAddModalOpen] = useState(false); 
+  const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [selectedCoopStaff, setSelectedCoopStaff] = useState(null);
   const [coopData, setCoopData] = useState(cooperative.cooperative_staffs);
   let token = localStorage.getItem('token');
-
+  console.log(cooperative);
   const handleUpdateClick = (coopstaff) => {
     setSelectedCoopStaff(coopstaff);
     setUpdateModalOpen(true);
@@ -61,13 +61,11 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
         cooperative_staffs: [...prevState.cooperative_staffs, addedCoopStaff],
       }));
 
-      onClose(); 
+      onClose();
     } catch (error) {
       console.error('Request Error:', error);
     }
   };
-
-
 
   const closeModal = () => {
     setDeleteModalOpen(false);
@@ -93,18 +91,27 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
     closeModal();
   };
   return (
-    <Modal className="p-0" show={true} onHide={onClose} fullscreen>
+    <Modal className="p-0 my-modal" show={true} onHide={onClose} fullscreen>
       <Modal.Header closeButton>
-        <Modal.Title>Staff List of {cooperative.name} </Modal.Title>
+        <Modal.Title style={{color:"white"}}>Staff List of {cooperative.name} </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <div className="d-flex justify-content-around mb-3">
-          <div className="d-flex">
+        <div className="d-flex justify-content-center mb-3">
+          <div className="d-flex ms-auto me-auto">
             <h2 className="ms-5">{cooperative.name} Staff Detail</h2>
           </div>
-            <Button variant="primary" onClick={handleAddClick}>
-              Add Staff
-            </Button>
+          <Button
+            style={{
+              boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+              backgroundColor: '#DEE2FF',
+              border: '0px',
+              color: 'white',
+            }}
+            variant="primary"
+            onClick={handleAddClick}
+          >
+            Add Staff
+          </Button>
         </div>
         <Table striped bordered hover>
           <thead>
@@ -119,6 +126,7 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
               <th>Date of Birth</th>
               <th>Identity Number</th>
               <th>Place of Birth</th>
+              <th>Control</th>
             </tr>
           </thead>
           <tbody>
