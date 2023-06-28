@@ -6,6 +6,7 @@ import DeleteAdmin from './Admin/DeleteAdmin';
 import AddAdmin from './Admin/AddAdmin';
 import SetUserType from './Admin/SetUserType';
 import SetAuthArea from './Admin/SetAuthArea';
+import AdminCoopController from './Admin/AdminCoopController';
 
 const AdminControl = () => {
   const [allAdmins, setAllAdmins] = useState([]);
@@ -15,6 +16,8 @@ const AdminControl = () => {
   const [isAddAdminModalOpen, setAddAdminModalOpen] = useState(false);
   const [isAuthAreaModalOpen, setAuthAreaModalOpen] = useState(false);
   const [isSetUserTypeModalOpen, setSetUserTypeModalOpen] = useState(false);
+  const [isCooperativeVisible, setCooperativeVisible] = useState(false); // Add state for cooperative visibility
+
   const [selectedAdmin, setSelectedAdmin] = useState(null);
   let token = localStorage.getItem('token');
   useEffect(() => {
@@ -63,9 +66,9 @@ const AdminControl = () => {
     setDeleteModalOpen(false);
   };
 
-  const handleCoopStaffUpdate = (updatedAdmin) => {
+  const handleAdminUpdate = (updatedAdmin) => {
     const admins = admins;
-    const updatedCoopStaffList = admins.map((admin) => {
+    const updatedAdminsList = admins.map((admin) => {
       if (admin.id === updatedAdmin.id) {
         return updatedAdmin;
       }
@@ -73,10 +76,10 @@ const AdminControl = () => {
     });
     setAllAdmins((prevState) => ({
       ...prevState,
-      cooperative_staffs: updatedCoopStaffList,
+      admins: updatedAdminsList,
     }));
   };
-  const handleCoopStaffAdd = async (newAdmin) => {
+  const handleAdminAdd = async (newAdmin) => {
     try {
       const response = await axios.post(
         'https://s3.syntradeveloper.be/bisurularavel/api/admins/',
@@ -88,11 +91,11 @@ const AdminControl = () => {
         }
       );
 
-      const addedCoopStaff = response.data;
+      const addedAdmin = response.data;
 
       setAllAdmins((prevState) => ({
         ...prevState,
-        admins: [...prevState.admins, addedCoopStaff],
+        admins: [...prevState.admins, addedAdmin],
       }));
 
       // onClose();
@@ -122,6 +125,10 @@ const AdminControl = () => {
     closeModal();
   };
 
+  const handleCooperativeToggle = () => {
+    setCooperativeVisible((prevState) => !prevState);
+  };
+
   return (
     <div>
       <div className="d-flex justify-content-between mb-3">
@@ -136,14 +143,20 @@ const AdminControl = () => {
         <Button
           variant="primary"
           onClick={handleAddClick}
+          onMouseEnter={(e) => {
+            e.target.style.backgroundColor = '#afa99f';
+            e.target.style.color = 'white';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.backgroundColor = '#DEE2FF';
+            e.target.style.color = 'black';
+          }}
           style={{
             boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
             backgroundColor: '#DEE2FF',
             border: '0px',
             color: 'black',
           }}
-          onMouseEnter={(e) => (e.target.style.backgroundColor = '#afa99f')}
-          onMouseLeave={(e) => (e.target.style.backgroundColor = '#DEE2FF')}
         >
           Add Admin
         </Button>
@@ -154,8 +167,7 @@ const AdminControl = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '70vh', // veya istediğiniz yükseklik değeri
-            color: 'white',
+            height: '100vh',
           }}
         >
           <Spinner animation="border" size="xl" role="status">
@@ -241,12 +253,20 @@ const AdminControl = () => {
                       color: 'black',
                     }}
                     onClick={() => handleUpdateClick(admin)}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#afa99f';
+                      e.target.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#DEE2FF';
+                      e.target.style.color = 'black';
+                    }}
                   >
                     Update
                   </Button>
                   <Button
                     style={{
-                      boxShadow: '4px 3px 2px 0px rgba(130, 106, 106, 0.75)',
+                      boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
                       backgroundColor: '#DEE2FF',
                       border: '0px',
                       color: 'orangered',
@@ -269,13 +289,36 @@ const AdminControl = () => {
           </tbody>
         </Table>
       )}
+      <div className="d-flex justify-content-between mb-3">
+
+        <Button
+        className='ms-auto'
+          onClick={handleCooperativeToggle}
+          onMouseEnter={(e) => {
+            e.target.style.backgroundColor = '#afa99f';
+            e.target.style.color = 'white';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.backgroundColor = '#DEE2FF';
+            e.target.style.color = 'black';
+          }}
+          style={{
+            boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+            backgroundColor: '#DEE2FF',
+            border: '0px',
+            color: 'black',
+          }}
+        >
+          {isCooperativeVisible ? 'Hide Cooperatives' : 'Show Cooperatives'}
+        </Button>
+      </div>
 
       {isUpdateModalOpen && (
         <UpdateAdmin
           admin={selectedAdmin}
           onClose={() => setUpdateModalOpen(false)}
           onSubmit={handleModalSubmit}
-          onCoopStaffUpdate={handleCoopStaffUpdate}
+          onCoopStaffUpdate={handleAdminUpdate}
         />
       )}
       {isDeleteModalOpen && (
@@ -291,7 +334,7 @@ const AdminControl = () => {
           // adminID={admin.id}
           admin={selectedAdmin}
           onClose={() => setAddAdminModalOpen(false)}
-          onCoopStaffAdd={handleCoopStaffAdd}
+          onCoopStaffAdd={handleAdminAdd}
         />
       )}
       {isSetUserTypeModalOpen && (
@@ -300,7 +343,7 @@ const AdminControl = () => {
           // adminID={admin.id}
           admin={selectedAdmin}
           onClose={() => setSetUserTypeModalOpen(false)}
-          onCoopStaffAdd={handleCoopStaffAdd}
+          onCoopStaffAdd={handleAdminAdd}
         />
       )}
       {isAuthAreaModalOpen && (
@@ -309,9 +352,10 @@ const AdminControl = () => {
           // adminID={admin.id}
           admin={selectedAdmin}
           onClose={() => setAuthAreaModalOpen(false)}
-          onCoopStaffAdd={handleCoopStaffAdd}
+          onCoopStaffAdd={handleAdminAdd}
         />
       )}
+      {isCooperativeVisible && <AdminCoopController />}
     </div>
   );
 };
