@@ -289,24 +289,23 @@ const AdminControl = () => {
           </tbody>
         </Table>
       )}
-      <div className="d-flex justify-content-between mb-3">
+      <hr className="mt-5" />
 
+      <div className="d-flex justify-content-between mb-3">
         <Button
-        className='ms-auto'
+          className="ms-auto me-auto"
           onClick={handleCooperativeToggle}
           onMouseEnter={(e) => {
             e.target.style.backgroundColor = '#afa99f';
-            e.target.style.color = 'white';
           }}
           onMouseLeave={(e) => {
-            e.target.style.backgroundColor = '#DEE2FF';
-            e.target.style.color = 'black';
+            e.target.style.backgroundColor = '#072c7c';
           }}
           style={{
             boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
-            backgroundColor: '#DEE2FF',
+            backgroundColor: '#072c7c',
             border: '0px',
-            color: 'black',
+            color: 'white',
           }}
         >
           {isCooperativeVisible ? 'Hide Cooperatives' : 'Show Cooperatives'}
