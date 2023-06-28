@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Dropdown } from 'react-bootstrap';
+import { Table, Dropdown, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import FarmDetail from './Farmers/FarmREQ/FarmDetail';
 import FarmStaffDetail from './Farmers/FarmStaffREQ/FarmStaffDetail';
@@ -7,7 +7,8 @@ import AnimalDetail from './Farmers/AnimalREQ/AnimalDetail';
 
 const FarmerControl = () => {
   const [allFarmers, setAllFarmers] = useState([]);
-  const [selectedFarmer, setSelectedFarmer] = useState(null); // Seçilen kooperatifin bilgilerini saklamak için bir durum kullanın
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedFarmer, setSelectedFarmer] = useState(null); 
   const [showFarmsDetail, setShowFarmsDetail] = useState(false);
   const [showFarmStaffDetail, setShowFarmStaffDetail] = useState(false);
   const [showAnimalsDetail, setShowAnimalsDetail] = useState(false);
@@ -25,8 +26,10 @@ const FarmerControl = () => {
           }
         );
         setAllFarmers(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error('Request Error:', error);
+        setIsLoading(false);
       }
     };
 
@@ -34,16 +37,16 @@ const FarmerControl = () => {
   }, [token]);
 
   const handleFarmsClick = (farmer) => {
-    setSelectedFarmer(farmer); // Seçilen kooperatifin bilgilerini ayarla
-    setShowFarmsDetail(!showFarmsDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+    setSelectedFarmer(farmer); 
+    setShowFarmsDetail(!showFarmsDetail); 
   };
   const handleFarmStaffClick = (farmer) => {
-    setSelectedFarmer(farmer); // Seçilen kooperatifin bilgilerini ayarla
-    setShowFarmStaffDetail(!showFarmStaffDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+    setSelectedFarmer(farmer);
+    setShowFarmStaffDetail(!showFarmStaffDetail); 
   };
   const handleAnimalsClick = (farmer) => {
-    setSelectedFarmer(farmer); // Seçilen kooperatifin bilgilerini ayarla
-    setShowAnimalsDetail(!showAnimalsDetail); // "Farms" seçeneğine tıklandığında yeni bileşeni aç/kapat
+    setSelectedFarmer(farmer); 
+    setShowAnimalsDetail(!showAnimalsDetail);
   };
 
   const handleClose = () => {
@@ -62,7 +65,22 @@ const FarmerControl = () => {
       >
         Farmer Panel
       </h1>
-      <Table striped bordered hover>
+      {isLoading ? (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '70vh',  
+            color: "white"
+          }}
+        >
+          <Spinner animation="border" size="xl" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      ) : (
+        <Table striped bordered hover>
         <thead>
           <tr>
             <th>id</th>
@@ -132,6 +150,8 @@ const FarmerControl = () => {
           ))}
         </tbody>
       </Table>
+      )}
+
 
       {showFarmsDetail && selectedFarmer && (
         <FarmDetail farmer={selectedFarmer} onClose={handleClose} />

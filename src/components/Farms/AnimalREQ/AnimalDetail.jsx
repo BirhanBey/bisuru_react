@@ -109,6 +109,14 @@ const AnimalDetail = ({ farm, onClose }) => {
             }}
             variant="primary"
             onClick={handleAddAnimalClick}
+            onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#afa99f';
+                e.target.style.color = 'white';
+            }}
+            onMouseLeave={(e) => {
+                e.target.style.backgroundColor = '#DEE2FF';
+                e.target.style.color = 'black';
+            }}
           >
             Add Animal
           </Button>
@@ -145,6 +153,14 @@ const AnimalDetail = ({ farm, onClose }) => {
                       color: 'black',
                     }}
                     onClick={() => handleAnimalUpdateClick(animal.id)}
+                    onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#afa99f';
+                        e.target.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#DEE2FF';
+                        e.target.style.color = 'black';
+                    }}
                   >
                     Update
                   </Button>
@@ -156,6 +172,14 @@ const AnimalDetail = ({ farm, onClose }) => {
                       color: 'black',
                     }}
                     onClick={() => handleAnimalDeleteClick(animal.id)}
+                    onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = 'orangered';
+                        e.target.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#DEE2FF';
+                        e.target.style.color = 'orangered';
+                    }}
                   >
                     Delete
                   </Button>

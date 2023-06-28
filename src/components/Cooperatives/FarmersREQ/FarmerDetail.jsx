@@ -115,6 +115,14 @@ const FarmersDetail = ({ cooperative, onClose }) => {
             }}
             variant="primary"
             onClick={handleAddFarmerClick}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = '#afa99f';
+              e.target.style.color = 'white';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = '#DEE2FF';
+              e.target.style.color = 'black';
+            }}
           >
             Add Farmer
           </Button>
@@ -148,7 +156,7 @@ const FarmersDetail = ({ cooperative, onClose }) => {
                 <td>{farmer.dateOfBirth}</td>
                 <td>{farmer.identityNumber}</td>
                 <td>{farmer.placeOfBirth}</td>
-                <td className='d-flex gap-3'>
+                <td className="d-flex gap-3">
                   <Button
                     style={{
                       boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
@@ -157,6 +165,14 @@ const FarmersDetail = ({ cooperative, onClose }) => {
                       color: 'black',
                     }}
                     onClick={() => handleFarmerUpdateClick(farmer)}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#afa99f';
+                      e.target.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#DEE2FF';
+                      e.target.style.color = 'black';
+                    }}
                   >
                     Update
                   </Button>
@@ -168,6 +184,14 @@ const FarmersDetail = ({ cooperative, onClose }) => {
                       color: 'black',
                     }}
                     onClick={() => handleDeleteClick(farmer.id)}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = 'orangered';
+                      e.target.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#DEE2FF';
+                      e.target.style.color = 'orangered';
+                    }}
                   >
                     Delete
                   </Button>

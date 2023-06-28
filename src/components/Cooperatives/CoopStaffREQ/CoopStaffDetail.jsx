@@ -113,6 +113,14 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
             }}
             variant="primary"
             onClick={handleAddClick}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = '#afa99f';
+              e.target.style.color = 'white';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = '#DEE2FF';
+              e.target.style.color = 'black';
+            }}
           >
             Add Staff
           </Button>
@@ -155,17 +163,33 @@ const CoopStaffDetail = ({ cooperative, onClose }) => {
                       color: 'black',
                     }}
                     onClick={() => handleUpdateClick(coopstaff)}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#afa99f';
+                      e.target.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#DEE2FF';
+                      e.target.style.color = 'black';
+                    }}
                   >
                     Update
                   </Button>
                   <Button
                     style={{
-                      boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                      boxShadow: '5px 3px 2px 0px rgba(130, 106, 106, 0.75)',
                       backgroundColor: '#DEE2FF',
                       border: '0px',
                       color: 'black',
                     }}
                     onClick={() => handleDeleteClick(coopstaff.id)}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = 'orangered';
+                      e.target.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#DEE2FF';
+                      e.target.style.color = 'orangered';
+                    }}
                   >
                     Delete
                   </Button>

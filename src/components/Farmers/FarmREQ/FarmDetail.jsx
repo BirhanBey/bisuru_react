@@ -97,6 +97,14 @@ const FarmDetail = ({ farmer, onClose }) => {
                       color: 'black',
                     }}
                     onClick={() => handleFarmUpdateClick(farm)}
+                    onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#afa99f';
+                        e.target.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#DEE2FF';
+                        e.target.style.color = 'black';
+                    }}
                   >
                     Update
                   </Button>

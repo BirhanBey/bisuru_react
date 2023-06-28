@@ -115,6 +115,14 @@ const FarmDetail = ({ cooperative, onClose }) => {
             }}
             variant="primary"
             onClick={handleAddFarmClick}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = '#afa99f';
+              e.target.style.color = 'white';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = '#DEE2FF';
+              e.target.style.color = 'black';
+            }}
           >
             Add Farm
           </Button>
@@ -160,6 +168,14 @@ const FarmDetail = ({ cooperative, onClose }) => {
                         color: 'black',
                       }}
                       onClick={() => handleFarmUpdateClick(farm)}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#afa99f';
+                        e.target.style.color = 'white';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#DEE2FF';
+                        e.target.style.color = 'black';
+                      }}
                     >
                       Update
                     </Button>
@@ -171,6 +187,14 @@ const FarmDetail = ({ cooperative, onClose }) => {
                         color: 'black',
                       }}
                       onClick={() => handleFarmDeleteClick(farm.id)}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = 'orangered';
+                        e.target.style.color = 'white';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#DEE2FF';
+                        e.target.style.color = 'orangered';
+                      }}
                     >
                       Delete
                     </Button>

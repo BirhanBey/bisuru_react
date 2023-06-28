@@ -37,14 +37,15 @@ const LogoutModal = () => {
     <Container style={{ backgroundColor: '#cbc0d3' }}>
       <Row style={{ backgroundColor: '#cbc0d3' }}>
         <Button
-          className="w-25 ms-auto mt-2 log-out"
           style={{
             boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
-            backgroundColor: '#DEE2FF',
+            backgroundColor: '#072c7c',
             border: '0px',
-            color: 'black',
+            color: 'white',
           }}
           onClick={handleShow}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = '#afa99f')}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = '#072c7c')}
         >
           Logout
         </Button>

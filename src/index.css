@@ -1,11 +1,12 @@
 body{
-  background-color: #8E9AAF;
+  background-color: #8E9AAF;;
 }
 .main-panel{
-  height: 100vh;
+  min-height: 100vh;
 }
 .login-page{
   height: 100vh;
+  margin-top: 130px;
 }
 .side-bar{
   height: 70vh;
@@ -27,4 +28,49 @@ body{
 .my-modal .modal-content {
   background-color: #8e9aaf;
 }
+.my-logo{
+  margin-left: 30px;
+  width: 100px;
+}
+.Nav-item{
+  font-weight: 600;
+  color: white;
+  padding: 10px 10px;
+}
+.Nav-item:hover{
+  font-weight: 600;
+  color: wheat;
+  backdrop-filter: invert(50%);
+  border-radius: 10px;
+  transition: 0.5s;
+}
 
+.my-image{
+  margin: 0;
+  width: 95%;
+  aspect-ratio: 16/4;
+  border-radius: 10px;  
+  box-shadow: 10px 10px 5px 0px rgba(130, 106, 106, 0.75);
+}
+.img-bg{
+  backdrop-filter: sepia(50%);
+  box-shadow: 10px 10px 5px 0px rgba(130, 106, 106, 0.75);
+  width: 95%;
+  border-radius: 10px;
+}
+.mp-title-bg{
+  backdrop-filter: sepia(50%);
+  width: 95%;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px 0px rgba(130, 106, 106, 0.75);
+}
+.mp-title{
+  color: white;
+  font-family: 'Times New Roman', Times, serif;
+}
+.body-title{
+  color: white;
+}
+p{
+  font-weight: 500;
+}

@@ -99,7 +99,7 @@ const AnimalDetail = ({ farm, onClose }) => {
       </Modal.Header>
       <Modal.Body>
         <div className="d-flex justify-content-around mb-3">
-          <div className="d-flex justify-content-between">
+          <div className="d-flex me-auto ms-auto">
             <h2 className="ms-5" style={{ color: 'white' }}>
               {' '}
               Animal Detail
@@ -114,6 +114,14 @@ const AnimalDetail = ({ farm, onClose }) => {
             }}
             variant="primary"
             onClick={handleAddAnimalClick}
+            onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#afa99f';
+                e.target.style.color = 'white';
+            }}
+            onMouseLeave={(e) => {
+                e.target.style.backgroundColor = '#DEE2FF';
+                e.target.style.color = 'black';
+            }}
           >
             Add Animal
           </Button>
@@ -150,6 +158,14 @@ const AnimalDetail = ({ farm, onClose }) => {
                       color: 'black',
                     }}
                     onClick={() => handleAnimalUpdateClick(animal.id)}
+                    onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#afa99f';
+                        e.target.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#DEE2FF';
+                        e.target.style.color = 'black';
+                    }}
                   >
                     Update
                   </Button>
@@ -161,6 +177,14 @@ const AnimalDetail = ({ farm, onClose }) => {
                       color: 'black',
                     }}
                     onClick={() => handleAnimalDeleteClick(animal.id)}
+                    onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = 'orangered';
+                        e.target.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#DEE2FF';
+                        e.target.style.color = 'orangered';
+                    }}
                   >
                     Delete
                   </Button>

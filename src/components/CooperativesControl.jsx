@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Dropdown } from 'react-bootstrap';
+import { Table, Dropdown, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import CoopStaffDetail from './Cooperatives/CoopStaffREQ/CoopStaffDetail'; // Eğer CoopStaffDetail bileşeni başka bir dosyada bulunuyorsa import edin
 import FarmerDetail from './Cooperatives/FarmersREQ/FarmerDetail';
@@ -9,6 +9,7 @@ import AnimalDetail from './Cooperatives/AnimalsREQ/AnimalDetail';
 
 const CooperativesControl = () => {
   const [allCooperatives, setAllCooperatives] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Yüklenme durumunu tutmak için bir durum ekleyin
   const [showCoopStaffDetail, setShowCoopStaffDetail] = useState(false); // Yeni bileşenin açılıp açılmayacağını kontrol etmek için bir durum kullanın
   const [selectedCooperative, setSelectedCooperative] = useState(null); // Seçilen kooperatifin bilgilerini saklamak için bir durum kullanın
   const [showFarmersDetail, setShowFarmersDetail] = useState(false);
@@ -29,8 +30,10 @@ const CooperativesControl = () => {
           }
         );
         setAllCooperatives(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error('Request Error:', error);
+        setIsLoading(false);
       }
     };
 
@@ -38,13 +41,13 @@ const CooperativesControl = () => {
   }, [token]);
 
   const handleCoopStaffClick = (cooperative) => {
-    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
-    setShowCoopStaffDetail(!showCoopStaffDetail); // "Cooperative Staff" seçeneğine tıklandığında yeni bileşeni aç/kapat
+    setSelectedCooperative(cooperative);
+    setShowCoopStaffDetail(!showCoopStaffDetail);
   };
 
   const handleFarmersClick = (cooperative) => {
-    setSelectedCooperative(cooperative); // Seçilen kooperatifin bilgilerini ayarla
-    setShowFarmersDetail(!showFarmersDetail); // "Farmers" seçeneğine tıklandığında yeni bileşeni aç/kapat
+    setSelectedCooperative(cooperative);
+    setShowFarmersDetail(!showFarmersDetail); 
   };
 
   const handleFarmsClick = (cooperative) => {
@@ -78,84 +81,102 @@ const CooperativesControl = () => {
       >
         Cooperatives Panel
       </h1>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Status</th>
-            <th>Field</th>
-            <th>Founded</th>
-            <th>License Number</th>
-            <th>Control</th>
-          </tr>
-        </thead>
-        <tbody>
-          {allCooperatives.map((cooperative) => (
-            <React.Fragment key={cooperative.id}>
-              <tr>
-                <td>{cooperative.id}</td>
-                <td>{cooperative.name}</td>
-                <td>{cooperative.address}</td>
-                <td>{cooperative.status ? 'Active' : 'Inactive'}</td>
-                <td>{cooperative.field}</td>
-                <td>{cooperative.founded}</td>
-                <td>{cooperative.licenseNo}</td>
+      {isLoading ? (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '70vh', 
+            color: "white"
+          }}
+        >
+          <Spinner animation="border" size="xxl" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      ) : (
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Status</th>
+              <th>Field</th>
+              <th>Founded</th>
+              <th>License Number</th>
+              <th>Control</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allCooperatives.map((cooperative) => (
+              <React.Fragment key={cooperative.id}>
+                <tr>
+                  <td>{cooperative.id}</td>
+                  <td>{cooperative.name}</td>
+                  <td>{cooperative.address}</td>
+                  <td>{cooperative.status ? 'Active' : 'Inactive'}</td>
+                  <td>{cooperative.field}</td>
+                  <td>{cooperative.founded}</td>
+                  <td>{cooperative.licenseNo}</td>
 
-                <td colSpan="7">
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      style={{
-                        boxShadow: '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
-                        backgroundColor: '#cbc0d3',
-                        border: '0px',
-                        color: 'white',
-                      }}
-                      variant="secondary"
-                      id="dropdown-basic"
-                    >
-                      View Details
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu
-                      style={{
-                        backgroundColor: '#cbc0d3',
-                        marginTop: '10px',
-                      }}
-                    >
-                      <Dropdown.Item
-                        onClick={() => handleCoopStaffClick(cooperative)}
+                  <td colSpan="7">
+                    <Dropdown>
+                      <Dropdown.Toggle
+                        style={{
+                          boxShadow:
+                            '5px 5px 2px 0px rgba(130, 106, 106, 0.75)',
+                          backgroundColor: '#cbc0d3',
+                          border: '0px',
+                          color: 'white',
+                        }}
+                        variant="secondary"
+                        id="dropdown-basic"
                       >
-                        Cooperative Staff
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleFarmersClick(cooperative)}
+                        View Details
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu
+                        style={{
+                          backgroundColor: '#cbc0d3',
+                          marginTop: '10px',
+                        }}
                       >
-                        Farmers
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleFarmsClick(cooperative)}
-                      >
-                        Farms
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleFarmStaffClick(cooperative)}
-                      >
-                        Farm Staff
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleAnimalsClick(cooperative)}
-                      >
-                        Animals
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </Table>
+                        <Dropdown.Item
+                          onClick={() => handleCoopStaffClick(cooperative)}
+                        >
+                          Cooperative Staff
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => handleFarmersClick(cooperative)}
+                        >
+                          Farmers
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => handleFarmsClick(cooperative)}
+                        >
+                          Farms
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => handleFarmStaffClick(cooperative)}
+                        >
+                          Farm Staff
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => handleAnimalsClick(cooperative)}
+                        >
+                          Animals
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </Table>
+      )}
+
       {showCoopStaffDetail && selectedCooperative && (
         <CoopStaffDetail
           cooperative={selectedCooperative}

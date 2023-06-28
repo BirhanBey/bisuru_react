@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Form, Container } from 'react-bootstrap';
+import { Form, Container, Button } from 'react-bootstrap';
 
 const LoginForm = ({ handleLogin }) => {
   const [email, setEmail] = useState('');
@@ -12,10 +12,22 @@ const LoginForm = ({ handleLogin }) => {
   };
 
   return (
-    <Container >
-      <Form className="form-signin d-flex flex-column align-items-center" onSubmit={handleSubmit}>
-        <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label htmlFor="inputEmail" className="sr-only">
+    <Container>
+      <Form
+        className="form-signin d-flex flex-column align-items-center"
+        onSubmit={handleSubmit}
+      >
+        <h1
+          className="h3 mb-3 font-weight-normal"
+          style={{ color: 'white', fontSize: '22px' }}
+        >
+          Please sign in
+        </h1>
+        <label
+          htmlFor="inputEmail"
+          className="sr-only"
+          style={{ color: 'white' }}
+        >
           Email address
         </label>
         <input
@@ -27,7 +39,11 @@ const LoginForm = ({ handleLogin }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <label htmlFor="inputPassword" className="sr-only">
+        <label
+          htmlFor="inputPassword"
+          className="sr-only"
+          style={{ color: 'white' }}
+        >
           Password
         </label>
         <input
@@ -39,14 +55,15 @@ const LoginForm = ({ handleLogin }) => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <div className="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me" /> Remember me
-          </label>
-        </div>
-        <button className="btn btn-lg btn-primary btn-block" type="submit">
+        <Button
+          className="btn btn-lg btn-primary btn-block mt-3"
+          style={{ backgroundColor: '#072c7c', border: 'none' }}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = 'afa99f')}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = '#072c7c')}
+          type="submit"
+        >
           Sign in
-        </button>
+        </Button>
       </Form>
     </Container>
   );

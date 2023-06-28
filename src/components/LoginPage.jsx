@@ -1,6 +1,8 @@
 import LoginForm from './LoginForm';
 import { useState } from 'react';
 import axios from 'axios';
+import { Image } from 'react-bootstrap';
+import logo from '../assets/1.png'
 
 function LoginPage() {
   let userInfo = localStorage.getItem('userInfo')
@@ -51,8 +53,10 @@ function LoginPage() {
   };
 
   return (
-    <div className='d-flex flex-column justify-content-center align-items-center login-page'>
-      <h2>Login Page </h2>
+    <div className='d-flex flex-column align-items-center login-page'>
+      <Image src={logo} alt='logo'/>
+      <h2 style={{color: "white", marginBottom: "100px"}}>Cooperative Management System</h2>
+      <h3 style={{color: "white"}}>Login Page </h3>
       <div className='w-50'>
       <LoginForm
         handleLogin={handleLogin}
