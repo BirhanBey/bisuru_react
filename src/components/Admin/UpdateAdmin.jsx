@@ -42,7 +42,7 @@ const UpdateAdmin = ({ onSubmit, admin, onClose }) => {
           },
         }
       );
-      onClose(); // Modalı kapat
+      onClose();
 
       if (response.status === 200) {
         onSubmit('OK');
